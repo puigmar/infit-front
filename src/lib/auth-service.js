@@ -21,8 +21,8 @@ class Auth {
       .then(({ data }) => data);
   }
 
-  logout() {
-    return this.auth.post("/auth/logout", {}).then(({ data }) => data);
+  logout(isCoach) {
+    return this.auth.post(`${isCoach ? 'coach' : 'client'}/auth/logout`, {}).then(({ data }) => data);
   }
 
   me() {

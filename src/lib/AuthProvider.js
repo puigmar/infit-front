@@ -20,11 +20,11 @@ export function AuthProvider(props) {
   }, []);*/
 
   const signup = (user) => {
-    const { username, password } = user;
-
+    console.log(user)
     auth
-      .signup({ username, password })
+      .signup({...user})
       .then((user) => {
+        console.log('user signup', user)
         setUser(user);
         setisLoggedin(true);
       })
@@ -49,8 +49,9 @@ export function AuthProvider(props) {
   };
 
   const logout = () => {
+
     auth
-      .logout()
+      .logout(user.isCoach)
       .then(() => {
         setisLoggedin(false);
         setUser(null);
