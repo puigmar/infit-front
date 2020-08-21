@@ -1,92 +1,74 @@
-import React from "react";
-import auth from "./auth-service"; // Importamos funciones para llamadas axios a la API
-const { Consumer, Provider } = React.createContext();
+import React, { useState, useEffect } from 'react';
+import auth from './auth-service'; // Importamos funciones para llamadas axios a la API
 
-// HOC para crear Consumer
-// el componente withAuth recibe un componente como argumento y nos devuelve un componente con el mismo componente dentro de un <Consumer /> con las propiedades user e isLoggedin (state), y los métodos login, signup y logout (this)
-const withAuth = (WrappedComponent) => {
-  return class extends React.Component {
-    render() {
-      return (
-        <Consumer>
-          {/* El componente <Consumer> provee un callback que recibe el "value" con el objeto Providers */}
-          {({ login, signup, user, logout, isLoggedin }) => {
-            return (
-              <WrappedComponent
-                login={login}
-                signup={signup}
-                user={user}
-                logout={logout}
-                isLoggedin={isLoggedin}
-                {...this.props}
-              />
-            );
-          }}
-        </Consumer>
-      );
-    }
-  };
-};
+const userContext = React.createContext();
 
-// Provider
-class AuthProvider extends React.Component {
-  state = { isLoggedin: false, user: null, isLoading: true };
+export function AuthProvider(props) {
+  const [user, setUser] = useState(null);
+  const [isLoggedin, setisLoggedin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  componentDidMount() {
-    // luego de que se monte el componente, llama a auth.me() que nos devuelve el usuario y setea los valores para loguearlo
+  useEffect(() => {
     auth
       .me()
-      .then((user) =>
-        this.setState({ isLoggedin: true, user: user, isLoading: false })
-      )
-      .catch((err) =>
-        this.setState({ isLoggedin: false, user: null, isLoading: false })
-      );
-  }
+      .then((user) => {
+        setUser(user);
+        setisLoggedin(true);
+        setIsLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-  signup = (user) => {
+  const signup = (user) => {
     const { username, password } = user;
 
     auth
       .signup({ username, password })
-      .then((user) => this.setState({ isLoggedin: true, user }))
-      .catch(({ response }) =>
-        this.setState({ message: response.data.statusMessage })
-      );
+      .then((user) => {
+        setUser(user);
+        setisLoggedin(true);
+      })
+      .catch(({ response }) => {
+        return { message: response.data.statusMessage };
+      });
   };
 
-  login = (user) => {
+  const login = (user) => {
     const { username, password } = user;
     auth
       .login({ username, password })
-      .then((user) => this.setState({ isLoggedin: true, user }))
+      .then((user) => {
+        setisLoggedin(true);
+        setUser(user);
+      })
       .catch((err) => console.log(err));
   };
 
-  logout = () => {
+  const logout = () => {
     auth
       .logout()
-      .then(() => this.setState({ isLoggedin: false, user: null }))
+      .then(() => {
+        setisLoggedin(false);
+        setUser(null);
+      })
       .catch((err) => console.log(err));
   };
 
-  render() {
-    // destructuramos isLoading, isLoggedin y user de this.state y login, logout y signup de this
-    const { isLoading, isLoggedin, user } = this.state;
-    const { login, logout, signup } = this;
+  const value = {
+    login,
+    logout,
+    signup,
+    user,
+    isLoggedin,
+    isLoading,
+  };
 
-    return isLoading ? (
-      // si está loading, devuelve un <div> y sino devuelve un componente <Provider> con un objeto con los valores: { isLoggedin, user, login, logout, signup}
-      // el objeto pasado en la prop value estará disponible para todos los componentes <Consumer>
-      <div>Loading</div>
-    ) : (
-      <Provider value={{ isLoggedin, user, login, logout, signup }}>
-        {this.props.children}
-      </Provider>
-    );
-  }
+  return <userContext.Provider value={value} {...props}></userContext.Provider>;
 }
 
-export { Consumer, withAuth }; //  <--	RECUERDA EXPORTAR  ! ! !
+const WithAuth = () => {
+  const context = React.useContext(userContext);
+  return context;
+};
 
-export default AuthProvider; //	<--	RECUERDA EXPORTAR  ! ! !
+export default WithAuth;

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 
 import { Switch } from "react-router-dom";
-import {AuthProvider} from "./lib/AuthProvider2";
+import {AuthProvider} from "./lib/AuthProvider";
 
 import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
