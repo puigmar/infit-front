@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { withAuth } from "../lib/AuthProvider2";
 
 // El componente <AnonRoute /> recibe como argumento un objecto con las propiedades: component con el valor de un componente (Signup, Login), isLoggedin (viene de withAuth, ya que Signup se exporta como withAuth(Signup), y el resto de las props (si hubiera))
 
@@ -16,4 +15,4 @@ function AnonRoute({ component: Component, isLoggedin, ...rest }) {
   );
 }
 
-export default withAuth(AnonRoute);
+export default AnonRoute;

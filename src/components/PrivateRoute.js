@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { withAuth } from "../lib/AuthProvider2";
 
 // El componente <PrivateRoute /> recibe como props un objecto con las propiedades: component con el valor de un componente (Private), isLoggedin (viene de withAuth, ya que Private se exporta como withAuth(Private), y el resto de las props (si hubiera))
 
@@ -16,4 +15,4 @@ function PrivateRoute({ component: Component, isLoggedin, ...rest }) {
   );
 }
 
-export default withAuth(PrivateRoute);
+export default PrivateRoute;
