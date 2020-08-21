@@ -1,53 +1,53 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { withAuth } from "../lib/AuthProvider";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import WithAuth from '../lib/AuthProvider';
 
-class Signup extends Component {
-  state = { username: "", password: "" };
+const Signup = () => {
+  const { signup } = WithAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  handleFormSubmit = (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
-    const { username, password } = this.state;
-    //console.log('Signup -> form submit', { username, password });
-    this.props.signup({ username, password });
+    console.log('Signup -> form submit', { username, password });
+    signup({ username, password, isCoach: false });
   };
 
-  handleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+
+    const nameConvesion = name.split('').map((letter,i) => (i===0) ? letter.toUpperCase() : letter).join('');
+    eval('set'+nameConvesion)(value)
   };
 
-  render() {
-    const { username, password } = this.state;
-    return (
-      <div>
-        <h1>Sign Up</h1>
+  return (
+    <div>
+      <h1>Sign Up</h1>
 
-        <form onSubmit={this.handleFormSubmit}>
-          <label>Username:</label>
-          <input
-            type='text'
-            name='username'
-            value={username}
-            onChange={this.handleChange}
-          />
+      <form onSubmit={handleFormSubmit}>
+        <label>Username:</label>
+        <input
+          type='text'
+          name='username'
+          value={username}
+          onChange={handleChange}
+        />
 
-          <label>Password:</label>
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={this.handleChange}
-          />
+        <label>Password:</label>
+        <input
+          type='password'
+          name='password'
+          value={password}
+          onChange={handleChange}
+        />
 
-          <input type='submit' value='Signup' />
-        </form>
+        <input type='submit' value='Signup' />
+      </form>
 
-        <p>Already have account?</p>
-        <Link to={"/login"}> Login</Link>
-      </div>
-    );
-  }
-}
+      <p>Already have account?</p>
+      <Link to={'/login'}> Login</Link>
+    </div>
+  );
+};
 
-export default withAuth(Signup);
+export default Signup;

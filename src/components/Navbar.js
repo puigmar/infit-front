@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { withAuth } from "../lib/AuthProvider2";
 
 class Navbar extends Component {
   render() {
@@ -23,7 +22,7 @@ class Navbar extends Component {
               <button className='navbar-button'>Login</button>
             </Link>
             <br />
-            <Link to='/signup'>
+            <Link to='/client/signup'>
               <button className='navbar-button'>Sign Up</button>
             </Link>
           </>
@@ -33,4 +32,4 @@ class Navbar extends Component {
   }
 }
 
-export default withAuth(Navbar);
+export default Navbar;
