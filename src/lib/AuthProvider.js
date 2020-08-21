@@ -57,7 +57,6 @@ class AuthProvider extends React.Component {
 
   login = (user) => {
     const { username, password } = user;
-
     auth
       .login({ username, password })
       .then((user) => this.setState({ isLoggedin: true, user }))
@@ -84,7 +83,7 @@ class AuthProvider extends React.Component {
       <Provider value={{ isLoggedin, user, login, logout, signup }}>
         {this.props.children}
       </Provider>
-    ); /*<Provider> "value={}" datos que estarán disponibles para todos los componentes <Consumer> */
+    );
   }
 }
 
