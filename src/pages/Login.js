@@ -1,22 +1,30 @@
 import React, { useState } from 'react';
 import WithAuth from '../lib/AuthProvider';
+import { Route, Redirect } from 'react-router-dom';
 
 const Login = () => {
-  const { login } = WithAuth();
+  const { login, user } = WithAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    console.log('Login -> form submit', { username, password });
-    login({ username, password });
+  const handleFormSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      console.log('Login -> form submit', { username, password });
+      await login({ username, password });
+      return <Redirect to='/client/logged' />
+    } catch (error) {}
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setUsername(name);
-    setPassword(value);
+
+    const nameConvesion = name
+      .split('')
+      .map((letter, i) => (i === 0 ? letter.toUpperCase() : letter))
+      .join('');
+    eval('set' + nameConvesion)(value);
   };
 
   return (

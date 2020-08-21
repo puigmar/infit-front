@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import WithAuth from '../lib/AuthProvider';
 
@@ -10,13 +10,14 @@ const Signup = () => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     console.log('Signup -> form submit', { username, password });
-    signup({ username, password });
+    signup({ username, password, isCoach: false });
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setUsername(name);
-    setPassword(value);
+
+    const nameConvesion = name.split('').map((letter,i) => (i===0) ? letter.toUpperCase() : letter).join('');
+    eval('set'+nameConvesion)(value)
   };
 
   return (

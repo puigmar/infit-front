@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import WithAuth from "../lib/AuthProvider";
 
 class Private extends Component {
   render() {
@@ -11,4 +10,4 @@ class Private extends Component {
   }
 }
 
-export default WithAuth(Private);
+export default Private;

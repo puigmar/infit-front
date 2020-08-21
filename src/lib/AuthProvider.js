@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import auth from './auth-service'; // Importamos funciones para llamadas axios a la API
 
-const userContext = React.createContext();
+const UserContext = React.createContext();
 
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
@@ -63,11 +63,11 @@ export function AuthProvider(props) {
     isLoading,
   };
 
-  return <userContext.Provider value={value} {...props}></userContext.Provider>;
+  return <UserContext.Provider value={value} {...props} />;
 }
 
 const WithAuth = () => {
-  const context = React.useContext(userContext);
+  const context = React.useContext(UserContext);
   return context;
 };
 
