@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 
 import { Switch } from "react-router-dom";
 import {AuthProvider} from "./lib/AuthProvider";
@@ -10,10 +9,12 @@ import Login from "./pages/Login";
 import AnonRoute from "./components/AnonRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import ClientDashboard from "./components/ClientDashboard";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
     <AuthProvider>
+      <Header />
       <div className='container'>
         <Navbar />
         <Switch>
