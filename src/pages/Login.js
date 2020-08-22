@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import WithAuth from '../lib/AuthProvider';
-import { Route, Redirect } from 'react-router-dom';
 
 const Login = () => {
-  const { login, user } = WithAuth();
+  const { login } = WithAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
