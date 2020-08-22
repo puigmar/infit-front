@@ -1,4 +1,4 @@
-import AxiosCredentials from './axios/credentials';
+import AxiosCredentials from '../axios/credentials';
 
 export async function signup({ username, password, isCoach }) {
   try {

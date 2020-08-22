@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import WithAuth from '../services/AuthProvider';
+import WithAuth from './AuthProvider';
 
 const Navbar = () =>{
   const { user, logoutUser, isLoggedin } = WithAuth();

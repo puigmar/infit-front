@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signup, login, logout } from './auth-service'; // Importamos funciones para llamadas axios a la API
+import { signup, login, logout } from '../services/authenticate/auth-client.service'; // Importamos funciones para llamadas axios a la API
 
 const UserContext = React.createContext();
 
@@ -15,7 +15,7 @@ export function AuthProvider(props) {
         console.log('user signup', user);
         setUser(user);
         setisLoggedin(true);
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch(({ response }) => {
         return { message: response.data.statusMessage };
@@ -28,7 +28,7 @@ export function AuthProvider(props) {
         console.log('withAuth.login => ', user);
         setisLoggedin(true);
         setUser(user);
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -37,13 +37,14 @@ export function AuthProvider(props) {
   };
 
   const logoutUser = () => {
-    logout(user.isCoach)
-      .then(() => {
-        setisLoggedin(false);
-        setUser(null);
-        setIsLoading(true);
-      })
-      .catch((err) => console.log(err));
+    user &&
+      logout(user.isCoach)
+        .then(() => {
+          setisLoggedin(false);
+          setUser(null);
+          setIsLoading(true);
+        })
+        .catch((err) => console.log(err));
   };
 
   const value = {

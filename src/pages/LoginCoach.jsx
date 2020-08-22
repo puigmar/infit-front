@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import WithAuth from '../services/AuthProvider';
+import WithAuth from '../components/AuthProvider';
 
-const Login = () => {
+const LoginCoach = () => {
   const { loginUser, user } = WithAuth();
 
   const [username, setUsername] = useState('');
@@ -11,11 +11,10 @@ const Login = () => {
     try {
       event.preventDefault();
       console.log('LoginUser -> form submit', { username, password });
-      const isUser = await loginUser(username, password);
-      if(isUser){
-        
-      }
-    } catch (error) {}
+      await loginUser({username, password, isCoach: true});
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleChange = (event) => {
@@ -24,7 +23,11 @@ const Login = () => {
       .split('')
       .map((letter, i) => (i === 0 ? letter.toUpperCase() : letter))
       .join('');
-    eval('set' + nameConversion)(value);
+      if(('set' + nameConversion) === 'setUsername'){
+        setUsername(value);
+      } else {
+        setPassword(value);
+      };
   };
 
   return (
@@ -54,4 +57,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginCoach;
