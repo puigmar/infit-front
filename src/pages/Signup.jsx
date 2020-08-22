@@ -1,16 +1,38 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import WithAuth from '../lib/AuthProvider';
-import Carousel from 'react-bootstrap/Carousel'
-
+import { Form, Carousel, Button } from 'react-bootstrap'
 
 const Signup = () => {
+  
+  const totalSteps = 7;
+
   const { signup } = WithAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [step, setStep] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(step)
+  const [loginValidation, setLoginValidation] = useState(false);
 
   const [controls, setControls] = useState(false)
   const [touch, isTouch] = useState(false)
+  const [interval, setInterval] = useState(null)
+
+  const nextStep = () => {
+    if(checkStep(step)) setStep(step+1)
+  }
+
+  const prevSep = () => {
+    if(checkStep(step)) setStep(step-1)
+  }
+
+  const checkStep = (newStep) => {
+    return (newStep >= totalSteps) ? false : true
+  }
+
+  useEffect(() => {
+    setActiveIndex(step)
+  }, [step])
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -27,31 +49,19 @@ const Signup = () => {
   return (
     <div className="signup">
 
-      <Carousel>
+      <Carousel controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
         <Carousel.Item>
           <h1>1. DATOS DE TU CUENTA</h1>
-          <form onSubmit={handleFormSubmit}>
-            <label>Username:</label>
-            <input
-              type='text'
-              name='username'
-              value={username}
-              onChange={handleChange}
-            />
 
-            <label>Password:</label>
-            <input
-              type='password'
-              name='password'
-              value={password}
-              onChange={handleChange}
-            />
+          <Form>
+            <Form.Group controlId="username">
+              <Form.Control type="text" name="username" onChange={handleChange}/>
+            </Form.Group>
 
-            <input type='submit' value='Signup' />
-          </form>
-
-          <p>Already have account?</p>
-          <Link to={'/login'}> Login</Link>
+            <Form.Group controlId="password">
+              <Form.Control type="password" name="password" onChange={handleChange}/>
+            </Form.Group>
+          </Form>
 
         </Carousel.Item>
         <Carousel.Item>
@@ -79,6 +89,10 @@ const Signup = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
+      <Button disabled={!loginValidation} variant="primary" size="lg" type="submit" onClick={() => nextStep()}>Continuar</Button>
+
+      <p>Already have account?</p>
+          <Link to={'/login'}> Login</Link>
     </div>
   );
 };
