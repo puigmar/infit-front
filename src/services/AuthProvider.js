@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import auth from './auth-service'; // Importamos funciones para llamadas axios a la API
+import { signup, login, logout } from './auth-service'; // Importamos funciones para llamadas axios a la API
 
 const UserContext = React.createContext();
 
@@ -8,23 +8,11 @@ export function AuthProvider(props) {
   const [isLoggedin, setisLoggedin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  /*useEffect(() => {
-    auth
-      .me()
+  const signupUser = (user) => {
+    console.log(user);
+    signup({ ...user })
       .then((user) => {
-        setUser(user);
-        setisLoggedin(true);
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err));
-  }, []);*/
-
-  const signup = (user) => {
-    console.log(user)
-    auth
-      .signup({...user})
-      .then((user) => {
-        console.log('user signup', user)
+        console.log('user signup', user);
         setUser(user);
         setisLoggedin(true);
         setIsLoading(false)
@@ -34,26 +22,22 @@ export function AuthProvider(props) {
       });
   };
 
-  const login = (username, password) => {
-
-    auth
-      .login({ username, password })
+  const loginUser = (username, password) => {
+    login({ username, password })
       .then((user) => {
-        console.log('withAuth.login => ', user)
+        console.log('withAuth.login => ', user);
         setisLoggedin(true);
         setUser(user);
         setIsLoading(false)
       })
-      .catch(err => {
-        console.log(err)
-        console.log('withAuth.login.err => ', err)
-      })
+      .catch((err) => {
+        console.log(err);
+        console.log('withAuth.login.err => ', err);
+      });
   };
 
-  const logout = () => {
-
-    auth
-      .logout(user.isCoach)
+  const logoutUser = () => {
+    logout(user.isCoach)
       .then(() => {
         setisLoggedin(false);
         setUser(null);
@@ -63,9 +47,9 @@ export function AuthProvider(props) {
   };
 
   const value = {
-    login,
-    logout,
-    signup,
+    loginUser,
+    logoutUser,
+    signupUser,
     user,
     isLoggedin,
     isLoading,

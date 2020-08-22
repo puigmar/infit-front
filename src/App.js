@@ -2,14 +2,14 @@ import React from "react";
 import "./App.css";
 
 import { Switch } from "react-router-dom";
-import {AuthProvider} from "./lib/AuthProvider";
+import {AuthProvider} from "./services/AuthProvider";
 
-import Navbar from "./components/Navbar";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import AnonRoute from "./components/AnonRoute";
-import PrivateRoute from "./components/PrivateRoute";
-import ClientDashboard from "./components/ClientDashboard";
+import Navbar from "./components/Navbar.jsx";
+import Signup from "./pages/Signup.jsx";
+import Login from "./pages/Login.jsx";
+import AnonRoute from "./components/AnonRoute.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import DashboardClient from "./pages/DashboardClient.jsx";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Switch>
           <AnonRoute exact path='/client/auth/signup' component={Signup} />
           <AnonRoute exact path='/client/auth/login' component={Login} />
-          <PrivateRoute exact path='/client/auth/my-account/dashboard' component={ClientDashboard} />
+          <PrivateRoute exact path='/client/auth/my-account/dashboard' component={DashboardClient} />
         </Switch>
       </div>
     </AuthProvider>

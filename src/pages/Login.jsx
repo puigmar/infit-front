@@ -1,28 +1,35 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import WithAuth from '../lib/AuthProvider';
+import WithAuth from '../services/AuthProvider';
 
-const Signup = () => {
-  const { signup } = WithAuth();
+const Login = () => {
+  const { loginUser, user } = WithAuth();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    console.log('Signup -> form submit', { username, password });
-    signup({ username, password, isCoach: false });
+  const handleFormSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      console.log('LoginUser -> form submit', { username, password });
+      const isUser = await loginUser(username, password);
+      if(isUser){
+        
+      }
+    } catch (error) {}
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
-    const nameConvesion = name.split('').map((letter,i) => (i===0) ? letter.toUpperCase() : letter).join('');
-    eval('set'+nameConvesion)(value)
+    const nameConversion = name
+      .split('')
+      .map((letter, i) => (i === 0 ? letter.toUpperCase() : letter))
+      .join('');
+    eval('set' + nameConversion)(value);
   };
 
   return (
     <div>
-      <h1>Sign Up</h1>
+      <h1>Login</h1>
 
       <form onSubmit={handleFormSubmit}>
         <label>Username:</label>
@@ -41,13 +48,10 @@ const Signup = () => {
           onChange={handleChange}
         />
 
-        <input type='submit' value='Signup' />
+        <input type='submit' value='Login' />
       </form>
-
-      <p>Already have account?</p>
-      <Link to={'/login'}> Login</Link>
     </div>
   );
 };
 
-export default Signup;
+export default Login;

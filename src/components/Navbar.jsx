@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import WithAuth from '../lib/AuthProvider';
+import WithAuth from '../services/AuthProvider';
 
 const Navbar = () =>{
-  const { user, logout, isLoggedin } = WithAuth();
+  const { user, logoutUser, isLoggedin } = WithAuth();
 
   return (
       <nav className='navbar'>
@@ -13,7 +13,7 @@ const Navbar = () =>{
         {isLoggedin ? (
           <>
             <p className='navbar-user'>username: {user && user.username }</p>
-            <button className='navbar-button' onClick={logout}>
+            <button className='navbar-button' onClick={logoutUser}>
               Logout
             </button>
           </>
