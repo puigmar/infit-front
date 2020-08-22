@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import WithAuth from '../lib/AuthProvider';
+import WithAuth from '../services/AuthProvider';
 
 const Login = () => {
-  const { login } = WithAuth();
+  const { loginUser, user } = WithAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -10,8 +10,8 @@ const Login = () => {
   const handleFormSubmit = async (event) => {
     try {
       event.preventDefault();
-      console.log('Login -> form submit', { username, password });
-      const isUser = await login(username, password);
+      console.log('LoginUser -> form submit', { username, password });
+      const isUser = await loginUser(username, password);
       if(isUser){
         
       }

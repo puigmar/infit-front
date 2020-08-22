@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import {Navbar, Nav, NavDropdown, Container, Col, Row} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import WithAuth from '../../lib/AuthProvider'
+import WithAuth from '../../services/AuthProvider'
 
 
 const Header = () => {
 
-  const { user, isLoggedin, logout } = WithAuth();
+  const { user, isLoggedin, logoutUser } = WithAuth();
 
   const configMenu = (userContext, isLogged) => {
 
@@ -26,7 +26,7 @@ const Header = () => {
       },
       {
         name: 'Cerrar sesión' ,
-        action: logout,
+        action: logoutUser,
         link: '/'
       }
     ]
@@ -46,7 +46,7 @@ const Header = () => {
       },
       {
         name: 'Cerrar sesión' ,
-        action: logout,
+        action: logoutUser,
         link: '/'
       }
     ]

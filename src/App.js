@@ -3,14 +3,14 @@ import React from "react";
 import './App.css'
 
 import { Switch } from "react-router-dom";
-import {AuthProvider} from "./lib/AuthProvider";
+import {AuthProvider} from "./services/AuthProvider";
 
 import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login";
 import AnonRoute from "./components/AnonRoute";
 import PrivateRoute from "./components/PrivateRoute";
-import ClientDashboard from "./components/ClientDashboard";
-import Header from "./components/Header/Header";
+import ClientDashboard from "./pages/DashboardClient.jsx";
+import Header from "./components/Header/Header.jsx";
 import {Container} from 'react-bootstrap'
 
 function App() {

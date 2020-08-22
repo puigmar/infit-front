@@ -10881,4 +10881,8 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+.error {
+  border: 2px solid #FF6565;
+}
 /*# sourceMappingURL=App.css.map */
