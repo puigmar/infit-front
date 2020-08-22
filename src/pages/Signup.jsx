@@ -10,6 +10,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
 
   const [controls, setControls] = useState(false)
+  const [touch, isTouch] = useState(false)
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -19,7 +20,6 @@ const Signup = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     const nameConvesion = name.split('').map((letter,i) => (i===0) ? letter.toUpperCase() : letter).join('');
     eval('set'+nameConvesion)(value)
   };
