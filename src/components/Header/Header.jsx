@@ -6,7 +6,7 @@ import WithAuth from '../../lib/AuthProvider'
 
 const Header = () => {
 
-  const { user, isLoggedin } = WithAuth();
+  const { user, isLoggedin, logout } = WithAuth();
 
   const configMenu = (userContext, isLogged) => {
 
@@ -23,6 +23,11 @@ const Header = () => {
       {
         name: 'Mi Cuenta' ,
         link: `${myAccountUrl}/profile`
+      },
+      {
+        name: 'Cerrar sesión' ,
+        action: logout,
+        link: '/'
       }
     ]
 
@@ -38,6 +43,11 @@ const Header = () => {
       {
         name: 'Mis clientes' ,
         link: `${myAccountUrl}/clients`
+      },
+      {
+        name: 'Cerrar sesión' ,
+        action: logout,
+        link: '/'
       }
     ]
 
@@ -58,19 +68,22 @@ const Header = () => {
       menuList = (userContext && userContext.isCoach) ? menuCoach : menuUser;
     }
 
-    return menuList.map( (listItem, index) =>
-      (
+    return menuList.map( (listItem, index) => {
+      console.log(listItem.link)
+      return (
         <LinkContainer key={index} to={listItem.link}>
-          <Nav.Link>{listItem.name}</Nav.Link>
+          <Nav.Link onSelect={listItem.action}>{listItem.name}</Nav.Link>
         </LinkContainer>
       )
+    }
+
     )
   }
 
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <LinkContainer to="/">
+        <LinkContainer to="/home">
           <Navbar.Brand>React-Bootstrap</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
