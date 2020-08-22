@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import WithAuth from '../lib/AuthProvider';
+import WithAuth from '../services/AuthProvider';
 
 const Signup = () => {
-  const { signup } = WithAuth();
+  const { signupUser } = WithAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log('Signup -> form submit', { username, password });
-    signup({ username, password, isCoach: false });
+    console.log('SignupUser -> form submit', { username, password });
+    signupUser({ username, password, isCoach: false });
   };
 
   const handleChange = (event) => {
