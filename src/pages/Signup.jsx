@@ -122,7 +122,7 @@ const Signup = (props) => {
         <Carousel controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
         
           <Carousel.Item>
-            <h2>{step+1}. DATOS DE TU CUENTA</h2>
+            <h2>1. DATOS DE TU CUENTA</h2>
             
               <Form.Group controlId="username">
                 <FormCompactField>
@@ -164,8 +164,8 @@ const Signup = (props) => {
               </Form.Group>
           </Carousel.Item>
           <Carousel.Item>
-            <h2>{step+1}. DATOS DE TU PERFIL</h2>
-            <FormAvatar />
+            <h2>2. DATOS DE TU PERFIL</h2>
+            <FormAvatar values={formik.values} />
           </Carousel.Item>
           <Carousel.Item>
             <img

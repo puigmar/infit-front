@@ -1,7 +1,32 @@
-.form-avatar-upload{
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+.form-avatar-upload {
+  -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+          clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   width: 150px;
   height: 150px;
   background-color: grey;
   margin: 60px auto 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
+.form-avatar-upload.isLoading:before {
+  content: "\e901";
+  font-family: 'inFit';
+  font-size: 2rem;
+}
+
+.form-avatar-upload input {
+  display: none;
+}
+/*# sourceMappingURL=FormAvatar.css.map */
