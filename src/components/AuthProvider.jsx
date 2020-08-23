@@ -54,6 +54,7 @@ export function AuthProvider(props) {
     user,
     isLoggedin,
     isLoading,
+    setIsLoading
   };
 
   return <UserContext.Provider value={value} {...props} />;

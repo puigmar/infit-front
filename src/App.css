@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -10880,6 +10881,81 @@ select {
             transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+@font-face {
+  font-family: "inFit";
+  src: url("/fonts/inFit.eot?d0d4cf");
+  src: url("/fonts/inFit.eot?d0d4cf#iefix") format("embedded-opentype"), url("/fonts/inFit.woff2?d0d4cf") format("woff2"), url("/fonts/inFit.ttf?d0d4cf") format("truetype"), url("/fonts/inFit.woff?d0d4cf") format("woff"), url("/fonts/inFit.svg?d0d4cf#inFit") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "inFit" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-addPhoto:before {
+  content: "";
+}
+
+.icon-backLinksvg:before {
+  content: "";
+  color: #979797;
+}
+
+h2 {
+  font-size: 1.125rem;
+}
+
+.signup-page form {
+  text-align: center;
+}
+
+.signup-page form .btn {
+  margin-top: 20px;
+}
+
+.btn {
+  width: 100%;
+  max-width: 375px;
+}
+
+.btn:disabled {
+  opacity: 0.3;
+}
+
+.carousel .carousel-indicators {
+  bottom: auto;
+  top: 8px;
+  padding: 0;
+  padding-top: 20px;
+  position: absolute;
+  pointer-events: none;
+}
+
+.carousel .carousel-indicators li {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: grey;
+  margin: 0 8px;
+}
+
+.carousel-item h2 {
+  text-align: center;
+  margin-bottom: 32px;
 }
 
 .error {
