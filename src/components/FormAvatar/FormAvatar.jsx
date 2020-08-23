@@ -1,18 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './FormAvatar.css'
+import { handleAvatarUpload } from '../../services/auth-service'
+import WithAuth from '../../services/AuthProvider';
 
-const FormAvatar = () => {
+const FormAvatar = (props) => {
+
+  const { isLoading, setIsLoading } = WithAuth();
+
+  const [avatarWrapper, setAvatarWrapper] = useState('')
 
   const handleFileEvent = (e) => {
     const inputFile = e.currentTarget.querySelector('input[type="file"]');
     inputFile.click();
   }
 
-  const handleUploadAvatar = (e) => {
+  const handleUploadAvatar = async (e) => {
     const inputFile = e.currentTarget;
     const uploadData = new FormData();
-    uploadData.append("imageUrl", inputFile.files[0]);
-    console.log(inputFile.files[0])
+    uploadData.append("avatarUrl", inputFile.files[0]);
+    const uploadAvatar = await handleAvatarUpload({formData: uploadData, isCoach: false});
+    setIsLoading(false)
+
+    setAvatarWrapper(uploadAvatar.avatar_url)
   }
 
   const handleSubmit = (e) => {
@@ -20,8 +29,8 @@ const FormAvatar = () => {
   }
 
   return (
-    <div className="form-avatar-upload" onClick={(e) => handleFileEvent(e)}>
-        <input type="file" name="uploadAvatar" onChange={(e) => handleUploadAvatar(e)} />
+    <div className={`form-avatar-upload ${isLoading ? 'isLoading' : ''}`} onClick={(e) => handleFileEvent(e)} style={{backgroundImage:`url("${avatarWrapper}")`}}>
+        <input type="file" name="uploadAvatar" onChange={(e) => handleUploadAvatar(e)} value={props.values.avatarUrl}/>
     </div>
   )
 }

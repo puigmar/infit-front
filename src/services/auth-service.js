@@ -25,6 +25,21 @@ export async function login({ username, password, isCoach }) {
   }
 }
 
+const errorHandler = (err) => {
+  throw err
+}
+
+export async function handleAvatarUpload({ formData, isCoach }) {
+
+  try {
+    return await AxiosCredentials.post(
+      `${isCoach ? 'coach' : 'client'}/auth/uploadPhotoAvatar`, formData
+    ).then(({ data }) => data);
+  } catch (error) {
+    console.log(errorHandler(error));
+  }
+}
+
 export async function checkExistUSer(username) {
   try {
     return await AxiosCredentials.post(
