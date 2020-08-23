@@ -25,6 +25,19 @@ export async function login({ username, password, isCoach }) {
   }
 }
 
+export async function checkExistUSer({ username }) {
+  try {
+    return await AxiosCredentials.post(
+      '/generic/auth/checkExistUser',
+      {
+        username
+      }
+    ).then(({ data }) => data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function logout(isCoach) {
   try {
     return await AxiosCredentials.post(
