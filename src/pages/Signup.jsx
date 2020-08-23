@@ -1,148 +1,188 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import WithAuth from '../services/AuthProvider';
-import { Formik, ErrorMessage } from 'formik';
+import { useFormik, connect, getIn } from 'formik';
 import * as Yup from 'yup';
 import { Form, Carousel, Button } from 'react-bootstrap';
 import { checkExistUSer } from '../services/auth-service';
+import SubHeader from '../components/SubHeader/SubHeader';
+import FormCompactField from '../components/FormCompactField/FormCompactField'
+import FormAvatar from '../components/FormAvatar/FormAvatar';
 
-const Signup = () => {
+const Signup = (props) => {
+
+  let history = useHistory();
 
   const totalSteps = 7;
 
   const { signup } = WithAuth();
   const [step, setStep] = useState(0);
+  const [backLink, setBackLink] = useState(null)
   const [activeIndex, setActiveIndex] = useState(step)
-  const [loginValidation, setLoginValidation] = useState(false);
+  const [loginValidation, setLoginValidation] = useState(true);
+  const [title, setTitle] = useState('Registro')
 
   const [controls, setControls] = useState(false)
-  const [touch, isTouch] = useState(false)
+  const [touch, setTouch] = useState(false)
   const [interval, setInterval] = useState(null)
 
   const nextStep = () => {
     if(checkStep(step)) setStep(step+1)
   }
 
-  const prevSep = () => {
+  const prevStep = () => {
     if(checkStep(step)) setStep(step-1)
   }
 
   const checkStep = (newStep) => {
-    return (newStep >= totalSteps) ? false : true
+    if (newStep >= totalSteps) {
+      return false;
+    }
+    return true;
+  }
+
+  const handleBackLink = () => {
+    return (step > 0) ? setBackLink(() => prevStep) : setBackLink(null)
   }
 
   useEffect(() => {
     setActiveIndex(step)
+    handleBackLink()
   }, [step])
 
-  const checkExistingUser = (event) => {
-    const { value } = event.target;
-    const isUser = checkExistUSer(value); 
-    console.log('isUSer: ', isUser)
-  }
 
-  // Schema for yup
+  // FORMIK
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-    .min(2, "*Names must have at least 2 characters")
-    .required("*Name is required"),
-    username: Yup.string()
-    .email("*Must be a valid email address")
-    .required("*Email is required"),
-    password: Yup.string()
-    .min(6, "*Names must have at least 6 characters")
-    .required("*Phone number required")
+  const formik = useFormik({
+    initialValues: {
+      username: '', 
+      password: '',
+      repeatPassword: ''
+    },
+    validationSchema: Yup.object().shape({
+      username: Yup.string()
+      .email("*El email no es válido")
+      .required("*El email es necesario"),
+      password: Yup.string()
+      .min(6, "*Tiene que contener 6 letras o más")
+      .required("*La contraseña es necesaria"),
+      repeatPassword: Yup.string()
+      .required('Required')
+      .test(
+          'password-match',
+          'Password musth match',
+          function (value) {
+              return this.parent.password === value
+          }
+      ),
+    }),
+    onSubmit: values => {
+      // This will run when the form is submitted
+    }
   });
 
+  const checkExistingUser = async (event) => {
+    if(!formik.errors.username){
+      const { value } = event.target;
+      const isUser = await checkExistUSer(value); 
+      if(!isUser) {
+        setLoginValidation(true)
+      } else {
+        setLoginValidation(false)
+        return formik.touched.username && formik.errors.username
+      }
+    }
+  }
+
+  const handleFieldClass = (name) => {
+    return ({
+      'error': formik.touched[name] && formik.errors[name],
+      'is-invalid': formik.touched[name] && formik.errors[name],
+      'is-valid': formik.touched[name] && !formik.errors[name],
+    })
+  }
+
+  const handleButton = (e) => {
+    const {name, value} = e.target;
+    console.log(value)
+    if(formik.touched[name] && !formik.errors[name]){
+      if (Object.entries(formik.errors).length > 0) {
+        setLoginValidation(false)
+      } else {
+        setLoginValidation(true)
+      }
+    }
+    
+  }
+
   return (
-    <div className="signup">
-      <Formik 
-        initialValues={
-          { 
-            username:"", 
-            password:"",
-            name: ''
-          }
-        }
+    <div className="signup-page">
+      <SubHeader title={title} history={history} action={backLink} />
+      <Form onSubmit={formik.handleSubmit} onBlur={handleButton}>
+        <Carousel controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
         
-        validationSchema={validationSchema}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting 
-        }) => (
-            <Fragment>
-              <Carousel controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
-              <Carousel.Item>
-                <h1>1. DATOS DE TU CUENTA</h1>
+          <Carousel.Item>
+            <h2>{step+1}. DATOS DE TU CUENTA</h2>
+            
+              <Form.Group controlId="username">
+                <FormCompactField>
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="username"
+                    {...formik.getFieldProps('username')}
+                    className={handleFieldClass('username')}
+                  />
+                </FormCompactField>
+                {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
+              </Form.Group>
 
-                <Form>
-                  <Form.Group controlId="username">
-                    <Form.Control
-                      type="text"
-                      name="username"
-                      onChange={handleChange}
-                      onBlur={checkExistingUser}
-                      onBlur={event => {
-                        handleBlur(event)
-                        checkExistingUser(event)
-                      }}
-                      value={values.username}
-                      className={(touched.username && errors.username) && "error"}
-                    />
-                    {(touched.username && errors.username ) && ( <div className="error-message">{errors.username}</div> )}
-                  </Form.Group>
+              <Form.Group controlId="password">
+                <FormCompactField>
+                  <Form.Label>Contraseña</Form.Label>
+                  <Form.Control 
+                    type="password" 
+                    name="password" 
+                    {...formik.getFieldProps('password')}
+                    className={handleFieldClass('password')}
+                  />
+                </FormCompactField>
+                {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
+              </Form.Group>
 
-                  <Form.Group controlId="password">
-                    <Form.Control 
-                      type="password" 
-                      name="password" 
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.password} 
-                      className={touched.password && errors.password ? "error" : null}
-                    />
-                    {(touched.password && errors.password ) && ( <div className="error-message">{errors.password}</div> )}
-                  </Form.Group>
+              <Form.Group controlId="repeatPassword">
+                <FormCompactField>
+                  <Form.Label>Repetir contraseña</Form.Label>
+                  <Form.Control 
+                    type="password" 
+                    name="repeatPassword" 
+                    {...formik.getFieldProps('repeatPassword')}
+                    className={handleFieldClass('repeatPassword')}
+                  />
+                </FormCompactField>
+                {(formik.touched.repeatPassword && formik.errors.repeatPassword ) && ( <div className="error-message">{formik.errors.repeatPassword}</div> )}
+              </Form.Group>
+          </Carousel.Item>
+          <Carousel.Item>
+            <h2>{step+1}. DATOS DE TU PERFIL</h2>
+            <FormAvatar />
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src="holder.js/800x400?text=Third slide&bg=20232a"
+              alt="Third slide"
+            />
 
-                </Form>
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="holder.js/800x400?text=Second slide&bg=282c34"
-                  alt="Third slide"
-                />
-
-                <Carousel.Caption>
-                  <h3>Second slide label</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="holder.js/800x400?text=Third slide&bg=20232a"
-                  alt="Third slide"
-                />
-
-                <Carousel.Caption>
-                  <h3>Third slide label</h3>
-                  <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-            </Carousel>
-            <Button disabled={!loginValidation} variant="primary" size="lg" type="submit" onClick={() => nextStep()}>Continuar</Button>
-            <p>Already have account?</p> <Link to={'/login'}> Login</Link>
-          </Fragment>
-          )}
-      </Formik>
+            <Carousel.Caption>
+              <h3>Third slide label</h3>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+        <Button disabled={!loginValidation} variant="primary" size="lg" type="submit" onClick={() => nextStep()}>Continuar</Button>
+        <p className="mt-3">Already have account? <Link to={'/login'}> Login</Link></p>
+      </Form>
     </div>
   );
 };
