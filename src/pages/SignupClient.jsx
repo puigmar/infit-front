@@ -7,6 +7,7 @@ import SubHeader from '../components/SubHeader/SubHeader';
 import ClientSignupStep1 from '../components/ClientSignup/ClientSignupStep1'
 import ClientSignupStep2 from '../components/ClientSignup/ClientSignupStep2'
 import ClientSignupStep3 from '../components/ClientSignup/ClientSignupStep3';
+import ClientSignupStep4 from '../components/ClientSignup/ClientSignupStep4';
 
 
 const SignupClient = (props) => {
@@ -18,17 +19,54 @@ const SignupClient = (props) => {
   const { signup } = WithAuth();
   const [step, setStep] = useState(0);
   const [backLink, setBackLink] = useState(null)
-  const [activeIndex, setActiveIndex] = useState(step)
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [title, setTitle] = useState('Registro')
+  const [formCompleted, setFormCompleted] = useState(false)
 
-  const [dataClient, setDataClient] = useState({})
+  // Form Data
+  const [dataClient, setDataClient] = useState({
+    username: {
+      username: '',
+      password: '',
+      isCoach: false
+    },
+    client: {
+      savePhoto: false,
+      name: '',
+      surname: '',
+      card: '',
+      telephone: '',
+      biometrics: {
+        age: '',
+        height: '',
+        weight: [],
+        sex: '',
+      },
+      wizard: {
+        sportFrecuency: '',
+        objective: '',
+        trainningDays: [],
+        availability: {
+          min: '',
+          max: '',
+        },
+        pack: {
+          name: '',
+          duration: '',
+          price: '',
+        },
+      },
+      sexPreference: '',
+      adress: '',
+      photos: []
+    }
+  })
 
+  // Carousel
   const [controls, setControls] = useState(false)
   const [touch, setTouch] = useState(false)
   const [interval, setInterval] = useState(null)
-
-  const [data, setData] = useState({})
+  const [activeIndex, setActiveIndex] = useState(step)
 
   const nextStep = () => {
     if(checkStep(step)) setStep(step+1)
@@ -72,40 +110,6 @@ const SignupClient = (props) => {
 
   }, [step])
 
-
-  // FORMIK
-
-  // const formik = useFormik({
-  //   initialValues: {
-  //     username: '', 
-  //     password: '',
-  //     repeatPassword: '',
-
-  //     trainningDays: []
-  //   },
-  //   validationSchema: Yup.object().shape({
-  //     username: Yup.string()
-  //     .email("*El email no es válido")
-  //     .required("*El email es necesario"),
-  //     password: Yup.string()
-  //     .min(6, "*Tiene que contener 6 letras o más")
-  //     .required("*La contraseña es necesaria"),
-  //     repeatPassword: Yup.string()
-  //     .required('Required')
-  //     .test(
-  //         'password-match',
-  //         'Debe coincidir con tu contraseña',
-  //         function (value) {
-  //             return this.parent.password === value
-  //         }
-  //     ),
-  //     trainningDays: Yup.array().required("Tienes que seleccionar almenos un día")
-  //   }),
-  //   onSubmit: values => {
-  //     // This will run when the form is submitted
-  //   }
-  // });
-
   // const checkExistingUser = async (event) => {
   //   if(!formik.errors.username){
   //     const { value } = event.target;
@@ -131,41 +135,25 @@ const SignupClient = (props) => {
     console.log('DataClient: ', dataClient)
   }, [dataClient])
 
-
-  const handleButton = (errors) => {
-    (Object.keys(errors).length > 0) ? setButtonDisabled(true) : setButtonDisabled(false)
-  }
-
   return (
     <div className="signup-page">
       <SubHeader title={title} history={history} action={backLink} />
       <Carousel controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
-        {/* <Carousel.Item>
+        <Carousel.Item>
           <h2>1. DATOS DE TU CUENTA</h2>
-          <ClientSignupStep1 nextStep={nextStep} handleData={handleData} setButtonDisabled={setButtonDisabled} buttonDisabled={buttonDisabled} step={step} handleButton={handleButton} />
-        </Carousel.Item> */}
+          <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step} formCompleted={formCompleted} setFormCompleted={setFormCompleted}/>
+        </Carousel.Item> 
         <Carousel.Item>
           <h2>2. DATOS DE TU PERFIL</h2>
-          <ClientSignupStep2 nextStep={nextStep} handleData={handleData} setButtonDisabled={setButtonDisabled} buttonDisabled={buttonDisabled} step={step} handleButton={handleButton}/>
+          <ClientSignupStep2 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step} formCompleted={formCompleted} setFormCompleted={setFormCompleted}/>
         </Carousel.Item>
         <Carousel.Item>
           <h2>3. DISPONIBILIDAD</h2>
-          <ClientSignupStep3 nextStep={nextStep} handleData={handleData} setButtonDisabled={setButtonDisabled} buttonDisabled={buttonDisabled} step={step} handleButton={handleButton} />
+          <ClientSignupStep3 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step} formCompleted={formCompleted} setFormCompleted={setFormCompleted}/>
         </Carousel.Item>
           <Carousel.Item>
-            <h2>3. DISPONIBILIDAD</h2>
-            <Form.Check
-              type="checkbox"
-              label="Lunes"
-              custom
-              name="trainningDays"
-            />
-            <Form.Check
-              type="checkbox"
-              label="Martes"
-              custom
-              name="trainningDays"
-            />
+            <h2>4. OBJETIVOS</h2>
+            <ClientSignupStep4 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step} formCompleted={formCompleted} setFormCompleted={setFormCompleted}/>
           </Carousel.Item>
         </Carousel>
         <section className="signupBtn">

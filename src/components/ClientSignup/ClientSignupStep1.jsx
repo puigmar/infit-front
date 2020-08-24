@@ -8,17 +8,6 @@ function ClientSignupStep1(props) {
   
   const [disabledButton, setDisabledButton] = useState(true)
 
-  const checkButton = () => {
-    props.handleButton(formik.errors)
-  }
-
-  useEffect(() => {
-    if(!formik.isValid){
-      setDisabledButton(true)
-    } else {
-      setDisabledButton(false)
-    }
-  }, [props.step])
 
   const formik = useFormik({
     initialValues: {
@@ -44,10 +33,34 @@ function ClientSignupStep1(props) {
       )
     }),
     onSubmit: values => {
-      console.log('valores: ', values)
-      props.handleData(formik.values)
+      const { username, password, isCoach} = values;
+      const stepData = {
+        username: {
+          username,
+          password,
+          isCoach: false
+        }
+      }
+      console.log('stepData: ', stepData)
+      props.handleData(stepData)
     }
   });
+  const checkFormEmptyFields = () => {
+    props.setFormCompleted(true)
+    for(let field in formik.values){
+      if(formik.values[field] === ''){
+        props.setFormCompleted(false)
+      }
+    }
+    if(props.formCompleted === true){
+      setDisabledButton(false)
+    }
+  }
+  
+  useEffect(() => {
+    console.log('props.formCompleted: ', props.formCompleted)
+    checkFormEmptyFields()
+  }, [formik.values, props.step])
 
   const handleFieldClass = (name) => {
     return ({
@@ -59,14 +72,13 @@ function ClientSignupStep1(props) {
 
   return (
     <Fragment>
-      <Form onSubmit={formik.handleSubmit} onBlur={checkButton}>
+      <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
       <div className="formGrupBlock">
         <Form.Group controlId="username">
           <FormCompactField>
             <Form.Label>Email</Form.Label>
             <Form.Control
               type="text"
-              name="username"
               {...formik.getFieldProps('username')}
               className={handleFieldClass('username')}
             />
@@ -79,7 +91,6 @@ function ClientSignupStep1(props) {
             <Form.Label>Contraseña</Form.Label>
             <Form.Control 
               type="password" 
-              name="password" 
               {...formik.getFieldProps('password')}
               className={handleFieldClass('password')}
             />
@@ -92,7 +103,6 @@ function ClientSignupStep1(props) {
             <Form.Label>Repetir contraseña</Form.Label>
             <Form.Control 
               type="password" 
-              name="repeatPassword" 
               {...formik.getFieldProps('repeatPassword')}
               className={handleFieldClass('repeatPassword')}
             />

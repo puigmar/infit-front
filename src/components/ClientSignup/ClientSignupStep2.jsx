@@ -8,11 +8,11 @@ import FormAvatar from '../../components/FormAvatar/FormAvatar';
 function ClientSignupStep2(props) {
 
   const [disabledButton, setDisabledButton] = useState(true)
-  const [formCompleted, setFormCompleted] = useState(false)
   const [avatarIsPending, setAvatarIsPending] = useState(true)
   const [avatarUrl, setAvatarUrl] = useState('')
 
-  const formik2 = useFormik({
+  // Formik
+  const formik = useFormik({
     initialValues: {
       nameUser: '',
       surname: '',
@@ -34,20 +34,24 @@ function ClientSignupStep2(props) {
       age: Yup.number()
       .required("*Debes escribir tu edad"),
       sex: Yup.string()
+      .oneOf(['male', 'female', 'other'])
       .required("Tienes que escoger un sexo"),
       telephone: Yup.number()
       .required("Tienes que facilitarnos un teléfono de contacto"),
     }),
     onSubmit: values => {
-      const { age, height, sex, ...rest } = values;
+      const { age, height, sex, weight, ...rest } = values;
       const stepData = {
-        avatarUrl,
-        biometric: {
-          age,
-          height,
-          sex
-        },
-        ...rest
+        client: {
+          ...props.dataClient.client,
+          avatarUrl,
+          biometrics: {
+            age,
+            height,
+            weight,
+            sex
+          }
+        }
       }
       console.log('stepData: ', stepData)
       props.handleData(stepData)
@@ -55,56 +59,45 @@ function ClientSignupStep2(props) {
   });
 
   const handleAvatarFile = (file) => {
-    console.log('file: ', file)
-    if(file !== ''){
+    console.log('file: ', typeof(file))
+    if(file !== ""){
       setAvatarIsPending(false)
     }
-    console.log('Estoy en la foto')
-    console.log('avatarIsPending: ', avatarIsPending)
-    console.log('formCompleted: ', formCompleted)
-
-    if(avatarIsPending === false && formCompleted === true){
-      setDisabledButton(false)
-    }
-
-    console.log('disabledButton : ', disabledButton)
   }
 
   const checkFormEmptyFields = () => {
-
-    setFormCompleted(true)
-    for(let field in formik2.values){
-      if(formik2.values[field] === ''){
-        setFormCompleted(false)
+    props.setFormCompleted(true)
+    for(let field in formik.values){
+      if(formik.values[field] === ''){
+        props.setFormCompleted(false)
       }
     }
-    if(avatarIsPending === false && formCompleted === true){
+    if(avatarIsPending === false && props.formCompleted === true){
       setDisabledButton(false)
     }
-    
   }
   
-
   useEffect(() => {
+    console.log('avatarIsPending: ', avatarIsPending)
+    console.log('props.formCompleted: ', props.formCompleted)
     checkFormEmptyFields()
-  }, [formik2.values, props.step])
+  }, [formik.values, props.step, avatarIsPending])
 
   const handleFieldClass = (name) => {
-    console.log(formik2.errors)
     return ({
-      'error': formik2.touched[name] && formik2.errors[name],
-      'is-invalid': formik2.touched[name] && formik2.errors[name],
-      'is-valid': formik2.touched[name] && !formik2.errors[name],
+      'error': formik.touched[name] && formik.errors[name],
+      'is-invalid': formik.touched[name] && formik.errors[name],
+      'is-valid': formik.touched[name] && !formik.errors[name],
     })
   }
 
   return (
     <Fragment>
-      <Form onSubmit={formik2.handleSubmit}>
+      <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
 
         <FormAvatar handleAvatarFile={handleAvatarFile} fieldName="avatarUrl" setAvatarUrl={setAvatarUrl}/>
         {avatarIsPending ? (<p>Sube una imagen de perfil</p>) : ''}
-        {(formik2.touched.avatarUrl && formik2.errors.avatarUrl ) && ( <div className="error-message">{formik2.errors.avatarUrl}</div> )}
+        {(formik.touched.avatarUrl && formik.errors.avatarUrl ) && ( <div className="error-message">{formik.errors.avatarUrl}</div> )}
 
         <Form.Group controlId="nameUser">
           <FormCompactField>
@@ -112,11 +105,11 @@ function ClientSignupStep2(props) {
             <Form.Control
               type="text"
               name="nameUser"
-              {...formik2.getFieldProps('nameUser')}
+              {...formik.getFieldProps('nameUser')}
               className={handleFieldClass('nameUser')}
             />
           </FormCompactField>
-          {(formik2.touched.nameUser && formik2.errors.nameUser ) && ( <div className="error-message">{formik2.errors.nameUser}</div> )}
+          {(formik.touched.nameUser && formik.errors.nameUser ) && ( <div className="error-message">{formik.errors.nameUser}</div> )}
         </Form.Group>
 
         <Form.Group controlId="surname">
@@ -125,11 +118,11 @@ function ClientSignupStep2(props) {
             <Form.Control 
               type="text" 
               name="surname" 
-              {...formik2.getFieldProps('surname')}
+              {...formik.getFieldProps('surname')}
               className={handleFieldClass('surname')}
             />
           </FormCompactField>
-          {(formik2.touched.surname && formik2.errors.surname ) && ( <div className="error-message">{formik2.errors.surname}</div> )}
+          {(formik.touched.surname && formik.errors.surname ) && ( <div className="error-message">{formik.errors.surname}</div> )}
         </Form.Group>
 
         <Form.Group controlId="weight">
@@ -140,12 +133,12 @@ function ClientSignupStep2(props) {
               maxLength="3"
               type="text" 
               name="weight" 
-              {...formik2.getFieldProps('weight')}
-              value={formik2.values.weight}
+              {...formik.getFieldProps('weight')}
+              value={formik.values.weight}
               className={handleFieldClass('weight')}
             />
           </FormCompactField>
-          {(formik2.touched.weight && formik2.errors.weight ) && ( <div className="error-message">{formik2.errors.weight}</div> )}
+          {(formik.touched.weight && formik.errors.weight ) && ( <div className="error-message">{formik.errors.weight}</div> )}
         </Form.Group>
 
         <Form.Group controlId="height">
@@ -156,12 +149,12 @@ function ClientSignupStep2(props) {
               pattern="\d*" 
               maxLength="3"
               name="height" 
-              {...formik2.getFieldProps('height')}
-              value={formik2.values.height}
+              {...formik.getFieldProps('height')}
+              value={formik.values.height}
               className={handleFieldClass('height')}
             />
           </FormCompactField>
-          {(formik2.touched.height && formik2.errors.height ) && ( <div className="error-message">{formik2.errors.height}</div> )}
+          {(formik.touched.height && formik.errors.height ) && ( <div className="error-message">{formik.errors.height}</div> )}
         </Form.Group>
 
         <Form.Group controlId="age">
@@ -172,12 +165,12 @@ function ClientSignupStep2(props) {
               pattern="\d*" 
               maxLength="2"
               name="age" 
-              {...formik2.getFieldProps('age')}
-              value={formik2.values.age}
+              {...formik.getFieldProps('age')}
+              value={formik.values.age}
               className={handleFieldClass('age')}
             />
           </FormCompactField>
-          {(formik2.touched.age && formik2.errors.age ) && ( <div className="error-message">{formik2.errors.age}</div> )}
+          {(formik.touched.age && formik.errors.age ) && ( <div className="error-message">{formik.errors.age}</div> )}
         </Form.Group>
 
         <Form.Group controlId="telephone">
@@ -187,12 +180,12 @@ function ClientSignupStep2(props) {
               type="number"
               pattern="\d*" 
               name="age" 
-              {...formik2.getFieldProps('telephone')}
-              value={formik2.values.telephone}
+              {...formik.getFieldProps('telephone')}
+              value={formik.values.telephone}
               className={handleFieldClass('telephone')}
             />
           </FormCompactField>
-          {(formik2.touched.telephone && formik2.errors.telephone ) && ( <div className="error-message">{formik2.errors.telephone}</div> )}
+          {(formik.touched.telephone && formik.errors.telephone ) && ( <div className="error-message">{formik.errors.telephone}</div> )}
         </Form.Group>
 
         <Form.Group controlId="sex">
@@ -200,18 +193,15 @@ function ClientSignupStep2(props) {
             <Form.Group controlId="sex">
               <Form.Control 
                 as="select" 
-                name="sex"
-                value={formik2.values.sex}
-                onChange={formik2.handleChange}
-                onBlur={formik2.handleBlur}
+                {...formik.getFieldProps('sex')}
               >
-                <option value="Escoge un sexo"></option>
+                <option selected value="Escoge un sexo"></option>
                 <option value="male">Hombre</option>
                 <option value="female">Mujer</option>
                 <option vale="other">Other</option>
               </Form.Control>
             </Form.Group>
-          {(formik2.touched.telephone && formik2.errors.telephone ) && ( <div className="error-message">{formik2.errors.telephone}</div> )}
+          {(formik.touched.telephone && formik.errors.telephone ) && ( <div className="error-message">{formik.errors.telephone}</div> )}
         </Form.Group>
         <Button disabled={ disabledButton } type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
       </Form>

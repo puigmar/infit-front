@@ -5,103 +5,109 @@ import { Form, Button } from 'react-bootstrap';
 
 function ClientSignupStep3(props) {
 
-  const checkButton = () => {
-    console.log(formik3.errors)
-    props.handleButton(formik3.errors)
-  }
+  const [disabledButton, setDisabledButton] = useState(false)
 
-  const showData = (values) => {
-    formik3.handleSubmit();
-  }
-
-  useEffect(() => {
-    if(!formik3.isValid){
-      props.setButtonDisabled(true)
-    } else {
-      props.setButtonDisabled(false)
-    }
-
-  }, [props.step])
-
-  const formik3 = useFormik({
+  // Formik
+  const formik = useFormik({
     initialValues: {
       trainningDays: [],
       availability: ''
     },
-    validateOnMount:  true,
     validationSchema: Yup.object().shape({
       trainningDays: Yup.array().required("Almenos tienes que escoger 1 día"),
-      availability: Yup.string().required('Tienes que escoger una franja horaria'),
+      //availability: Yup.string().required("Tienes que escoger una franja horaria"),
     }),
     onSubmit: values => {
-      console.log(formik3.values)
+      console.log('ENTRANDO EN onSUBMIT!')
+      const { trainningDays, availability } = values;
+
+      const test = JSON.parse(`${availability}`);
+      console.log(test)
+      
+      const stepData = {
+        client: {
+          ...props.dataClient.client,
+          wizard: {
+            ...props.dataClient.wizard,
+            trainningDays,
+          }
+        }
+      }
+      console.log('stepData: ', stepData)
+      //props.handleData(stepData)
     }
   });
 
-  const handleFieldClass = (name) => {
-    return ({
-      'error': formik3.touched[name] && formik3.errors[name],
-      'is-invalid': formik3.touched[name] && formik3.errors[name],
-      'is-valid': formik3.touched[name] && !formik3.errors[name],
-    })
+  const checkFormEmptyFields = () => {
+    props.setFormCompleted(true)
+    for(let field in formik.values){
+      if(formik.values[field] === ''){
+        props.setFormCompleted(false)
+      }
+    }
+    if(props.formCompleted === true){
+      setDisabledButton(false)
+    }
   }
+
+  useEffect(() => {
+    console.log('props.formCompleted: ', props.formCompleted)
+    checkFormEmptyFields()
+  }, [formik.values, props.step])
 
   return (
     <Fragment>
-      <Form onSubmit={formik3.handleSubmit} onBlur={checkButton}>
-        <Form.Group controlId="trainningDays">
-          <Form.Label>¿Que día quieres entrenar?</Form.Label>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check 
-              type="checkbox" 
-              label="Lunes" 
-              value="monday"
-              name="trainningDays"
-              onChange={formik3.handleChange}
-            />
-            <Form.Check 
-              type="checkbox" 
-              label="Martes" 
-              value="tuesday"
-              name="trainningDays"
-              onChange={formik3.handleChange}
-            />
-            <Form.Check 
-              type="checkbox" 
-              label="Miércoles" 
-              value="wednesday"
-              name="trainningDays"
-              onChange={formik3.handleChange}
-            />
-            <Form.Check 
-              type="checkbox" 
-              label="Jueves" 
-              value="thursday"
-              name="trainningDays"
-              onChange={formik3.handleChange}
-            />
-          </Form.Group>
-        </Form.Group>
+      <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
 
         <Form.Group controlId="availability">
           <Form.Label>¿Qué horario prefieres?</Form.Label>
           <Form.Group controlId="availability">
             <Form.Control 
               as="select" 
-              name="availability"
-              value={formik3.values.availability}
-              onChange={formik3.handleChange}
-              onBlur={formik3.handleBlur}
+              {...formik.getFieldProps('availability')}
             >
               <option value="Escoge una franja horaria"></option>
-              <option value="[9,13]">Mañanas, de 9h a 13h</option>
-              <option value="[14,20]">Tardes, de 14h a 20h</option>
-              <option vale="[21,23]">Noches de 21h a 23h</option>
+              {/* <option value={{min: 9,max: 13}}>Mañanas, de 9h a 13h</option>
+              <option value={{min: 14,max: 20}}>Tardes, de 14h a 20h</option>
+              <option vale={{min: 21,max: 23}}>Noches de 21h a 23h</option> */}
+              <option value="{min: 9,max: 13}">Mañanas, de 9h a 13h</option>
+              <option value="{min: 14,max: 20}">Tardes, de 14h a 20h</option>
+              <option vale="{min: 21,max: 23}">Noches de 21h a 23h</option>
             </Form.Control>
           </Form.Group>
         </Form.Group>
+
+        <Form.Group controlId="trainningDays">
+          <Form.Label>¿Que día quieres entrenar?</Form.Label>
+          <Form.Group controlId="formBasicCheckbox">
+            <Form.Check
+              {...formik.getFieldProps('trainningDays')}
+              type="checkbox" 
+              label="Lunes" 
+              value="monday"
+            />
+            <Form.Check 
+              {...formik.getFieldProps('trainningDays')}
+              type="checkbox" 
+              label="Martes" 
+              value="tuesday"
+            />
+            <Form.Check
+              {...formik.getFieldProps('trainningDays')}
+              type="checkbox" 
+              label="Miércoles" 
+              value="wednesday"
+            />
+            <Form.Check
+              {...formik.getFieldProps('trainningDays')}
+              type="checkbox" 
+              label="Jueves" 
+              value="thursday"
+            />
+          </Form.Group>
+        </Form.Group>
+        <Button  type="submit" variant="primary" size="lg" >Continuar</Button>
       </Form>
-      <Button disabled={props.buttonDisabled} type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
     </Fragment>
   )
 }
