@@ -2,6 +2,8 @@ import AxiosCredentials from '../axios/credentials';
 
 export async function signup({ username, password, isCoach }) {
   try {
+    console.log('este es mi signup: ');
+    console.log(`${isCoach ? 'coach' : 'client'}/auth/signup`);
     await AxiosCredentials.post(`${isCoach ? 'coach' : 'client'}/auth/signup`, {
       username,
       password,
@@ -12,6 +14,8 @@ export async function signup({ username, password, isCoach }) {
 }
 
 export async function login({ username, password, isCoach }) {
+  console.log('este es mi login: ');
+  console.log(`${isCoach ? 'coach' : 'client'}/auth/login`);
   try {
     return await AxiosCredentials.post(
       `${isCoach ? 'coach' : 'client'}/auth/login`,
@@ -26,14 +30,14 @@ export async function login({ username, password, isCoach }) {
 }
 
 const errorHandler = (err) => {
-  throw err
-}
+  throw err;
+};
 
 export async function handleAvatarUpload({ formData, isCoach }) {
-
   try {
     return await AxiosCredentials.post(
-      `${isCoach ? 'coach' : 'client'}/auth/uploadPhotoAvatar`, formData
+      `${isCoach ? 'coach' : 'client'}/auth/uploadPhotoAvatar`,
+      formData
     ).then(({ data }) => data);
   } catch (error) {
     console.log(errorHandler(error));
@@ -42,9 +46,9 @@ export async function handleAvatarUpload({ formData, isCoach }) {
 
 export async function checkExistUSer(username) {
   try {
-    return await AxiosCredentials.post(
-      '/generic/auth/checkExistUser',{ username }
-    ).then(({ data }) => data);
+    return await AxiosCredentials.post('/generic/auth/checkExistUser', {
+      username,
+    }).then(({ data }) => data);
   } catch (error) {
     console.log(error);
   }
@@ -53,7 +57,9 @@ export async function checkExistUSer(username) {
 export async function logout(isCoach) {
   try {
     return await AxiosCredentials.post(
-      `${isCoach ? 'coach' : 'client'}/auth/logout`,{}).then(({ data }) => data);
+      `${isCoach ? 'coach' : 'client'}/auth/logout`,
+      {}
+    ).then(({ data }) => data);
   } catch (error) {
     console.log(error);
   }

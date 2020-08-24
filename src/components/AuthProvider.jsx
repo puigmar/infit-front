@@ -22,8 +22,8 @@ export function AuthProvider(props) {
       });
   };
 
-  const loginUser = (username, password) => {
-    login({ username, password })
+  const loginUser = (username, password, isCoach) => {
+    login({ username, password, isCoach})
       .then((user) => {
         console.log('withAuth.login => ', user);
         setisLoggedin(true);

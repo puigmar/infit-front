@@ -7,14 +7,9 @@ const LoginCoach = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleFormSubmit = async (event) => {
-    try {
-      event.preventDefault();
-      console.log('LoginUser -> form submit', { username, password });
-      await loginUser({username, password, isCoach: true});
-    } catch (error) {
-      console.log(error)
-    }
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    loginUser({ username, password, isCoach: true });
   };
 
   const handleChange = (event) => {
@@ -23,16 +18,16 @@ const LoginCoach = () => {
       .split('')
       .map((letter, i) => (i === 0 ? letter.toUpperCase() : letter))
       .join('');
-      if(('set' + nameConversion) === 'setUsername'){
-        setUsername(value);
-      } else {
-        setPassword(value);
-      };
+    if ('set' + nameConversion === 'setUsername') {
+      setUsername(value);
+    } else {
+      setPassword(value);
+    }
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Login coach</h1>
 
       <form onSubmit={handleFormSubmit}>
         <label>Username:</label>
