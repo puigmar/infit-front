@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import WithAuth from '../components/AuthProvider';
 
 const LoginCoach = () => {
-  const { loginUser, user } = WithAuth();
+  const { loginUser } = WithAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

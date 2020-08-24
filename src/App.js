@@ -12,6 +12,7 @@ import LoginCoach from './pages/LoginCoach.jsx';
 import AnonRoute from './components/AnonRoute.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import DashboardClient from './pages/DashboardClient.jsx';
+import DashboardCoach from './pages/DashboardCoach.jsx';
 import Header from './components/Header/Header.jsx';
 import { Container } from 'react-bootstrap';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './FormAvatar.css'
-import { handleAvatarUpload } from '../../services/auth-service';
+import { handleAvatarUpload } from '../../services/authenticate/auth-client.service';
 
 const FormAvatar = (props) => {
 

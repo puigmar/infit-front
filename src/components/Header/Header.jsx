@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import {Navbar, Nav, NavDropdown, Container, Col, Row} from 'react-bootstrap';
+import React from 'react'
+import {Navbar, Nav, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import WithAuth from '../AuthProvider'
 

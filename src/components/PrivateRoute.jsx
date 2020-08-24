@@ -6,7 +6,7 @@ import WithAuth from './AuthProvider'
 function PrivateRoute({ component: Component, props }) {
   // devuelve un componente <Route /> donde su prop render recibe las props, y si está logueado, devuelve el componente con sus props (history, etc.), en caso contrario, el componente <Redirect /> redirige a /login
   const { isLoggedin } = WithAuth();
-  console.log(props)
+  console.log('props de PrivateRoute: ',props)
   return (
     <Route
       render={(props) =>
