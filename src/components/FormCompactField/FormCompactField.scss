@@ -26,7 +26,8 @@
     height: 31px;
   }
 
-  &.isFilled{
+  &.isFilled,
+  &.iFocus{
     .form-label{
       top: 2px;
       font-size: 0.75rem;

@@ -10927,6 +10927,10 @@ h2 {
   margin-top: 20px;
 }
 
+.signup-page .signupBtn {
+  text-align: center;
+}
+
 .btn {
   width: 100%;
   max-width: 375px;

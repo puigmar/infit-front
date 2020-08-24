@@ -35,7 +35,7 @@
   height: 31px;
 }
 
-.field-compact.isFilled .form-label {
+.field-compact.isFilled .form-label, .field-compact.iFocus .form-label {
   top: 2px;
   font-size: 0.75rem;
 }

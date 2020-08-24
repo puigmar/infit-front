@@ -20,8 +20,12 @@ const FormAvatar = (props) => {
     uploadData.append("avatarUrl", inputFile.files[0]);
     const uploadAvatar = await handleAvatarUpload({formData: uploadData, isCoach: false});
     setIsLoading(false)
-
     setAvatarWrapper(uploadAvatar.avatar_url)
+
+    if(props.formikName.errors.avatarUrl){
+      delete props.formikName.errors.avatarUrl;
+      props.setButtonDisabled(false)
+    }
   }
 
   const handleSubmit = (e) => {
@@ -30,7 +34,7 @@ const FormAvatar = (props) => {
 
   return (
     <div className={`form-avatar-upload ${isLoading ? 'isLoading' : ''}`} onClick={(e) => handleFileEvent(e)} style={{backgroundImage:`url("${avatarWrapper}")`}}>
-        <input type="file" name="uploadAvatar" onChange={(e) => handleUploadAvatar(e)} value={props.values.avatarUrl}/>
+        <input type="file" name="avatarUrl" onChange={(e) => handleUploadAvatar(e)} value={props.formikName.values.avatarUrl}/>
     </div>
   )
 }
