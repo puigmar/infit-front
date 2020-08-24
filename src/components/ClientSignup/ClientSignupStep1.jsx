@@ -1,10 +1,12 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import FormCompactField from '../FormCompactField/FormCompactField'
 
 function ClientSignupStep1(props) {
+  
+  const [disabledButton, setDisabledButton] = useState(true)
 
   const checkButton = () => {
     props.handleButton(formik.errors)
@@ -12,7 +14,9 @@ function ClientSignupStep1(props) {
 
   useEffect(() => {
     if(!formik.isValid){
-      props.setButtonDisabled(true)
+      setDisabledButton(true)
+    } else {
+      setDisabledButton(false)
     }
   }, [props.step])
 
@@ -40,7 +44,8 @@ function ClientSignupStep1(props) {
       )
     }),
     onSubmit: values => {
-      // This will run when the form is submitted
+      console.log('valores: ', values)
+      props.handleData(formik.values)
     }
   });
 
@@ -95,7 +100,9 @@ function ClientSignupStep1(props) {
           {(formik.touched.repeatPassword && formik.errors.repeatPassword ) && ( <div className="error-message">{formik.errors.repeatPassword}</div> )}
         </Form.Group>
       </div>
+      <Button disabled={disabledButton} type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
       </Form>
+      
     </Fragment>
   )
 }

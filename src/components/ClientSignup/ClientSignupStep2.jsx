@@ -1,39 +1,27 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import FormCompactField from '../FormCompactField/FormCompactField'
 import FormAvatar from '../../components/FormAvatar/FormAvatar';
 
-
 function ClientSignupStep2(props) {
 
-  const checkButton = () => {
-    console.log(formik2.errors)
-    props.handleButton(formik2.errors)
-  }
-
-  useEffect(() => {
-    if(!formik2.isValid){
-      props.setButtonDisabled(true)
-    } else {
-      props.setButtonDisabled(false)
-    }
-  }, [props.step])
+  const [disabledButton, setDisabledButton] = useState(true)
+  const [formCompleted, setFormCompleted] = useState(false)
+  const [avatarIsPending, setAvatarIsPending] = useState(true)
+  const [avatarUrl, setAvatarUrl] = useState('')
 
   const formik2 = useFormik({
     initialValues: {
-      avatarUrl: '',
       nameUser: '',
       surname: '',
-      card: '',
       telephone: '',
       age: '',
       height: '',
       weight: '',
       sex: '',
     },
-    validateOnMount:  true,
     validationSchema: Yup.object().shape({
       nameUser: Yup.string()
       .required("*Debes escribir tu nombre"),
@@ -45,15 +33,64 @@ function ClientSignupStep2(props) {
       .required("*Debes escribir tu altura"),
       age: Yup.number()
       .required("*Debes escribir tu edad"),
-      avatarUrl: Yup.mixed()
-      .required("*Debes subir una foto")
+      sex: Yup.string()
+      .required("Tienes que escoger un sexo"),
+      telephone: Yup.number()
+      .required("Tienes que facilitarnos un teléfono de contacto"),
     }),
     onSubmit: values => {
-      // This will run when the form is submitted
+      const { age, height, sex, ...rest } = values;
+      const stepData = {
+        avatarUrl,
+        biometric: {
+          age,
+          height,
+          sex
+        },
+        ...rest
+      }
+      console.log('stepData: ', stepData)
+      props.handleData(stepData)
     }
   });
 
+  const handleAvatarFile = (file) => {
+    console.log('file: ', file)
+    if(file !== ''){
+      setAvatarIsPending(false)
+    }
+    console.log('Estoy en la foto')
+    console.log('avatarIsPending: ', avatarIsPending)
+    console.log('formCompleted: ', formCompleted)
+
+    if(avatarIsPending === false && formCompleted === true){
+      setDisabledButton(false)
+    }
+
+    console.log('disabledButton : ', disabledButton)
+  }
+
+  const checkFormEmptyFields = () => {
+
+    setFormCompleted(true)
+    for(let field in formik2.values){
+      if(formik2.values[field] === ''){
+        setFormCompleted(false)
+      }
+    }
+    if(avatarIsPending === false && formCompleted === true){
+      setDisabledButton(false)
+    }
+    
+  }
+  
+
+  useEffect(() => {
+    checkFormEmptyFields()
+  }, [formik2.values, props.step])
+
   const handleFieldClass = (name) => {
+    console.log(formik2.errors)
     return ({
       'error': formik2.touched[name] && formik2.errors[name],
       'is-invalid': formik2.touched[name] && formik2.errors[name],
@@ -63,8 +100,12 @@ function ClientSignupStep2(props) {
 
   return (
     <Fragment>
-      <Form onSubmit={formik2.handleSubmit} onBlur={checkButton}>
-      <FormAvatar setButtonDisabled={props.setButtonDisabled} formikName={formik2} />
+      <Form onSubmit={formik2.handleSubmit}>
+
+        <FormAvatar handleAvatarFile={handleAvatarFile} fieldName="avatarUrl" setAvatarUrl={setAvatarUrl}/>
+        {avatarIsPending ? (<p>Sube una imagen de perfil</p>) : ''}
+        {(formik2.touched.avatarUrl && formik2.errors.avatarUrl ) && ( <div className="error-message">{formik2.errors.avatarUrl}</div> )}
+
         <Form.Group controlId="nameUser">
           <FormCompactField>
             <Form.Label>Nombre</Form.Label>
@@ -138,6 +179,41 @@ function ClientSignupStep2(props) {
           </FormCompactField>
           {(formik2.touched.age && formik2.errors.age ) && ( <div className="error-message">{formik2.errors.age}</div> )}
         </Form.Group>
+
+        <Form.Group controlId="telephone">
+          <FormCompactField>
+            <Form.Label>Teléfono</Form.Label>
+            <Form.Control 
+              type="number"
+              pattern="\d*" 
+              name="age" 
+              {...formik2.getFieldProps('telephone')}
+              value={formik2.values.telephone}
+              className={handleFieldClass('telephone')}
+            />
+          </FormCompactField>
+          {(formik2.touched.telephone && formik2.errors.telephone ) && ( <div className="error-message">{formik2.errors.telephone}</div> )}
+        </Form.Group>
+
+        <Form.Group controlId="sex">
+            <Form.Label>Sexo</Form.Label>
+            <Form.Group controlId="sex">
+              <Form.Control 
+                as="select" 
+                name="sex"
+                value={formik2.values.sex}
+                onChange={formik2.handleChange}
+                onBlur={formik2.handleBlur}
+              >
+                <option value="Escoge un sexo"></option>
+                <option value="male">Hombre</option>
+                <option value="female">Mujer</option>
+                <option vale="other">Other</option>
+              </Form.Control>
+            </Form.Group>
+          {(formik2.touched.telephone && formik2.errors.telephone ) && ( <div className="error-message">{formik2.errors.telephone}</div> )}
+        </Form.Group>
+        <Button disabled={ disabledButton } type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
       </Form>
     </Fragment>
   )

@@ -1,8 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Form } from 'react-bootstrap';
-import FormCompactField from '../FormCompactField/FormCompactField'
+import { Form, Button } from 'react-bootstrap';
 
 function ClientSignupStep3(props) {
 
@@ -11,26 +10,28 @@ function ClientSignupStep3(props) {
     props.handleButton(formik3.errors)
   }
 
+  const showData = (values) => {
+    formik3.handleSubmit();
+  }
+
   useEffect(() => {
     if(!formik3.isValid){
       props.setButtonDisabled(true)
     } else {
       props.setButtonDisabled(false)
     }
+
   }, [props.step])
 
   const formik3 = useFormik({
     initialValues: {
       trainningDays: [],
-      availability: []
+      availability: ''
     },
     validateOnMount:  true,
     validationSchema: Yup.object().shape({
-      trainningDays: Yup.array().required("At least one checkbox is required"),
-      availability: Yup
-      .string()
-      .oneOf([[8,13],[14,20],[21,23]])
-      .required('Please indicate your communications preference')
+      trainningDays: Yup.array().required("Almenos tienes que escoger 1 día"),
+      availability: Yup.string().required('Tienes que escoger una franja horaria'),
     }),
     onSubmit: values => {
       console.log(formik3.values)
@@ -54,46 +55,53 @@ function ClientSignupStep3(props) {
             <Form.Check 
               type="checkbox" 
               label="Lunes" 
-              value={formik3.values.monday}
-              name={"trainningDays"}
-              className={handleFieldClass('trainningDays')}
+              value="monday"
+              name="trainningDays"
+              onChange={formik3.handleChange}
             />
             <Form.Check 
               type="checkbox" 
               label="Martes" 
-              value={formik3.values.tuesday}
-              name={"trainningDays"}
-              className={handleFieldClass('trainningDays')}
+              value="tuesday"
+              name="trainningDays"
+              onChange={formik3.handleChange}
             />
             <Form.Check 
               type="checkbox" 
               label="Miércoles" 
-              value={formik3.values.wednesday}
-              name={"trainningDays"}
-              className={handleFieldClass('trainningDays')}
+              value="wednesday"
+              name="trainningDays"
+              onChange={formik3.handleChange}
             />
             <Form.Check 
               type="checkbox" 
               label="Jueves" 
-              value={formik3.values.thursday}
-              name={"trainningDays"}
-              className={handleFieldClass('trainningDays')}
+              value="thursday"
+              name="trainningDays"
+              onChange={formik3.handleChange}
             />
           </Form.Group>
         </Form.Group>
 
         <Form.Group controlId="availability">
           <Form.Label>¿Qué horario prefieres?</Form.Label>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Control as="select" onChange={formik3.handleChange} name="availability">
-              <option value="" label="Selecciona un rango horario" />
-              <option value={[8,13]}>Mañana, entre 8h y 13h</option>
-              <option value={[14,20]}>Tarde, entre las 14h y las 20h</option>
-              <option value={[21,23]}>Noche, entre las 21 y las 23h</option>
+          <Form.Group controlId="availability">
+            <Form.Control 
+              as="select" 
+              name="availability"
+              value={formik3.values.availability}
+              onChange={formik3.handleChange}
+              onBlur={formik3.handleBlur}
+            >
+              <option value="Escoge una franja horaria"></option>
+              <option value="[9,13]">Mañanas, de 9h a 13h</option>
+              <option value="[14,20]">Tardes, de 14h a 20h</option>
+              <option vale="[21,23]">Noches de 21h a 23h</option>
             </Form.Control>
           </Form.Group>
         </Form.Group>
       </Form>
+      <Button disabled={props.buttonDisabled} type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
     </Fragment>
   )
 }

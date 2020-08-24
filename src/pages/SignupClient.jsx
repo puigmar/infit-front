@@ -22,9 +22,13 @@ const SignupClient = (props) => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [title, setTitle] = useState('Registro')
 
+  const [dataClient, setDataClient] = useState({})
+
   const [controls, setControls] = useState(false)
   const [touch, setTouch] = useState(false)
   const [interval, setInterval] = useState(null)
+
+  const [data, setData] = useState({})
 
   const nextStep = () => {
     if(checkStep(step)) setStep(step+1)
@@ -115,6 +119,19 @@ const SignupClient = (props) => {
   //   }
   // }
 
+  const handleData = async (data) => {
+    const newData = {
+      ...dataClient,
+      ...data
+    }
+    setDataClient(newData);
+  }
+
+  useEffect(() => {
+    console.log('DataClient: ', dataClient)
+  }, [dataClient])
+
+
   const handleButton = (errors) => {
     (Object.keys(errors).length > 0) ? setButtonDisabled(true) : setButtonDisabled(false)
   }
@@ -125,17 +142,16 @@ const SignupClient = (props) => {
       <Carousel controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
         {/* <Carousel.Item>
           <h2>1. DATOS DE TU CUENTA</h2>
-          <ClientSignupStep1 setButtonDisabled={setButtonDisabled} step={step} handleButton={handleButton} />
-        </Carousel.Item>
-        <Carousel.Item>
-          <h2>2. DATOS DE TU PERFIL</h2>
-          <ClientSignupStep2 setButtonDisabled={setButtonDisabled} step={step} handleButton={handleButton} />
+          <ClientSignupStep1 nextStep={nextStep} handleData={handleData} setButtonDisabled={setButtonDisabled} buttonDisabled={buttonDisabled} step={step} handleButton={handleButton} />
         </Carousel.Item> */}
         <Carousel.Item>
-          <h2>3. DISPONIBILIDAD</h2>
-          <ClientSignupStep3 setButtonDisabled={setButtonDisabled} step={step} handleButton={handleButton} />
+          <h2>2. DATOS DE TU PERFIL</h2>
+          <ClientSignupStep2 nextStep={nextStep} handleData={handleData} setButtonDisabled={setButtonDisabled} buttonDisabled={buttonDisabled} step={step} handleButton={handleButton}/>
         </Carousel.Item>
-        {/*
+        <Carousel.Item>
+          <h2>3. DISPONIBILIDAD</h2>
+          <ClientSignupStep3 nextStep={nextStep} handleData={handleData} setButtonDisabled={setButtonDisabled} buttonDisabled={buttonDisabled} step={step} handleButton={handleButton} />
+        </Carousel.Item>
           <Carousel.Item>
             <h2>3. DISPONIBILIDAD</h2>
             <Form.Check
@@ -150,10 +166,9 @@ const SignupClient = (props) => {
               custom
               name="trainningDays"
             />
-          </Carousel.Item>*/}
+          </Carousel.Item>
         </Carousel>
         <section className="signupBtn">
-          <Button disabled={buttonDisabled} variant="primary" size="lg" onClick={() => nextStep()}>Continuar</Button>
           <p className="mt-3">Already have account? <Link to={'/login'}> Login</Link></p>
         </section>
     </div>
