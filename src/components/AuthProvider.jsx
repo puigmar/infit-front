@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { signup, login, logout } from '../services/authenticate/auth-client.service'; // Importamos funciones para llamadas axios a la API
+import {
+  signup,
+  login,
+  logout,
+} from '../services/authenticate/auth-client.service'; // Importamos funciones para llamadas axios a la API
 
 const UserContext = React.createContext();
 
@@ -7,7 +11,7 @@ export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoggedin, setisLoggedin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   const signupUser = (user) => {
     console.log(user);
     signup({ ...user })
@@ -22,12 +26,11 @@ export function AuthProvider(props) {
       });
   };
 
-  const loginUser = (username, password, isCoach) => {
-    login({ username, password, isCoach})
+  const loginUser = ({ username, password, isCoach }) => {
+    login({ username, password, isCoach })
       .then((user) => {
-        console.log('withAuth.login => ', user);
-        setisLoggedin(true);
         setUser(user);
+        setisLoggedin(true);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -54,7 +57,7 @@ export function AuthProvider(props) {
     user,
     isLoggedin,
     isLoading,
-    setIsLoading
+    setIsLoading,
   };
 
   return <UserContext.Provider value={value} {...props} />;

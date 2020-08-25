@@ -9,7 +9,7 @@ const LoginCoach = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    loginUser({ username, password, isCoach: true });
+    loginUser({ username, password, isCoach:true });
   };
 
   const handleChange = (event) => {

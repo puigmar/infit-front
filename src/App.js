@@ -14,6 +14,7 @@ import PrivateRoute from './components/PrivateRoute.jsx';
 import DashboardClient from './pages/DashboardClient.jsx';
 import DashboardCoach from './pages/DashboardCoach.jsx';
 import Header from './components/Header/Header.jsx';
+import Home from './pages/Home.jsx';
 import { Container } from 'react-bootstrap';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Header />
       <Container>
         <Switch>
+          <AnonRoute exact path='/' component={Home} />
           <AnonRoute exact path='/client/auth/signup' component={SignupClient} />
           <AnonRoute exact path='/client/auth/login' component={LoginClient} />
           <AnonRoute exact path='/coach/auth/signup' component={SignupCoach} />
@@ -30,6 +32,11 @@ function App() {
             exact
             path='/client/auth/my-account/dashboard'
             component={DashboardClient}
+          />
+          <PrivateRoute
+            exact
+            path='/coach/auth/my-account/dashboard'
+            component={DashboardCoach}
           />
         </Switch>
       </Container>

@@ -69,7 +69,6 @@ const Header = () => {
     }
 
     return menuList.map( (listItem, index) => {
-      console.log(listItem.link)
       return (
         <LinkContainer key={index} to={listItem.link}>
           <Nav.Link onSelect={listItem.action}>{listItem.name}</Nav.Link>
