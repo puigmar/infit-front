@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react'
-import {Navbar, Nav, NavDropdown, Container, Col, Row} from 'react-bootstrap';
+import React from 'react'
+import {Navbar, Nav, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import WithAuth from '../../services/AuthProvider'
+import WithAuth from '../AuthProvider'
 
 
 const Header = () => {
@@ -69,7 +69,6 @@ const Header = () => {
     }
 
     return menuList.map( (listItem, index) => {
-      console.log(listItem.link)
       return (
         <LinkContainer key={index} to={listItem.link}>
           <Nav.Link onSelect={listItem.action}>{listItem.name}</Nav.Link>

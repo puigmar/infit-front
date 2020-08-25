@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { signup, login, logout } from './auth-service'; // Importamos funciones para llamadas axios a la API
+import {
+  signup,
+  login,
+  logout,
+} from '../services/authenticate/auth-client.service'; // Importamos funciones para llamadas axios a la API
+
+import { getUser } from '../services/user/user.service';
 
 const UserContext = React.createContext();
 
@@ -7,28 +13,28 @@ export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoggedin, setisLoggedin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   const signupUser = (user) => {
     console.log(user);
     signup({ ...user })
       .then((user) => {
         console.log('user signup', user);
+        getUser(user)
         setUser(user);
         setisLoggedin(true);
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch(({ response }) => {
         return { message: response.data.statusMessage };
       });
   };
 
-  const loginUser = (username, password) => {
-    login({ username, password })
+  const loginUser = ({ username, password, isCoach }) => {
+    login({ username, password, isCoach })
       .then((user) => {
-        console.log('withAuth.login => ', user);
-        setisLoggedin(true);
         setUser(user);
-        setIsLoading(false)
+        setisLoggedin(true);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -37,13 +43,14 @@ export function AuthProvider(props) {
   };
 
   const logoutUser = () => {
-    logout(user.isCoach)
-      .then(() => {
-        setisLoggedin(false);
-        setUser(null);
-        setIsLoading(true);
-      })
-      .catch((err) => console.log(err));
+    user &&
+      logout(user.isCoach)
+        .then(() => {
+          setisLoggedin(false);
+          setUser(null);
+          setIsLoading(true);
+        })
+        .catch((err) => console.log(err));
   };
 
   const value = {
@@ -53,7 +60,7 @@ export function AuthProvider(props) {
     user,
     isLoggedin,
     isLoading,
-    setIsLoading
+    setIsLoading,
   };
 
   return <UserContext.Provider value={value} {...props} />;

@@ -1,4 +1,4 @@
-import AxiosCredentials from './axios/credentials';
+import AxiosCredentials from '../axios/credentials';
 
 export async function signup(user, client) {
   const { username, password, isCoach } = user;
@@ -13,17 +13,14 @@ export async function signup(user, client) {
   }
 }
 
-export async function login({ username, password, isCoach }, {...client}) {
+export async function login({ username, password, isCoach }) {
+  const url = `${isCoach ? '/coach' : '/client'}/auth/login`;
   try {
-    return await AxiosCredentials.post(
-      `${isCoach ? 'coach' : 'client'}/auth/login`,
-      {
-        username,
-        password,
-      }
-    ).then(data => {
-      console.log(data)
-      return data
+    return await AxiosCredentials.post(`${url}`, {
+      username,
+      password,
+    }).then(({ data }) => {
+      return data;
     });
   } catch (error) {
     console.log(error);
@@ -31,14 +28,14 @@ export async function login({ username, password, isCoach }, {...client}) {
 }
 
 const errorHandler = (err) => {
-  throw err
-}
+  throw err;
+};
 
 export async function handleAvatarUpload({ formData, isCoach }) {
-
   try {
     return await AxiosCredentials.post(
-      `${isCoach ? 'coach' : 'client'}/auth/uploadPhotoAvatar`, formData
+      `${isCoach ? '/coach' : '/client'}/auth/uploadPhotoAvatar`,
+      formData
     ).then(({ data }) => data);
   } catch (error) {
     console.log(errorHandler(error));
@@ -47,9 +44,9 @@ export async function handleAvatarUpload({ formData, isCoach }) {
 
 export async function checkExistUSer(username) {
   try {
-    return await AxiosCredentials.post(
-      '/generic/auth/checkExistUser',{ username }
-    ).then(({ data }) => data);
+    return await AxiosCredentials.post('/generic/auth/checkExistUser', {
+      username,
+    }).then(({ data }) => data);
   } catch (error) {
     console.log(error);
   }
@@ -58,7 +55,9 @@ export async function checkExistUSer(username) {
 export async function logout(isCoach) {
   try {
     return await AxiosCredentials.post(
-      `${isCoach ? 'coach' : 'client'}/auth/logout`,{}).then(({ data }) => data);
+      `${isCoach ? '/coach' : '/client'}/auth/logout`,
+      {}
+    ).then(({ data }) => data);
   } catch (error) {
     console.log(error);
   }

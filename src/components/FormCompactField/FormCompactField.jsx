@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './FormCompactField.css';
 
 const FormCompactField = (props) => {  

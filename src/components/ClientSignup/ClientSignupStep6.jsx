@@ -1,17 +1,15 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Button, Accordion, Card, Row, Col, render, Modal } from 'react-bootstrap';
+import { Form, Button, Accordion, Card, Row, Col, Modal } from 'react-bootstrap';
 import { PayPalButton } from "react-paypal-button-v2";
 import FormCompactField from '../FormCompactField/FormCompactField' 
 import {Link} from 'react-router-dom';
 
 function ClientSignupStep6(props) {
 
-  const [disabledButton, setDisabledButton] = useState(true)
-  const [card, cardPack] = useState({})
-  const [formCompleted, setFormCompleted] = useState(false)
-  const [validPayment, setValidPayment] = useState(false)
+  const [disabledButton, setDisabledButton] = useState(true);
+  const [formCompleted, setFormCompleted] = useState(false);
   const [show, setShow] = useState(false);
   const [paymentIsLoading, setPaymentIsLoading] = useState(false);
 
@@ -166,9 +164,9 @@ function ClientSignupStep6(props) {
                 </Col>
               </Row>
             
-              <Button id="paymentButton" disabled={ disabledButton} type="submit" variant="primary" size="lg" className={(paymentIsLoading == true ? 'isLoading' : '')}>
+              <Button id="paymentButton" disabled={ disabledButton} type="submit" variant="primary" size="lg" className={(paymentIsLoading && 'isLoading')}>
                 Pagar
-                <div className="spinner"><img src="/img/spinner.svg" /></div>
+                <div className="spinner"><img src="/img/spinner.svg" alt="spinner"/></div>
               </Button>
             
             </Form>

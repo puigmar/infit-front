@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
-import WithAuth from '../services/AuthProvider';
+import WithAuth from '../components/AuthProvider';
 
-const Login = () => {
-  const { loginUser, user } = WithAuth();
+const LoginCoach = () => {
+  const { loginUser } = WithAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleFormSubmit = async (event) => {
-    try {
-      event.preventDefault();
-      console.log('LoginUser -> form submit', { username, password });
-      const isUser = await loginUser(username, password);
-      if(isUser){
-        
-      }
-    } catch (error) {}
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    loginUser({ username, password, isCoach:true });
   };
 
   const handleChange = (event) => {
@@ -24,12 +18,16 @@ const Login = () => {
       .split('')
       .map((letter, i) => (i === 0 ? letter.toUpperCase() : letter))
       .join('');
-    eval('set' + nameConversion)(value);
+    if ('set' + nameConversion === 'setUsername') {
+      setUsername(value);
+    } else {
+      setPassword(value);
+    }
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Login coach</h1>
 
       <form onSubmit={handleFormSubmit}>
         <label>Username:</label>
@@ -54,4 +52,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginCoach;
