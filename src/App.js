@@ -12,6 +12,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import ClientDashboard from "./pages/DashboardClient.jsx";
 import Header from "./components/Header/Header.jsx";
 import {Container} from 'react-bootstrap'
+import ArrangeMeetingPage from "./pages/ArrangeMeetingPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <AnonRoute exact path='/client/auth/signup' component={ SignupClient } />
             <AnonRoute exact path='/client/auth/login' component={ Login } />
             <PrivateRoute exact path='/client/auth/my-account/dashboard' component={ ClientDashboard } />
+            <PrivateRoute exact path='/client/auth/arrange-meeting' component={ ArrangeMeetingPage } />
           </Switch>
         </Container>
     </AuthProvider>

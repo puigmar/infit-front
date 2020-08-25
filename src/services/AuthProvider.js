@@ -22,7 +22,7 @@ export function AuthProvider(props) {
       });
   };
 
-  const loginUser = (username, password) => {
+  const loginUser = ({ username, password}) => {
     login({ username, password })
       .then((user) => {
         console.log('withAuth.login => ', user);

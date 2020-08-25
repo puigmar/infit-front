@@ -1,25 +1,17 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Button, Accordion, Card, Row, Col, render, Modal } from 'react-bootstrap';
-import { PayPalButton } from "react-paypal-button-v2";
 import FormCompactField from '../FormCompactField/FormCompactField' 
-import {Link} from 'react-router-dom';
+import { Form, Button, Accordion, Card, Row, Col } from 'react-bootstrap';
+import { PayPalButton } from "react-paypal-button-v2";
 
 function ClientSignupStep6(props) {
 
   const [disabledButton, setDisabledButton] = useState(true)
-  const [card, cardPack] = useState({})
   const [formCompleted, setFormCompleted] = useState(false)
-  const [validPayment, setValidPayment] = useState(false)
-  const [show, setShow] = useState(false);
   const [paymentIsLoading, setPaymentIsLoading] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   // Formik
-
   const formik = useFormik({
     initialValues: {
       owner: '',
@@ -72,12 +64,11 @@ function ClientSignupStep6(props) {
     checkFormEmptyFields()
   }, [formik.values])
 
+  // paypal method
   const paymentHandler = async (details, data) => {
-
     if(details.status === 'COMPLETED' && data.orderID){
-      handleShow();
+      props.setFunnelDone(true);
     }
-
   }
 
   const handleFieldClass = (name) => {
@@ -176,19 +167,6 @@ function ClientSignupStep6(props) {
           </Accordion.Collapse>
         </Card>
       </Accordion>
-
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Body>
-          <p>Tu pago de {props.totalAmount} se ha realizado correctamente.</p>
-          <Link to="/"><Button variant="primary">Quiero ir a mi centa</Button></Link>
-          <Link to="/"><Button variant="secondary">Quiero pedir una cita</Button></Link>
-        </Modal.Body>
-      </Modal>
 
     </Fragment>
   )

@@ -7,13 +7,15 @@ export async function signup(user, client) {
     await AxiosCredentials.post(`${isCoach ? 'coach' : 'client'}/auth/signup`, {
       username,
       password,
-    }).then(({ data }) => data);
-  } catch (error) {
+      client
+    }).then(({data}) => data)
+  }
+  catch (error) {
     console.log(error);
   }
 }
 
-export async function login({ username, password, isCoach }, {...client}) {
+export async function login({ username, password, isCoach }) {
   try {
     return await AxiosCredentials.post(
       `${isCoach ? 'coach' : 'client'}/auth/login`,

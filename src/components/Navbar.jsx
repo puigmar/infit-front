@@ -5,6 +5,10 @@ import WithAuth from '../services/AuthProvider';
 const Navbar = () =>{
   const { user, logoutUser, isLoggedin } = WithAuth();
 
+  console.log('user: ', user)
+  console.log('logoutUser: ', logoutUser)
+  console.log('isLoggedin: ', isLoggedin)
+
   return (
       <nav className='navbar'>
         <Link to={"/"} id='home-btn'>

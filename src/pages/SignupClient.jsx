@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import WithAuth from '../services/AuthProvider';
-import { Form, Carousel, Button, Col, Row, FormCheck, CarouselItem } from 'react-bootstrap';
+import { Carousel, Button, Row, Col, Modal } from 'react-bootstrap';
 import { checkExistUSer } from '../services/auth-service';
 import SubHeader from '../components/SubHeader/SubHeader';
 import ClientSignupStep1 from '../components/ClientSignup/ClientSignupStep1'
@@ -13,12 +13,7 @@ import ClientSignupStep6 from '../components/ClientSignup/ClientSignupStep6';
 
 import { signup as signupService } from '../services/auth-service'
 
-
 const SignupClient = (props) => {
-
-  let history = useHistory();
-
-  const totalSteps = 7;
 
   const { signup } = WithAuth();
   const [step, setStep] = useState(0);
@@ -28,6 +23,8 @@ const SignupClient = (props) => {
   const [clientName, setClientName] = useState('')
   const [totalAmount, setTotalAmount] = useState(0)
   const [funnelDone, setFunnelDone] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [show, setShow] = useState(false);
 
   // Form Data
   const [dataClient, setDataClient] = useState({
@@ -73,6 +70,11 @@ const SignupClient = (props) => {
   const [touch, setTouch] = useState(false)
   const [interval, setInterval] = useState(null)
   const [activeIndex, setActiveIndex] = useState(step)
+
+  let history = useHistory();
+  const totalSteps = 7;
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const nextStep = () => {
     if(checkStep(step)) setStep(step+1)
@@ -121,7 +123,7 @@ const SignupClient = (props) => {
 
   const fakeData = {
     user: {
-      username: 'ferran@ferranpuig.com',
+      username: 'ferran10@ferranpuig.com',
       password: '123456',
       isCoach: false
     },
@@ -161,54 +163,72 @@ const SignupClient = (props) => {
     }
   }
 
-  const registerDBClient = () => { //dataClient
-    console.log('entrando en registerDBCLient')
-    const data = fakeData;
+  const registerDBClient = async () => { 
+    const data = fakeData; //dataClient
     const {client, user} = data;
-    console.log(data)
-    const registerUSer = signupService(user, client)
-    console.log(registerUSer)
+    const registerUser = signupService(user, client);
+
+    if(registerUser) {
+      console.log('se ha hecho un usuario')
+      handleShow();
+    }
   }
 
   useEffect(() => {
-    registerDBClient()
+    if(funnelDone){
+      registerDBClient()
+    }
   }, [funnelDone])
 
   return (
-    <div className="signup-page">
-      <SubHeader title={title} history={history} action={backLink} />
-      <Carousel className={(step > 3 && 'without-dots')} controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
-        
-        {/* <Carousel.Item>
-          <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step}/>
-        </Carousel.Item>
-
-        <Carousel.Item>
-          <ClientSignupStep2 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step}/>
-        </Carousel.Item>
-
-        <Carousel.Item>
-          <ClientSignupStep3 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
-        </Carousel.Item> 
-
-          <Carousel.Item>
-            <ClientSignupStep4 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
-          </Carousel.Item>
-
-          <Carousel.Item>
-            <ClientSignupStep5 handleTotalAmount={setTotalAmount} name={clientName} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
-          </Carousel.Item> */}
-
-          <Carousel.Item>
-            <ClientSignupStep6 setFunnelDone={setFunnelDone} registerDBClient={registerDBClient} totalAmount={totalAmount} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step} />
-          </Carousel.Item>
+    <Fragment>
+      <div className={`signup-page${isLoading ? ' isLoading' : ''}`}>
+        <SubHeader title={title} history={history} action={backLink} />
+        <Carousel className={(step > 3 && 'without-dots')} controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
           
-        </Carousel>
-        
-        <section className="signupBtn">
-          <p className="mt-3">Already have account? <Link to={'/login'}> Login</Link></p>
-        </section>
-    </div>
+          {/* <Carousel.Item>
+            <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step}/>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <ClientSignupStep2 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step}/>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <ClientSignupStep3 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
+          </Carousel.Item> 
+
+            <Carousel.Item>
+              <ClientSignupStep4 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
+            </Carousel.Item>
+
+            <Carousel.Item>
+              <ClientSignupStep5 handleTotalAmount={setTotalAmount} name={clientName} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
+            </Carousel.Item> */}
+
+            <Carousel.Item>
+              <ClientSignupStep6 setFunnelDone={setFunnelDone} registerDBClient={registerDBClient} totalAmount={totalAmount} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step} />
+            </Carousel.Item>
+            
+          </Carousel>
+          
+          <section className="signupBtn">
+            <p className="mt-3">Already have account? <Link to={'/login'}> Login</Link></p>
+          </section>
+      </div>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Body>
+          <p>Tu pago de {props.totalAmount} se ha realizado correctamente.</p>
+          <Link to="/client/auth/my-account/dashboard"><Button variant="primary">Quiero ir a mi centa</Button></Link>
+          <Link to="/client/auth/arrange-meeting"><Button variant="secondary">Quiero pedir una cita</Button></Link>
+        </Modal.Body>
+      </Modal>
+    </Fragment>
   );
 };
 
