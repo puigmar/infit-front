@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import FormCompactField from '../FormCompactField/FormCompactField'
+import {Link} from 'react-router-dom'
 
 function ClientSignupStep1(props) {
   
