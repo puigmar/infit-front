@@ -77,7 +77,7 @@ function ClientSignupStep2(props) {
 
   useEffect(() => {
     checkFormEmptyFields();
-  }, [formik.values, props.step, avatarIsPending]);
+  }, [formik.values, avatarIsPending]);
 
   const handleFieldClass = (name) => {
     return {

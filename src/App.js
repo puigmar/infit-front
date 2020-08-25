@@ -16,6 +16,8 @@ import DashboardCoach from './pages/DashboardCoach.jsx';
 import Header from './components/Header/Header.jsx';
 import Home from './pages/Home.jsx';
 import { Container } from 'react-bootstrap';
+import ArrangeMeetingPage from "./pages/ArrangeMeetingPage";
+
 
 function App() {
   return (
@@ -38,6 +40,7 @@ function App() {
             path='/coach/auth/my-account/dashboard'
             component={DashboardCoach}
           />
+          <PrivateRoute exact path='/client/auth/arrange-meeting' component={ ArrangeMeetingPage } />
         </Switch>
       </Container>
     </AuthProvider>

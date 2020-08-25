@@ -58,7 +58,7 @@ function ClientSignupStep3(props) {
   useEffect(() => {
     console.log('formCompleted: ', formCompleted)
     checkFormEmptyFields()
-  }, [formik.values, props.step])
+  }, [formik.values])
 
   return (
     <Fragment>
