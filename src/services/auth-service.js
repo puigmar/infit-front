@@ -1,6 +1,8 @@
 import AxiosCredentials from './axios/credentials';
 
-export async function signup({ username, password, isCoach }) {
+export async function signup(user, client) {
+  const { username, password, isCoach } = user;
+  console.log('Estoy dentro del service...', user)
   try {
     await AxiosCredentials.post(`${isCoach ? 'coach' : 'client'}/auth/signup`, {
       username,
@@ -11,7 +13,7 @@ export async function signup({ username, password, isCoach }) {
   }
 }
 
-export async function login({ username, password, isCoach }) {
+export async function login({ username, password, isCoach }, {...client}) {
   try {
     return await AxiosCredentials.post(
       `${isCoach ? 'coach' : 'client'}/auth/login`,
@@ -19,7 +21,10 @@ export async function login({ username, password, isCoach }) {
         username,
         password,
       }
-    ).then(({ data }) => data);
+    ).then(data => {
+      console.log(data)
+      return data
+    });
   } catch (error) {
     console.log(error);
   }

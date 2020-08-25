@@ -10927,6 +10927,10 @@ h2 {
   margin-top: 20px;
 }
 
+.signup-page .signupBtn {
+  text-align: center;
+}
+
 .btn {
   width: 100%;
   max-width: 375px;
@@ -10934,6 +10938,36 @@ h2 {
 
 .btn:disabled {
   opacity: 0.3;
+}
+
+.btn .spinner {
+  display: none;
+}
+
+.btn.isLoading {
+  position: relative;
+}
+
+.btn.isLoading .spinner {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  left: 0;
+  top: 0;
+}
+
+.btn.isLoading .spinner img {
+  width: auto;
+  height: 100%;
 }
 
 .carousel .carousel-indicators {
