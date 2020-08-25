@@ -16,6 +16,9 @@ import DashboardCoach from './pages/DashboardCoach.jsx';
 import Header from './components/Header/Header.jsx';
 import Home from './pages/Home.jsx';
 import { Container } from 'react-bootstrap';
+import NewProgram from './pages/NewProgram.jsx'
+import Exercises from './pages/Exercises.jsx'
+import NewExercise from './pages/NewExercise'
 import ArrangeMeetingPage from "./pages/ArrangeMeetingPage";
 
 
@@ -39,6 +42,21 @@ function App() {
             exact
             path='/coach/auth/my-account/dashboard'
             component={DashboardCoach}
+          />
+          <PrivateRoute
+            exact
+            path='/coach/auth/program'
+            component={NewProgram}
+          />
+          <PrivateRoute
+            exact
+            path='/coach/auth/exercises'
+            component={Exercises}
+          />
+          <PrivateRoute
+            exact
+            path='/coach/auth/newExercises'
+            component={NewExercise}
           />
           <PrivateRoute exact path='/client/auth/arrange-meeting' component={ ArrangeMeetingPage } />
         </Switch>
