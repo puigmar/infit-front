@@ -43,11 +43,12 @@ function Exercises() {
   }, [])
 
   useEffect(() => {
+    console.log('coachID', coach.coachID)
     getExercises(coach.coachID)
   }, [coach])
 
 console.log('este es el coach', coach);
-console.log('este es el entrenamiento')
+console.log('este es el entrenamiento', exercises)
   return (
     <div>
       <h1>Ejercicios con cojones</h1>

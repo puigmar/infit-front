@@ -50,7 +50,10 @@ const DashboardClient = (props) => {
       <h1>Hola {userMock && userMock.username}</h1>
       <h2>Este es tu próximo entrenamiento</h2>
       <Link to={'/coach/auth/program'} >Crea un nuevo programa de Programa</Link>
+      <br/>
       <Link to={'/coach/auth/exercises'} >Estos son tus ejercicios</Link>
+      <br/>
+      <Link to={'/coach/auth/newExercises'} >Crea ejercicios</Link>
     </>
   );
 };
