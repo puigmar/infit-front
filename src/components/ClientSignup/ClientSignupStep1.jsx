@@ -7,6 +7,7 @@ import FormCompactField from '../FormCompactField/FormCompactField'
 function ClientSignupStep1(props) {
   
   const [disabledButton, setDisabledButton] = useState(true)
+  const [formCompleted, setFormCompleted] = useState(false)
 
 
   const formik = useFormik({
@@ -35,7 +36,7 @@ function ClientSignupStep1(props) {
     onSubmit: values => {
       const { username, password, isCoach} = values;
       const stepData = {
-        username: {
+        user: {
           username,
           password,
           isCoach: false
@@ -46,19 +47,19 @@ function ClientSignupStep1(props) {
     }
   });
   const checkFormEmptyFields = () => {
-    props.setFormCompleted(true)
+    setFormCompleted(true)
     for(let field in formik.values){
       if(formik.values[field] === ''){
-        props.setFormCompleted(false)
+        setFormCompleted(false)
       }
     }
-    if(props.formCompleted === true){
+    if(formCompleted === true){
       setDisabledButton(false)
     }
   }
   
   useEffect(() => {
-    console.log('props.formCompleted: ', props.formCompleted)
+    console.log('formCompleted: ', formCompleted)
     checkFormEmptyFields()
   }, [formik.values, props.step])
 
@@ -72,6 +73,7 @@ function ClientSignupStep1(props) {
 
   return (
     <Fragment>
+      <h2>1. DATOS DE TU CUENTA</h2>
       <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
       <div className="formGrupBlock">
         <Form.Group controlId="username">

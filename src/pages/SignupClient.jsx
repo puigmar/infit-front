@@ -1,13 +1,17 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import WithAuth from '../services/AuthProvider';
-import { Form, Carousel, Button, Col, Row, FormCheck } from 'react-bootstrap';
+import { Form, Carousel, Button, Col, Row, FormCheck, CarouselItem } from 'react-bootstrap';
 import { checkExistUSer } from '../services/auth-service';
 import SubHeader from '../components/SubHeader/SubHeader';
 import ClientSignupStep1 from '../components/ClientSignup/ClientSignupStep1'
 import ClientSignupStep2 from '../components/ClientSignup/ClientSignupStep2'
 import ClientSignupStep3 from '../components/ClientSignup/ClientSignupStep3';
 import ClientSignupStep4 from '../components/ClientSignup/ClientSignupStep4';
+import ClientSignupStep5 from '../components/ClientSignup/ClientSignupStep5';
+import ClientSignupStep6 from '../components/ClientSignup/ClientSignupStep6';
+
+import { signup as signupService } from '../services/auth-service'
 
 
 const SignupClient = (props) => {
@@ -21,11 +25,13 @@ const SignupClient = (props) => {
   const [backLink, setBackLink] = useState(null)
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [title, setTitle] = useState('Registro')
-  const [formCompleted, setFormCompleted] = useState(false)
+  const [clientName, setClientName] = useState('')
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [funnelDone, setFunnelDone] = useState(false)
 
   // Form Data
   const [dataClient, setDataClient] = useState({
-    username: {
+    user: {
       username: '',
       password: '',
       isCoach: false
@@ -90,24 +96,6 @@ const SignupClient = (props) => {
   useEffect(() => {
     setActiveIndex(step)
     handleBackLink()
-    setButtonDisabled(true)
-
-    const compactFields = document.querySelectorAll('.field-compact');
-
-    compactFields.forEach(field => {
-      
-      field.addEventListener('input', (e)=> {
-        const {value} = e.target;
-        value === '' ? field.classList.remove('isFilled') : field.classList.add('isFilled')
-      })
-
-      field.addEventListener('focus', (e)=> {
-        const {value} = e.target;
-        value === '' ? field.classList.add('isFocus') : field.classList.remove('isFocus')
-      })
-
-    })
-
   }, [step])
 
   // const checkExistingUser = async (event) => {
@@ -131,31 +119,92 @@ const SignupClient = (props) => {
     setDataClient(newData);
   }
 
+  const fakeData = {
+    user: {
+      username: 'ferran@ferranpuig.com',
+      password: '123456',
+      isCoach: false
+    },
+    client: {
+      savePhoto: false,
+      name: 'Ferran',
+      surname: 'Puig Martínez',
+      card: {
+        owner: 'Ferran Puig',
+        number: 3423423423424234,
+        expireAt: '12/2024',
+        cvv: 345
+      },
+      telephone: '655607113',
+      biometrics: {
+        age: '40',
+        height: '167',
+        weight: [40],
+        sex: 'male',
+      },
+      wizard: {
+        objective: 'Perder Peso',
+        trainningDays: ['Monday', 'Wednesday'],
+        availability: {
+          min: 9,
+          max: 13,
+        },
+        pack: {
+          name: 'XXXXX',
+          duration: 12,
+          price: 300,
+        },
+      },
+      sexPreference: '',
+      adress: '',
+      photos: []
+    }
+  }
+
+  const registerDBClient = () => { //dataClient
+    console.log('entrando en registerDBCLient')
+    const data = fakeData;
+    const {client, user} = data;
+    console.log(data)
+    const registerUSer = signupService(user, client)
+    console.log(registerUSer)
+  }
+
   useEffect(() => {
-    console.log('DataClient: ', dataClient)
-  }, [dataClient])
+    registerDBClient()
+  }, [funnelDone])
 
   return (
     <div className="signup-page">
       <SubHeader title={title} history={history} action={backLink} />
-      <Carousel controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
+      <Carousel className={(step > 3 && 'without-dots')} controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
+        
+        {/* <Carousel.Item>
+          <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step}/>
+        </Carousel.Item>
+
         <Carousel.Item>
-          <h2>1. DATOS DE TU CUENTA</h2>
-          <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step} formCompleted={formCompleted} setFormCompleted={setFormCompleted}/>
+          <ClientSignupStep2 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step}/>
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <ClientSignupStep3 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
         </Carousel.Item> 
-        <Carousel.Item>
-          <h2>2. DATOS DE TU PERFIL</h2>
-          <ClientSignupStep2 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step} formCompleted={formCompleted} setFormCompleted={setFormCompleted}/>
-        </Carousel.Item>
-        <Carousel.Item>
-          <h2>3. DISPONIBILIDAD</h2>
-          <ClientSignupStep3 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step} formCompleted={formCompleted} setFormCompleted={setFormCompleted}/>
-        </Carousel.Item>
+
           <Carousel.Item>
-            <h2>4. OBJETIVOS</h2>
-            <ClientSignupStep4 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step} formCompleted={formCompleted} setFormCompleted={setFormCompleted}/>
+            <ClientSignupStep4 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
           </Carousel.Item>
+
+          <Carousel.Item>
+            <ClientSignupStep5 handleTotalAmount={setTotalAmount} name={clientName} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
+          </Carousel.Item> */}
+
+          <Carousel.Item>
+            <ClientSignupStep6 setFunnelDone={setFunnelDone} registerDBClient={registerDBClient} totalAmount={totalAmount} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step} />
+          </Carousel.Item>
+          
         </Carousel>
+        
         <section className="signupBtn">
           <p className="mt-3">Already have account? <Link to={'/login'}> Login</Link></p>
         </section>

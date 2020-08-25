@@ -5,7 +5,10 @@ import { Form, Button } from 'react-bootstrap';
 
 function ClientSignupStep3(props) {
 
-  const [disabledButton, setDisabledButton] = useState(false)
+  const [disabledButton, setDisabledButton] = useState(true)
+  const [selectDefaultValue, setSelectDefaultValue] = useState('Escoge una franja horaria')
+  const [formCompleted, setFormCompleted] = useState(false)
+
 
   // Formik
   const formik = useFormik({
@@ -15,64 +18,65 @@ function ClientSignupStep3(props) {
     },
     validationSchema: Yup.object().shape({
       trainningDays: Yup.array().required("Almenos tienes que escoger 1 día"),
-      //availability: Yup.string().required("Tienes que escoger una franja horaria"),
+      availability: Yup.string().required("Tienes que escoger una franja horaria"),
     }),
     onSubmit: values => {
       console.log('ENTRANDO EN onSUBMIT!')
       const { trainningDays, availability } = values;
-
-      const test = JSON.parse(`${availability}`);
-      console.log(test)
+      const availabilityRange = availability.split('-');
       
       const stepData = {
         client: {
           ...props.dataClient.client,
           wizard: {
-            ...props.dataClient.wizard,
+            ...props.dataClient.client.wizard,
             trainningDays,
+            availability: {
+              min: Number(availabilityRange[0]),
+              max: Number(availabilityRange[1])
+            }
           }
         }
       }
       console.log('stepData: ', stepData)
-      //props.handleData(stepData)
+      props.handleData(stepData)
     }
   });
 
   const checkFormEmptyFields = () => {
-    props.setFormCompleted(true)
+    setFormCompleted(true)
     for(let field in formik.values){
       if(formik.values[field] === ''){
-        props.setFormCompleted(false)
+        setFormCompleted(false)
       }
     }
-    if(props.formCompleted === true){
+    if(formCompleted === true){
       setDisabledButton(false)
     }
   }
 
   useEffect(() => {
-    console.log('props.formCompleted: ', props.formCompleted)
+    console.log('formCompleted: ', formCompleted)
     checkFormEmptyFields()
   }, [formik.values, props.step])
 
   return (
     <Fragment>
+      <h2>3. DISPONIBILIDAD</h2>
       <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
 
         <Form.Group controlId="availability">
           <Form.Label>¿Qué horario prefieres?</Form.Label>
           <Form.Group controlId="availability">
             <Form.Control 
-              as="select" 
+              as="select"
+              value={selectDefaultValue}
               {...formik.getFieldProps('availability')}
             >
               <option value="Escoge una franja horaria"></option>
-              {/* <option value={{min: 9,max: 13}}>Mañanas, de 9h a 13h</option>
-              <option value={{min: 14,max: 20}}>Tardes, de 14h a 20h</option>
-              <option vale={{min: 21,max: 23}}>Noches de 21h a 23h</option> */}
-              <option value="{min: 9,max: 13}">Mañanas, de 9h a 13h</option>
-              <option value="{min: 14,max: 20}">Tardes, de 14h a 20h</option>
-              <option vale="{min: 21,max: 23}">Noches de 21h a 23h</option>
+              <option value="9-13">Mañanas, de 9h a 13h</option>
+              <option value="14-20">Tardes, de 14h a 20h</option>
+              <option vale="21-23">Noches de 21h a 23h</option>
             </Form.Control>
           </Form.Group>
         </Form.Group>
@@ -106,7 +110,7 @@ function ClientSignupStep3(props) {
             />
           </Form.Group>
         </Form.Group>
-        <Button  type="submit" variant="primary" size="lg" >Continuar</Button>
+        <Button  type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
       </Form>
     </Fragment>
   )

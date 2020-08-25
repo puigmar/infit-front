@@ -10,6 +10,8 @@ function ClientSignupStep2(props) {
   const [disabledButton, setDisabledButton] = useState(true)
   const [avatarIsPending, setAvatarIsPending] = useState(true)
   const [avatarUrl, setAvatarUrl] = useState('')
+  const [sexDefaultInputValue, setSexDefaultInputValue] = useState('Escoge un sexo')
+  const [formCompleted, setFormCompleted] = useState(false)
 
   // Formik
   const formik = useFormik({
@@ -27,11 +29,11 @@ function ClientSignupStep2(props) {
       .required("*Debes escribir tu nombre"),
       surname: Yup.string()
       .required("*Debes escribir tus apellidos"),
-      weight: Yup.number()
+      weight: Yup.string()
       .required("*Debes escribir tu peso"),
-      height: Yup.number()
+      height: Yup.string()
       .required("*Debes escribir tu altura"),
-      age: Yup.number()
+      age: Yup.string()
       .required("*Debes escribir tu edad"),
       sex: Yup.string()
       .oneOf(['male', 'female', 'other'])
@@ -40,10 +42,12 @@ function ClientSignupStep2(props) {
       .required("Tienes que facilitarnos un teléfono de contacto"),
     }),
     onSubmit: values => {
-      const { age, height, sex, weight, ...rest } = values;
+      const { nameUser, age, height, sex, weight, ...rest } = values;
       const stepData = {
         client: {
           ...props.dataClient.client,
+          name: nameUser,
+          ...rest,
           avatarUrl,
           biometrics: {
             age,
@@ -66,20 +70,18 @@ function ClientSignupStep2(props) {
   }
 
   const checkFormEmptyFields = () => {
-    props.setFormCompleted(true)
+    setFormCompleted(true)
     for(let field in formik.values){
       if(formik.values[field] === ''){
-        props.setFormCompleted(false)
+        setFormCompleted(false)
       }
     }
-    if(avatarIsPending === false && props.formCompleted === true){
+    if(avatarIsPending === false && formCompleted === true){
       setDisabledButton(false)
     }
   }
   
   useEffect(() => {
-    console.log('avatarIsPending: ', avatarIsPending)
-    console.log('props.formCompleted: ', props.formCompleted)
     checkFormEmptyFields()
   }, [formik.values, props.step, avatarIsPending])
 
@@ -93,6 +95,7 @@ function ClientSignupStep2(props) {
 
   return (
     <Fragment>
+      <h2>2. DATOS DE TU PERFIL</h2>
       <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
 
         <FormAvatar handleAvatarFile={handleAvatarFile} fieldName="avatarUrl" setAvatarUrl={setAvatarUrl}/>
@@ -104,7 +107,6 @@ function ClientSignupStep2(props) {
             <Form.Label>Nombre</Form.Label>
             <Form.Control
               type="text"
-              name="nameUser"
               {...formik.getFieldProps('nameUser')}
               className={handleFieldClass('nameUser')}
             />
@@ -117,7 +119,6 @@ function ClientSignupStep2(props) {
             <Form.Label>Apellidos</Form.Label>
             <Form.Control 
               type="text" 
-              name="surname" 
               {...formik.getFieldProps('surname')}
               className={handleFieldClass('surname')}
             />
@@ -129,11 +130,10 @@ function ClientSignupStep2(props) {
           <FormCompactField>
             <Form.Label>Peso</Form.Label>
             <Form.Control
+              {...formik.getFieldProps('weight')}
               pattern="\d*" 
               maxLength="3"
               type="text" 
-              name="weight" 
-              {...formik.getFieldProps('weight')}
               value={formik.values.weight}
               className={handleFieldClass('weight')}
             />
@@ -192,10 +192,11 @@ function ClientSignupStep2(props) {
             <Form.Label>Sexo</Form.Label>
             <Form.Group controlId="sex">
               <Form.Control 
-                as="select" 
+                as="select"
+                value={sexDefaultInputValue} 
                 {...formik.getFieldProps('sex')}
               >
-                <option selected value="Escoge un sexo"></option>
+                <option value="Escoge un sexo"></option>
                 <option value="male">Hombre</option>
                 <option value="female">Mujer</option>
                 <option vale="other">Other</option>
