@@ -11,15 +11,15 @@ const UserContext = React.createContext();
 
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
-  const [isLoggedin, setisLoggedin] = useState(false);
+  const [isLoggedin, setisLoggedin] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const signupUser = (user) => {
     console.log(user);
     signup({ ...user })
       .then((user) => {
         console.log('user signup', user);
-        getUser(user)
+        getUser(user);
         setUser(user);
         setisLoggedin(true);
         setIsLoading(false);

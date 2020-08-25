@@ -16,6 +16,7 @@ import DashboardCoach from './pages/DashboardCoach.jsx';
 import Header from './components/Header/Header.jsx';
 import Home from './pages/Home.jsx';
 import { Container } from 'react-bootstrap';
+import NewProgram from './pages/NewProgram.jsx'
 
 function App() {
   return (
@@ -37,6 +38,11 @@ function App() {
             exact
             path='/coach/auth/my-account/dashboard'
             component={DashboardCoach}
+          />
+          <PrivateRoute
+            exact
+            path='/coach/auth/program'
+            component={NewProgram}
           />
         </Switch>
       </Container>

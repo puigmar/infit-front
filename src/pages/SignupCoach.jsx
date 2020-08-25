@@ -4,8 +4,11 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Carousel } from 'react-bootstrap';
 import { checkExistUSer } from '../services/authenticate/auth-client.service';
+import WithAuth from '../components/AuthProvider';
 
 const SignupCoach = () => {
+const { signupUser } = WithAuth();
+
   const totalSteps = 7;
 
   const [step, setStep] = useState(0);
