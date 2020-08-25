@@ -43,7 +43,6 @@ function ClientSignupStep6(props) {
         }
       }
       props.handleData(stepData);
-      props.setFunnelDone(true);
     }
   });
 

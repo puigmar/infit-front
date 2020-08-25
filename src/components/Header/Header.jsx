@@ -82,7 +82,7 @@ const Header = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <LinkContainer to="/home">
+        <LinkContainer to="/">
           <Navbar.Brand>React-Bootstrap</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
