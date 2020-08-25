@@ -9,6 +9,12 @@ function ClientSignupStep1(props) {
   const [disabledButton, setDisabledButton] = useState(true)
   const [formCompleted, setFormCompleted] = useState(false)
 
+  /*useEffect( ()=> {
+    setFormCompleted(false)
+    return() => {
+      checkFormEmptyFields()
+    }
+  },[])*/
 
   const formik = useFormik({
     initialValues: {
@@ -48,8 +54,10 @@ function ClientSignupStep1(props) {
   });
   const checkFormEmptyFields = () => {
     setFormCompleted(true)
+    console.log(formik.values)
     for(let field in formik.values){
       if(formik.values[field] === ''){
+        console.log('soy el culpable uauauaa')
         setFormCompleted(false)
       }
     }
@@ -61,7 +69,7 @@ function ClientSignupStep1(props) {
   useEffect(() => {
     console.log('formCompleted: ', formCompleted)
     checkFormEmptyFields()
-  }, [formik.values, props.step])
+  }, [formik.values])
 
   const handleFieldClass = (name) => {
     return ({

@@ -1,21 +1,20 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import WithAuth from '../services/AuthProvider';
 import { Carousel, Button, Row, Col, Modal } from 'react-bootstrap';
-import { checkExistUSer } from '../services/auth-service';
+//import { checkExistUSer } from '../services/auth-service';
+import WithAuth from '../components/AuthProvider';
 import SubHeader from '../components/SubHeader/SubHeader';
-import ClientSignupStep1 from '../components/ClientSignup/ClientSignupStep1'
-import ClientSignupStep2 from '../components/ClientSignup/ClientSignupStep2'
+import { checkExistUSer } from '../services/authenticate/auth-client.service';
+import ClientSignupStep1 from '../components/ClientSignup/ClientSignupStep1';
+import ClientSignupStep2 from '../components/ClientSignup/ClientSignupStep2';
 import ClientSignupStep3 from '../components/ClientSignup/ClientSignupStep3';
 import ClientSignupStep4 from '../components/ClientSignup/ClientSignupStep4';
 import ClientSignupStep5 from '../components/ClientSignup/ClientSignupStep5';
 import ClientSignupStep6 from '../components/ClientSignup/ClientSignupStep6';
 
-import { signup as signupService } from '../services/auth-service'
-
 const SignupClient = (props) => {
 
-  const { signup } = WithAuth();
+  const { signupUser } = WithAuth();
   const [step, setStep] = useState(0);
   const [backLink, setBackLink] = useState(null)
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -31,9 +30,10 @@ const SignupClient = (props) => {
     user: {
       username: '',
       password: '',
-      isCoach: false
+      isCoach: false,
     },
     client: {
+      clientID: '',
       savePhoto: false,
       name: '',
       surname: '',
@@ -61,15 +61,15 @@ const SignupClient = (props) => {
       },
       sexPreference: '',
       adress: '',
-      photos: []
-    }
-  })
+      photos: [],
+    },
+  });
 
   // Carousel
-  const [controls, setControls] = useState(false)
-  const [touch, setTouch] = useState(false)
-  const [interval, setInterval] = useState(null)
-  const [activeIndex, setActiveIndex] = useState(step)
+  const [controls, setControls] = useState(false);
+  const [touch, setTouch] = useState(false);
+  const [interval, setInterval] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(step);
 
   let history = useHistory();
   const totalSteps = 7;
@@ -77,33 +77,43 @@ const SignupClient = (props) => {
   const handleShow = () => setShow(true);
 
   const nextStep = () => {
-    if(checkStep(step)) setStep(step+1)
-  }
+    console.log('estoy pulsando eh!!')
+    console.log('step: ', step);
+    if (checkStep(step)) {
+      setStep(step + 1)
+      console.log('new step: ', step);
+      setActiveIndex(step);
+      handleBackLink();
+    };
+  };
 
   const prevStep = () => {
-    if(checkStep(step)) setStep(step-1)
-  }
+    if (checkStep(step)){ 
+      setStep(step - 1)
+      setActiveIndex(step);
+      handleBackLink();
+    };
+  };
+
+  useEffect( ()=> {
+    setActiveIndex(step);
+  },[setStep])
 
   const checkStep = (newStep) => {
     if (newStep >= totalSteps) {
       return false;
     }
     return true;
-  }
+  };
 
   const handleBackLink = () => {
-    return (step > 0) ? setBackLink(() => prevStep) : setBackLink(null)
-  }
-
-  useEffect(() => {
-    setActiveIndex(step)
-    handleBackLink()
-  }, [step])
+    return step > 0 ? setBackLink(() => prevStep) : setBackLink(null);
+  };
 
   // const checkExistingUser = async (event) => {
   //   if(!formik.errors.username){
   //     const { value } = event.target;
-  //     const isUser = await checkExistUSer(value); 
+  //     const isUser = await checkExistUSer(value);
   //     if(!isUser) {
   //       setLoginValidation(true)
   //     } else {
@@ -116,16 +126,16 @@ const SignupClient = (props) => {
   const handleData = async (data) => {
     const newData = {
       ...dataClient,
-      ...data
-    }
+      ...data,
+    };
     setDataClient(newData);
-  }
+  };
 
   const fakeData = {
     user: {
       username: 'ferran10@ferranpuig.com',
       password: '123456',
-      isCoach: false
+      isCoach: false,
     },
     client: {
       savePhoto: false,
@@ -135,7 +145,7 @@ const SignupClient = (props) => {
         owner: 'Ferran Puig',
         number: 3423423423424234,
         expireAt: '12/2024',
-        cvv: 345
+        cvv: 345,
       },
       telephone: '655607113',
       biometrics: {
@@ -159,14 +169,14 @@ const SignupClient = (props) => {
       },
       sexPreference: '',
       adress: '',
-      photos: []
-    }
-  }
+      photos: [],
+    },
+  };
 
   const registerDBClient = async () => { 
     const data = fakeData; //dataClient
     const {client, user} = data;
-    const registerUser = signupService(user, client);
+    const registerUser = signupUser({ user, client });
 
     if(registerUser) {
       console.log('se ha hecho un usuario')

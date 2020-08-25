@@ -157,9 +157,9 @@ function ClientSignupStep6(props) {
                 </Col>
               </Row>
             
-              <Button id="paymentButton" disabled={ disabledButton} type="submit" variant="primary" size="lg" className={(paymentIsLoading == true ? 'isLoading' : '')}>
+              <Button id="paymentButton" disabled={ disabledButton} type="submit" variant="primary" size="lg" className={(paymentIsLoading && 'isLoading')}>
                 Pagar
-                <div className="spinner"><img src="/img/spinner.svg" /></div>
+                <div className="spinner"><img src="/img/spinner.svg" alt="spinner"/></div>
               </Button>
             
             </Form>
