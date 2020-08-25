@@ -11,7 +11,7 @@ const LoginClient = () => {
     try {
       event.preventDefault();
       console.log('LoginUser -> form submit', { username, password });
-      await loginUser(username, password);
+      await loginUser({username, password, isCoach: false});
     } catch (error) {
       console.log(error)
     }

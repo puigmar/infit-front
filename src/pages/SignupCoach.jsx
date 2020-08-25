@@ -1,15 +1,12 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import WithAuth from '../components/AuthProvider';
-import { Formik, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Carousel, Button } from 'react-bootstrap';
+import { Form, Carousel } from 'react-bootstrap';
 import { checkExistUSer } from '../services/authenticate/auth-client.service';
 
 const SignupCoach = () => {
   const totalSteps = 7;
-
-  const { signupUser } = WithAuth();
 
   const [step, setStep] = useState(0);
   const [activeIndex, setActiveIndex] = useState(step);
@@ -18,13 +15,13 @@ const SignupCoach = () => {
   const [touch, setTouch] = useState(false);
   const [interval, setInterval] = useState(null);
 
-  const nextStep = () => {
-    if (checkStep(step)) setStep(step + 1);
-  };
+  // const nextStep = () => {
+  //   if (checkStep(step)) setStep(step + 1);
+  // };
 
-  const prevStep = () => {
-    if (checkStep(step)) setStep(step - 1);
-  };
+  // const prevStep = () => {
+  //   if (checkStep(step)) setStep(step - 1);
+  // };
 
   const checkStep = (newStep) => {
     return newStep >= totalSteps ? false : true;
@@ -78,7 +75,6 @@ const SignupCoach = () => {
           handleChange,
           handleBlur,
           handleSubmit,
-          isSubmitting,
         }) => (
           <Fragment>
             <Form onSubmit={handleSubmit}>

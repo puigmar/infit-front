@@ -1,8 +1,18 @@
 import AxiosCredentials from '../axios/credentials';
 
-export async function getTraining(userID) {
+export async function getTraining(trainingID) {
   try {
-    return await AxiosCredentials.post('/training/', { userID }).then(({data}) => data);
+    const trainings = await AxiosCredentials.post('/training/', { trainingID }).then(({data}) => data);
+    return trainings;
+  } catch (error) {
+    console.log(error)
+  }
+}
+export async function getTrainings({userID, isCoach}) {
+  const url = `${isCoach ? '/coach' : '/client'}`;
+  try {
+    const trainings = await AxiosCredentials.post(`/training/${ url }/${userID}`).then(({data}) => data);
+    return trainings;
   } catch (error) {
     console.log(error)
   }

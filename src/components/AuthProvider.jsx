@@ -5,6 +5,8 @@ import {
   logout,
 } from '../services/authenticate/auth-client.service'; // Importamos funciones para llamadas axios a la API
 
+import { getUser } from '../services/user/user.service';
+
 const UserContext = React.createContext();
 
 export function AuthProvider(props) {
@@ -17,6 +19,7 @@ export function AuthProvider(props) {
     signup({ ...user })
       .then((user) => {
         console.log('user signup', user);
+        getUser(user)
         setUser(user);
         setisLoggedin(true);
         setIsLoading(false);
