@@ -17,6 +17,7 @@ import Header from './components/Header/Header.jsx';
 import Home from './pages/Home.jsx';
 import { Container } from 'react-bootstrap';
 import NewProgram from './pages/NewProgram.jsx'
+import Exercises from './pages/Exercises.jsx'
 
 function App() {
   return (
@@ -43,6 +44,11 @@ function App() {
             exact
             path='/coach/auth/program'
             component={NewProgram}
+          />
+          <PrivateRoute
+            exact
+            path='/coach/auth/exercises'
+            component={Exercises}
           />
         </Switch>
       </Container>
