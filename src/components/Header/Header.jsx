@@ -11,7 +11,7 @@ const Header = () => {
   const configMenu = (userContext, isLogged) => {
 
     const baseUrl = (userContext && userContext.isCoach) ? '/coach' : '/client'
-    const myAccountUrl = `${baseUrl}/my-account`;
+    const myAccountUrl = `${baseUrl}/auth/my-account`;
     const anonymUrl = `${baseUrl}/auth`;
     let menuList;
 

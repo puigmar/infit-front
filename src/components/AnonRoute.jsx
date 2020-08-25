@@ -6,11 +6,12 @@ import WithOut from './AuthProvider';
 
 function AnonRoute({ component: Component }) {
   // devuelve un componente <Route /> donde su prop render recibe las props, y si no está logueado, devuelve el componente con sus props (history, etc.), en caso contrario, el componente <Redirect /> redirige a /private
-  const { isLoggedin, user } = WithOut();
+  const { isLoggedin, user} = WithOut();
+
   return (
     <Route
       render={(props) =>
-        !isLoggedin ? (
+        !isLoggedin  ? (
           <Component {...props} />
         ) : (
           <Redirect

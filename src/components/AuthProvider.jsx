@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   signup,
   login,
   logout,
+  auth
 } from '../services/authenticate/auth-client.service'; // Importamos funciones para llamadas axios a la API
 
 import { getUser } from '../services/user/user.service';
@@ -33,6 +34,7 @@ export function AuthProvider(props) {
     login({ username, password, isCoach })
       .then((user) => {
         setUser(user);
+        console.log('AuthPovider: loginUser ----->: ', user);
         setisLoggedin(true);
         setIsLoading(false);
       })
@@ -43,6 +45,7 @@ export function AuthProvider(props) {
   };
 
   const logoutUser = () => {
+    console.log('user logout ---->:', user)
     user &&
       logout(user.isCoach)
         .then(() => {
@@ -60,7 +63,9 @@ export function AuthProvider(props) {
     user,
     isLoggedin,
     isLoading,
+    isLogout,
     setIsLoading,
+    authUser
   };
 
   return <UserContext.Provider value={value} {...props} />;

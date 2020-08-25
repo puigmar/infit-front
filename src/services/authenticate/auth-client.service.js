@@ -2,13 +2,17 @@ import AxiosCredentials from '../axios/credentials';
 
 export async function signup(user, client) {
   const { username, password, isCoach } = user;
-  console.log('Estoy dentro del service...', user)
+
   try {
-    await AxiosCredentials.post(`${isCoach ? 'coach' : 'client'}/auth/signup`, {
+    const signUpUser =  await AxiosCredentials.post(`${isCoach ? 'coach' : 'client'}/auth/signup`, {
       username,
       password,
-    }).then(({ data }) => data);
-  } catch (error) {
+      client
+    })
+    console.log('signUpUser :', signUpUser)
+    return signUpUser;
+  }
+  catch (error) {
     console.log(error);
   }
 }
@@ -16,12 +20,12 @@ export async function signup(user, client) {
 export async function login({ username, password, isCoach }) {
   const url = `${isCoach ? '/coach' : '/client'}/auth/login`;
   try {
-    return await AxiosCredentials.post(`${url}`, {
+    const userLogged = await AxiosCredentials.post(`${url}`, {
       username,
       password,
-    }).then(({ data }) => {
-      return data;
-    });
+    })
+    return userLogged;
+
   } catch (error) {
     console.log(error);
   }
@@ -56,6 +60,18 @@ export async function logout(isCoach) {
   try {
     return await AxiosCredentials.post(
       `${isCoach ? '/coach' : '/client'}/auth/logout`,
+      {}
+    )
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function auth() {
+  try {
+    return await AxiosCredentials.get(
+      '/generic/auth/me',
       {}
     ).then(({ data }) => data);
   } catch (error) {
