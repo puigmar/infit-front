@@ -174,7 +174,7 @@ const SignupClient = (props) => {
   };
 
   const registerDBClient = async () => { 
-    const data = fakeData; //dataClient
+    const data = dataClient; // dataClient || fakeData
     const {client, user} = data;
     const registerUser = signupUser({ user, client });
 
@@ -189,14 +189,14 @@ const SignupClient = (props) => {
       registerDBClient()
     }
   }, [funnelDone])
-
+  //props.setFunnelDone(true);
   return (
     <Fragment>
       <div className={`signup-page${isLoading ? ' isLoading' : ''}`}>
         <SubHeader title={title} history={history} action={backLink} />
         <Carousel className={(step > 3 && 'without-dots')} controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
           
-          {/* <Carousel.Item>
+          <Carousel.Item>
             <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step}/>
           </Carousel.Item>
 
@@ -214,7 +214,7 @@ const SignupClient = (props) => {
 
             <Carousel.Item>
               <ClientSignupStep5 handleTotalAmount={setTotalAmount} name={clientName} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
-            </Carousel.Item> */}
+            </Carousel.Item>
 
             <Carousel.Item>
               <ClientSignupStep6 setFunnelDone={setFunnelDone} registerDBClient={registerDBClient} totalAmount={totalAmount} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step} />
@@ -222,22 +222,7 @@ const SignupClient = (props) => {
             
           </Carousel>
           
-          <section className="signupBtn">
-            <p className="mt-3">Already have account? <Link to={'/login'}> Login</Link></p>
-          </section>
       </div>
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Body>
-          <p>Tu pago de {props.totalAmount} se ha realizado correctamente.</p>
-          <Link to="/client/auth/my-account/dashboard"><Button variant="primary">Quiero ir a mi centa</Button></Link>
-          <Link to="/client/auth/arrange-meeting"><Button variant="secondary">Quiero pedir una cita</Button></Link>
-        </Modal.Body>
-      </Modal>
     </Fragment>
   );
 };
