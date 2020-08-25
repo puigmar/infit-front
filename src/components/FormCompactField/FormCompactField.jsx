@@ -1,18 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './FormCompactField.css';
 
-const FormCompactField = (props) => {
+const FormCompactField = (props) => {  
 
-  const compactFields = document.querySelectorAll('.field-compact');
-  compactFields.forEach(field => {
-    field.addEventListener('input', (e)=> {
-      const {value} = e.target;
-      value === '' ? field.classList.remove('isFilled') : field.classList.add('isFilled')
-    })
-  })
+  const handleFocus = (e) => {
+    const target = e.target.parentNode;
+    const input = target.querySelector('.form-control');
+    target.classList.add('isFocus')
+  }
+
+  const handleBlur = (e) => {
+    const target = e.target.parentNode;
+    const input = target.querySelector('.form-control');
+    target.classList.remove('isFocus')
+  }
+
+  const handleFilled = (e) => {
+      const target = e.target.parentNode;
+      const input = target.querySelector('.form-control');
+
+      if(input.value == ''){
+        target.classList.remove('isFilled')
+      } else {
+        target.classList.add('isFilled')
+      }
+  }
 
   return (
-    <div className="field-compact">
+    <div className="field-compact" onBlur={(e) => handleBlur(e)} onFocus={(e)=> handleFocus(e)} onChange={(e) => handleFilled(e)}>
       {props.children}
     </div>
   )

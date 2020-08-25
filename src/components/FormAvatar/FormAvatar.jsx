@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import './FormAvatar.css'
-import { handleAvatarUpload } from '../../services/authenticate/auth-client.service';
+import { handleAvatarUpload } from '../../services/auth-service'
 
 const FormAvatar = (props) => {
 
-  const [avatarLoading, setAvatarLoading] = useState(true);
-  const [avatarWrapper, setAvatarWrapper] = useState('')
+  const [isLoading, setIsLoading] = useState(true);
+  const [fieldName, setFieldName] = useState(props.fieldName) 
+
+  const [avatarImgRoute, setAvatarImgRoute] = useState('')
 
   const handleFileEvent = (e) => {
     const inputFile = e.currentTarget.querySelector('input[type="file"]');
@@ -15,10 +17,13 @@ const FormAvatar = (props) => {
   const handleUploadAvatar = async (e) => {
     const inputFile = e.currentTarget;
     const uploadData = new FormData();
-    uploadData.append("avatarUrl", inputFile.files[0]);
+    uploadData.append(fieldName, inputFile.files[0]);
     const uploadAvatar = await handleAvatarUpload({formData: uploadData, isCoach: false});
-    setAvatarLoading(false);
-    setAvatarWrapper(uploadAvatar.avatar_url)
+    console.log('imagen subida!')
+    setIsLoading(false)
+    setAvatarImgRoute(uploadAvatar.avatar_url)
+    props.handleAvatarFile(uploadAvatar.avatar_url)
+    props.setAvatarUrl(uploadAvatar.avatar_url)
   }
 
   const handleSubmit = (e) => {
@@ -26,8 +31,8 @@ const FormAvatar = (props) => {
   }
 
   return (
-    <div className={`form-avatar-upload ${avatarLoading && 'isLoading'}`} onClick={(e) => handleFileEvent(e)} style={{backgroundImage:`url("${avatarWrapper}")`}}>
-        <input type="file" name="uploadAvatar" onChange={(e) => handleUploadAvatar(e)} value={props.values.avatarUrl}/>
+    <div className={`form-avatar-upload ${isLoading ? 'isLoading' : ''}`} onClick={(e) => handleFileEvent(e)} style={{backgroundImage:`url("${avatarImgRoute}")`}}>
+        <input type="file" name="avatarUrl" onChange={(e) => handleUploadAvatar(e)}/>
     </div>
   )
 }

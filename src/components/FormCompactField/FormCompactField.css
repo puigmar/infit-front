@@ -23,6 +23,7 @@
   transition: all 0.2s ease-in-out;
   padding: 0;
   margin: 0;
+  pointer-events: none;
 }
 
 .field-compact .form-control {
@@ -35,7 +36,7 @@
   height: 31px;
 }
 
-.field-compact.isFilled .form-label {
+.field-compact.isFilled .form-label, .field-compact.isFocus .form-label {
   top: 2px;
   font-size: 0.75rem;
 }

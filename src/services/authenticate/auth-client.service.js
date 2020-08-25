@@ -1,6 +1,8 @@
 import AxiosCredentials from '../axios/credentials';
 
-export async function signup({ username, password, isCoach }) {
+export async function signup(user, client) {
+  const { username, password, isCoach } = user;
+  console.log('Estoy dentro del service...', user)
   try {
     await AxiosCredentials.post(`${isCoach ? 'coach' : 'client'}/auth/signup`, {
       username,
