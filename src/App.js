@@ -26,6 +26,7 @@ function App() {
   return (
     <AuthProvider>
       <Header />
+      <main>
       <Container>
         <Switch>
           <AnonRoute exact path='/' component={Home} />
@@ -61,6 +62,7 @@ function App() {
           <PrivateRoute exact path='/client/auth/arrange-meeting' component={ ArrangeMeetingPage } />
         </Switch>
       </Container>
+      </main>
     </AuthProvider>
   );
 }
