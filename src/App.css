@@ -11046,7 +11046,7 @@ h2 {
 }
 
 .navbar.bg-light {
-  background-color: #F7B500 !important;
+  background-color: #44D7B6 !important;
 }
 
 .navbar .navbar-brand {
@@ -11075,7 +11075,7 @@ h2 {
     transition-property: left, visibility;
     font-size: 1.8rem;
     padding: 40px;
-    background: #44D7B6;
+    background: #F7B500;
     top: 0;
     color: #fff;
   }
@@ -11094,7 +11094,7 @@ h2 {
     margin-top: 40px;
   }
   .offcanvas-collapse .navbar-nav .nav-link {
-    color: #F7B500;
+    color: #44D7B6;
   }
   .offcanvas-collapse.show {
     left: 20vw;

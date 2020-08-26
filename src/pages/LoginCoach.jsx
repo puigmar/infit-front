@@ -54,15 +54,16 @@ const LoginCoach = () => {
         <Form onSubmit={handleFormSubmit}>
           <Form.Group controlId="username">
             <FormCompactField>
-              <Form.Label>Email</Form.Label>
+              <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
                 {...formik.getFieldProps('username')}
                 className={handleFieldClass('username')}
               />
             </FormCompactField>
-            {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
           </Form.Group>
+          {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
+
 
           <Form.Group controlId="password">
             <FormCompactField>
