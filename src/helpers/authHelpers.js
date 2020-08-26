@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 const TOKEN_KEY = 'INFIT_TOKEN'; 
 
-export const setToken = (token) =>  localStorage.setItem(TOKEN_KEY, token);
+export const setToken = (token) => localStorage.setItem(TOKEN_KEY, token);
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 
