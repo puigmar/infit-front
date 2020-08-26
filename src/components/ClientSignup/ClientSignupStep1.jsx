@@ -10,6 +10,13 @@ function ClientSignupStep1(props) {
   const [disabledButton, setDisabledButton] = useState(true)
   const [formCompleted, setFormCompleted] = useState(false)
 
+  /*useEffect( ()=> {
+    setFormCompleted(false)
+    return() => {
+      checkFormEmptyFields()
+    }
+  },[])*/
+
   const formik = useFormik({
     initialValues: {
       username: '', 
@@ -46,12 +53,12 @@ function ClientSignupStep1(props) {
       props.handleData(stepData)
     }
   });
-
   const checkFormEmptyFields = () => {
     setFormCompleted(true)
-    console.log('errors: ', formik.errors)
+    console.log(formik.values)
     for(let field in formik.values){
       if(formik.values[field] === ''){
+        console.log('soy el culpable uauauaa')
         setFormCompleted(false)
       }
     }
@@ -118,7 +125,7 @@ function ClientSignupStep1(props) {
       </Form>
 
       <section className="signupBtn">
-        <p className="mt-3">¿Ya eres usuario? <Link to={'/login'}>Inicia sesión</Link></p>
+        <p className="mt-3">Already have account? <Link to={'/login'}> Login</Link></p>
       </section>
       
     </Fragment>

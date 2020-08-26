@@ -1,58 +1,21 @@
-import React, { Fragment, useState } from 'react';
+import React from 'react';
 import NextTraining from '../components/NextTraining.jsx';
 import WithAuth from '../components/AuthProvider';
 import { getTraining } from '../services/training/training.service';
-import { Modal, Form, Button, Accordion, Card, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
 
-const DashboardClient = (props) => {
+const DashboardClient = () => {
   const { user, isLoggedin, isLogout } = WithAuth();
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  console.log('USER----->', user)
-  const trainings = getTraining({...user})
+  console.log('este es el usuario', user)
+  const trainings = getTraining( {...user})
   console.log('entrenamientos del usuario', trainings)
 
-  const handleMeetingCalendar = () => {
-  }
-
   return (
-    <Fragment>
-      <h1>Hola {}</h1>
-      <section>
-
-      </section>
-      
+    <>
+      <h1>Hola campeón</h1>
+      <h2>Este es tu próximo entrenamiento</h2>
       <NextTraining />
-
-      {/* Meeting Calendar */}
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-        className="fullScreen payment-confrmation"
-      >
-        <Modal.Body>
-          <div className="box box-skew">
-            <div className="modal-highlightedTitle">
-              <p>Tu pago de {props.totalAmount}€ se ha realizado correctamente.</p>
-            </div>
-            <div className="mt-3">
-              <p><strong>Para que podamos asignarte el mejor entrenador</strong>, necesitamos que pidas cita para poder acordar tu programa</p>
-              <Button variant="secondary" onClick={()=>handleMeetingCalendar()}>Pedir cita</Button>
-            </div>
-          </div>
-          <div className="meetingCalendar">
-
-          </div>
-          <Link to="/client/auth/my-account/dashboard"><Button variant="primary">Quiero ir a mi centa</Button></Link>
-        </Modal.Body>
-      </Modal>
-
-    </Fragment>
+    </>
   );
 };
 
