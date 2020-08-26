@@ -15,9 +15,7 @@ function AnonRoute({ component: Component }) {
           <Component {...props} />
         ) : (
           <Redirect
-            to={`${
-              user && user.isCoach ? '/coach' : '/client'
-            }/auth/my-account/dashboard`}
+            to={`/coach/auth/my-account/dashboard`}
           />
         )
       }

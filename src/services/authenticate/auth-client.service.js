@@ -1,18 +1,13 @@
 import AxiosCredentials from '../axios/credentials';
 
 export async function signup(user, client) {
-  const { username, password, isCoach } = user;
-  console.log('username: ----->', username)
-  console.log('password: ----->', password)
-  console.log('isCoach: ----->', isCoach)
-  console.log('client: ----->', client)
+  const { username, password } = user;
   try {
-    const signUpUser =  await AxiosCredentials.post(`${isCoach ? 'coach' : 'client'}/auth/signup`, {
+    const signUpUser =  await AxiosCredentials.post('coach/auth/signup', {
       username,
       password,
       client
     })
-    console.log('signUpUser :', signUpUser)
     return signUpUser;
   }
   catch (error) {
@@ -21,9 +16,8 @@ export async function signup(user, client) {
 }
 
 export async function login({ username, password, isCoach }) {
-  const url = `${isCoach ? '/coach' : '/client'}/auth/login`;
   try {
-    const userLogged = await AxiosCredentials.post(`${url}`, {
+    const userLogged = await AxiosCredentials.post('/coach/auth/login', {
       username,
       password,
     }).then(({data}) => data);
@@ -40,7 +34,7 @@ const errorHandler = (err) => {
 export async function handleAvatarUpload({ formData, isCoach }) {
   try {
     return await AxiosCredentials.post(
-      `${isCoach ? '/coach' : '/client'}/auth/uploadPhotoAvatar`,
+    '/coach/auth/uploadPhotoAvatar',
       formData
     ).then(({ data }) => data);
   } catch (error) {
@@ -61,7 +55,7 @@ export async function checkExistUSer(username) {
 export async function logout(isCoach) {
   try {
     return await AxiosCredentials.post(
-      `${isCoach ? '/coach' : '/client'}/auth/logout`,
+      '/coach/client/auth/logout',
       {}
     )
 
@@ -73,8 +67,7 @@ export async function logout(isCoach) {
 export async function auth() {
   try {
     return await AxiosCredentials.get(
-      '/generic/auth/me',
-      {}
+      '/generic/auth/me',{}
     ).then(({ data }) => data);
   } catch (error) {
     console.log(error);

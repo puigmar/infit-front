@@ -11,19 +11,6 @@ import { Next } from 'react-bootstrap/esm/PageItem';
 const LoginCoach = () => {
   const { loginUser } = WithAuth();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleFormSubmit = (event) => {
-    try {
-      event.preventDefault();
-      loginUser({ username, password, isCoach:true });
-    }
-    catch(err){
-      console.log(err)
-    } 
-  };
-
   const formik = useFormik({
     initialValues: {
       username: '', 
@@ -36,7 +23,10 @@ const LoginCoach = () => {
       password: Yup.string()
       .min(1, "*Tiene que contener 1 letras o más")
       .required("*La contraseña es necesaria"),
-    })
+    }),
+    onSubmit: values => {
+        loginUser(values);
+    }
   });
 
   const handleFieldClass = (name) => {
@@ -51,7 +41,7 @@ const LoginCoach = () => {
     <SectionBg bgImage="">
       <h1>Login</h1>
       <BoxSkew>
-        <Form onSubmit={handleFormSubmit}>
+        <Form onSubmit={formik.handleSubmit}>
           <Form.Group controlId="username">
             <FormCompactField>
               <Form.Label>Email</Form.Label>

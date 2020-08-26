@@ -9,70 +9,31 @@ import {
 
 import { getUser } from '../services/user/user.service';
 
-import { deleteToken, getToken, setToken, initAxiosInterceptors} from '../helpers/authHelpers';
-
 const UserContext = React.createContext();
-
-initAxiosInterceptors();
 
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoggedin, setisLoggedin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
   const [isLogout, setIsLogout] = useState(false)
 
   useEffect(() => {
-    async function cargarUsuario () {
-      if(!getToken){
-        setIsLoading(false);
-        console.log('no hay token')
-        return;
-      }
-
-      try {
-        const { data: usuario } = await Axios.get('/generic/auth/me');
-        console.log('Usuario token me', usuario)
-        setUser(usuario);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error)
-      }
+    return () => {
+      auth()
     }
-    cargarUsuario();
-  }, [])
-
-
-  useEffect(() => {
-      authUser()
-  }, [])
+  }, [isLoggedin, []])
 
   const authUser = () => {
     auth()
       .then((user) => {
-        console.log('petición de user desde auth(): ', user)
-        if(user !== 'undefined'){
-          console.log('Usuario del me', user);
-          const { username , isCoach } = user;
-          login( {username, password: '*', isCoach} )
-            .then((user) => {
-              console.log('AuthPovider: loginUser prevSetUser ----->: ', user);
-              setUser(user);
-              console.log('AuthPovider: loginUser ----->: ', user);
-              setisLoggedin(true);
-              setIsLoading(false);
-              setIsLogout(false)
-            })
-            .catch((err) => {
-              console.log(err);
-              console.log('withAuth.login.err => ', err);
-            });
-
-
-          // setisLoggedin(true)
-          // setUser(user)
-          // setIsLoading(false)
-        }
+        console.log('datos del user: ', user)
+        // setisLoggedin(true);
+        // setIsLoading(false);
+        // setIsLogout(false)
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log('withAuth.login.err => ', err);
       })
       .catch((err) => {
         setUser(null)
@@ -117,8 +78,8 @@ export function AuthProvider(props) {
 
   const logoutUser = () => {
     console.log('user logout ---->:', user)
-    user &&
-      logout(user.isCoach)
+
+      logout()
         .then(() => {
           setisLoggedin(false);
           setUser(null);

@@ -20,14 +20,26 @@ function Exercises() {
   };
 
   //LLAMAR AL COACH & CLIENT
+
+  const handleCoach = (coachValue) => {
+    setCoach(coachValue);
+  }
+
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
-      setCoach(coachValue);
+      console.log(coachValue);
+      const handleCoach = await handleCoach(coachMock);
+      console.log(handleCoach);
+      await getExercises(coach.coachID)
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(async () => {
+    getCoach(coachMock)
+ }, [])
 
   const getExercises = async (coachID) => {
     try {
@@ -38,21 +50,19 @@ function Exercises() {
     }
   }
 
-  useEffect(() => {
-    getCoach(coachMock)
-  }, [])
-
-  useEffect(() => {
-    console.log('coachID', coach.coachID)
-    getExercises(coach.coachID)
-  }, [coach])
-
-console.log('este es el coach', coach);
-console.log('este es el entrenamiento', exercises)
   return (
-    <div>
-      <h1>Ejercicios con cojones</h1>
-    </div>
+    <section>
+      <h1>Ejercicios disponibles</h1>
+      <div className="exercise-list">
+        {
+          exercises.map( (exercise, index) => 
+            (
+              <Exercises key={index} exercise={exercise} />
+            )
+          )
+        }
+      </div>
+    </section>
   )
 }
 
