@@ -16,7 +16,6 @@ function NewExercise() {
       second: 0,
     },
   });
-
   const [rest, setRest] = useState({
     minute: 0,
     second: 0,
@@ -57,21 +56,20 @@ function NewExercise() {
     if (id.includes('rest')) {
       setRest({ ...rest, [name]: value });
       setExercise({ ...exercise, rest: { ...rest, [name]: value } });
-      console.log('Exercise if', exercise);
       return;
     }
 
-    console.log('name', name)
-    console.log('value', value)
-
     setExercise({ ...exercise, [name]: value });
-    console.log('Exercise no if', exercise);
   };
+
+  const createNewExercise = () => {
+    
+  }
 
   return (
     <div>
       <h1>Crea tu nuevo programa</h1>
-      <form action='post'>
+      <form action='post' onSubmit=''>
         <label htmlFor='input-title'>Titulo</label>
         <input
           type='text'
