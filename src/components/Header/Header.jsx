@@ -3,10 +3,14 @@ import {Navbar, Nav, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import WithAuth from '../AuthProvider'
 
-
 const Header = () => {
 
   const { user, isLoggedin, logoutUser } = WithAuth();
+
+  console.log('user --------->', user)
+  console.log('isLoggedin --------->', isLoggedin)
+
+
 
   const configMenu = (userContext, isLogged) => {
 

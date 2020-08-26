@@ -43,6 +43,12 @@ function ClientSignupStep6(props) {
         }
       }
       props.handleData(stepData);
+      props.setIsLoading(true)
+      setTimeout(()=> {
+        props.setIsLoading(false)
+        handleRegister()
+      }, 3000)
+      
     }
   });
 
@@ -65,9 +71,7 @@ function ClientSignupStep6(props) {
 
   // paypal method
   const paymentHandler = async (details, data) => {
-    if(details.status === 'COMPLETED' && data.orderID){
-      props.setFunnelDone(true);
-    }
+    handleRegister()
   }
 
   const handleFieldClass = (name) => {
@@ -78,6 +82,9 @@ function ClientSignupStep6(props) {
     })
   }
 
+  const handleRegister = () => {
+    props.registerDBClient()
+  }
   
 
   return (
@@ -86,13 +93,14 @@ function ClientSignupStep6(props) {
       <h3>Total a pagar: {props.totalAmount}€</h3>
       <h3 className="h5">Escoge tu método de pago</h3>
       <PayPalButton 
-          amount = {props.totalAmount}
-          currency = {'USD'}
+          amount={props.totalAmount}
+          currency= {'USD'}
           onSuccess={paymentHandler}
           options={{
             clientId: 'AYtz3rCFFUx95tncJNFkn3Fp0C6XJdHXJ23eGL-DgF6faQdSmuXerQDLfpavWJqFJBXXCa3t1GGIMK88',
           }}
         />
+          
       <Accordion defaultActiveKey="0">
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="1">
@@ -156,9 +164,8 @@ function ClientSignupStep6(props) {
                 </Col>
               </Row>
             
-              <Button id="paymentButton" disabled={ disabledButton} type="submit" variant="primary" size="lg" className={(paymentIsLoading && 'isLoading')}>
+              <Button id="paymentButton" disabled={ disabledButton} type="submit" variant="primary" size="lg" >
                 Pagar
-                <div className="spinner"><img src="/img/spinner.svg" alt="spinner"/></div>
               </Button>
             
             </Form>
@@ -166,7 +173,7 @@ function ClientSignupStep6(props) {
           </Accordion.Collapse>
         </Card>
       </Accordion>
-
+      
     </Fragment>
   )
 }

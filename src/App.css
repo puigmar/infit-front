@@ -10992,6 +10992,59 @@ h2 {
   margin-bottom: 32px;
 }
 
+.loadingWrapper {
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 100;
+}
+
+.loadingWrapper.spinner {
+  height: 100px;
+}
+
+.loadingWrapper.spinner image {
+  height: 100%;
+  width: auto;
+}
+
+.loadingWrapper.spinner p {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.loadingWrapper.is-active {
+  opacity: 100%;
+  pointer-events: all;
+}
+
+.modal.fullScreen .modal-dialog {
+  margin: 0;
+  border-radius: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal.fullScreen .modal-dialog .modal-content {
+  height: 100%;
+}
+
 .error {
   border: 2px solid #FF6565;
 }

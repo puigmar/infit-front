@@ -28,7 +28,11 @@ export function AuthProvider(props) {
         console.log('petición de user desde auth(): ', user)
         if(user){
           setisLoggedin(true)
-          setUser(user)
+          setUser({user})
+          setIsLoading(false)
+        } else{
+          setUser(null)
+          setisLoggedin(false)
           setIsLoading(false)
         }
       })
@@ -47,7 +51,7 @@ export function AuthProvider(props) {
       .then((user) => {
         console.log('user signup', user);
         getUser(user)
-        setUser(user);
+        setUser({user})
         setisLoggedin(true);
         setIsLoading(false);
         setIsLogout(false)
@@ -60,7 +64,7 @@ export function AuthProvider(props) {
   const loginUser = ({ username, password, isCoach }) => {
     login({ username, password, isCoach })
       .then((user) => {
-        setUser(user);
+        setUser({user})
         console.log('AuthPovider: loginUser ----->: ', user);
         setisLoggedin(true);
         setIsLoading(false);
