@@ -2,31 +2,20 @@ import React, { useState, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import { getUser } from '../services/user/user.service';
-import { use } from '../../../infit-backend/routes/exercise.routes';
-
+// import ExerciseDetail from '../components/Exercise/ExerciseDetail.jsx';
+import Exercise from '../components/Exercise/Exercise';
 
 const Exercises = () => {
-
+  const { user } = WithAuth()
   const [coach, setCoach] = useState({});
-  const [exercises, setExercises] = useState([])
-
-  const coachMock = {
-    _id: '5f44e55a186acf0b52cad177',
-    isCoach: true,
-    username: '2',
-    password: '$2b$10$LCbudLK5fTfJwzxQa15RLO7yTgYIEp3XLFt4LoBusB1THEI3D1D3a',
-    created_at: { $date: '2020-08-25T10:18:02.308Z' },
-    updated_at: { $date: '2020-08-25T10:18:02.308Z' },
-    __v: 0,
-  };
+  const [exercises, setExercises] = useState([]);
 
   //LLAMAR AL COACH & CLIENT
 
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
-      setCoach(coach.coachID)
-      getExercises(coach)
+      setCoach(coachValue);
     } catch (error) {
       console.log(error);
     }
@@ -35,31 +24,34 @@ const Exercises = () => {
   const getExercises = async (coachID) => {
     try {
       const exercisesCoach = await getExercisesByCoach(coachID);
-      setExercises (exercisesCoach.map(item => item));
+      setExercises(exercisesCoach);
     } catch (error) {
       console.log(error)
     }
-  }
 
-  useEffect(  () => {
-     getCoach(coachMock)
-  }, [])
+  };
 
-  useEffect(  () => {
-    getExercises(coach.coachID)
-  }, [coach])
+  useEffect(() => {
+    getCoach(user);
+  }, []);
 
-  
+  useEffect(() => {
+    console.log('este es el coachID', coach.coachID)
+    getExercises(coach.coachID);
+  }, [coach]);
+
   return (
     <section>
       <h1>Ejercicios disponibles</h1>
-      <div className="exercise-list">
+      <div className='exercise-list'>
         {
-          exercises.map((item, index) => <Exercises key={index} exercise={item} />)
-        }
+        exercises.map((item, index) => (
+          // console.log('item', item)
+          <Exercise key={index} {...item} showNumbers={false} showText= {true} />
+        ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Exercises
+export default Exercises;
