@@ -10991,4 +10991,115 @@ h2 {
   text-align: center;
   margin-bottom: 32px;
 }
+
+.loadingWrapper {
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 100;
+}
+
+.loadingWrapper.spinner {
+  height: 100px;
+}
+
+.loadingWrapper.spinner image {
+  height: 100%;
+  width: auto;
+}
+
+.loadingWrapper.spinner p {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.loadingWrapper.is-active {
+  opacity: 100%;
+  pointer-events: all;
+}
+
+.modal.fullScreen .modal-dialog {
+  margin: 0;
+  border-radius: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal.fullScreen .modal-dialog .modal-content {
+  height: 100%;
+}
+
+.navbar.bg-light {
+  background-color: #F7B500 !important;
+}
+
+.navbar .navbar-brand {
+  height: 40px;
+}
+
+.navbar .navbar-brand img {
+  width: 102px;
+  height: auto;
+}
+
+@media (max-width: 991px) {
+  .offcanvas-collapse {
+    position: fixed;
+    left: 100%;
+    width: 80vw;
+    height: 100vh;
+    overflow-y: auto;
+    visibility: hidden;
+    background-color: #343a40;
+    -webkit-transition-timing-function: ease-in-out;
+            transition-timing-function: ease-in-out;
+    -webkit-transition-duration: .3s;
+            transition-duration: .3s;
+    -webkit-transition-property: left, visibility;
+    transition-property: left, visibility;
+    font-size: 1.8rem;
+    padding: 40px;
+    background: #44D7B6;
+    top: 0;
+    color: #fff;
+  }
+  .offcanvas-collapse .navbar-toggler {
+    top: 20px;
+    position: absolute;
+    right: 20px;
+    font-size: 26px;
+  }
+  .offcanvas-collapse:before, .offcanvas-collapse:after {
+    content: '';
+    position: absolute;
+    opacity: 0.2;
+  }
+  .offcanvas-collapse .navbar-nav {
+    margin-top: 40px;
+  }
+  .offcanvas-collapse .navbar-nav .nav-link {
+    color: #F7B500;
+  }
+  .offcanvas-collapse.show {
+    left: 20vw;
+    visibility: visible;
+    z-index: 1;
+  }
+}
 /*# sourceMappingURL=style.css.map */

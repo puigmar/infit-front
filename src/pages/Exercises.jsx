@@ -23,6 +23,7 @@ function Exercises() {
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
+      console.log(coachValue)
       setCoach(coachValue);
     } catch (error) {
       console.log(error);
