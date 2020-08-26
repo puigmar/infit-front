@@ -1,158 +1,173 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useFormik } from 'formik';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Button } from 'react-bootstrap';
-import FormCompactField from '../components/FormCompactField/FormCompactField'
+import { Form, Carousel } from 'react-bootstrap';
+import { checkExistUSer } from '../services/authenticate/auth-client.service';
 import WithAuth from '../components/AuthProvider';
-import SubHeader from '../components/SubHeader/SubHeader'
-
 
 const SignupCoach = () => {
+const { signupUser } = WithAuth();
 
-  const { signupUser } = WithAuth();
+  const totalSteps = 7;
 
-  let history = useHistory();
+  const [step, setStep] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(step);
+  const [loginValidation, setLoginValidation] = useState(true);
+  const [controls, setControls] = useState(false);
+  const [touch, setTouch] = useState(false);
+  const [interval, setInterval] = useState(null);
 
-  const [disabledButton, setDisabledButton] = useState(true)
-  const [formCompleted, setFormCompleted] = useState(false)
-  const [title, setTitle] = useState('Registro Entrenador')
+  // const nextStep = () => {
+  //   if (checkStep(step)) setStep(step + 1);
+  // };
 
-  // Formik
+  // const prevStep = () => {
+  //   if (checkStep(step)) setStep(step - 1);
+  // };
 
-  const formik = useFormik({
-    initialValues: {
-      username: '', 
-      password: '',
-      repeatPassword: '',
-      nameUser: ''
-    },
-    validationSchema: Yup.object().shape({
-      username: Yup.string()
-      .email("*El email no es válido")
-      .required("*El email es necesario"),
-      password: Yup.string()
-      .min(6, "*Tiene que contener 6 letras o más")
-      .required("*La contraseña es necesaria"),
-      repeatPassword: Yup.string()
-      .required('Required')
-      .test(
-          'password-match',
-          'Debe coincidir con tu contraseña',
-          function (value) {
-              return this.parent.password === value
-          }
-      ),
-      nameUser: Yup.string()
-      .required("*Este campo no puede quedar vacío")
-    }),
-    onSubmit: values => {
-      const { username, password, nameUser } = values;
-      const dataCoach = {
-        user: {
-          username,
-          password,
-          isCoach: true
-        },
-        Coach: {
-          name: nameUser
-        }
-      }
-      registerDBCoach(dataCoach)
-    }
-  });
-
-  const registerDBCoach = (dataCoach) => { 
-    const data = dataCoach; // dataCoach || fakeData
-    const {coach, user} = data;
-    const registerCoach = signupUser({ user, coach });
-  }
-
-  const checkFormEmptyFields = () => {
-    setFormCompleted(true)
-    console.log('errors: ', formik.errors)
-    for(let field in formik.values){
-      if(formik.values[field] === ''){
-        setFormCompleted(false)
-      }
-    }
-    if(formCompleted === true){
-      setDisabledButton(false)
-    }
-  }
+  const checkStep = (newStep) => {
+    return newStep >= totalSteps ? false : true;
+  };
 
   useEffect(() => {
-    checkFormEmptyFields()
-  }, [formik.values])
+    setActiveIndex(step);
+  }, [step]);
 
-  const handleFieldClass = (name) => {
-    return ({
-      'error': formik.touched[name] && formik.errors[name],
-      'is-invalid': formik.touched[name] && formik.errors[name],
-      'is-valid': formik.touched[name] && !formik.errors[name],
-    })
-  }
+  // const checkExistingUser = (event) => {
+  //   const { value } = event.target;
+  //   const isUser = checkExistUSer(value);
+  //   console.log('isUSer: ', isUser);
+  // };
+
+  // Schema for yup
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(2, '*Names must have at least 2 characters')
+      .required('*Name is required'),
+    username: Yup.string()
+      .email('*Must be a valid email address')
+      .required('*Email is required'),
+    password: Yup.string()
+      .min(6, '*Names must have at least 6 characters')
+      .required('*Phone number required'),
+  });
 
   return (
-    <Fragment>
-      <SubHeader title={title} history={history} />
-      <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
-        <Form.Group controlId='username'>
-          <FormCompactField>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type='text'
-              {...formik.getFieldProps('username')}
-              className={handleFieldClass('username')}
-            />
-            {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
-          </FormCompactField>
-        </Form.Group>
-        
-        <Form.Group controlId="password">
-          <FormCompactField>
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control 
-              type="password" 
-              {...formik.getFieldProps('password')}
-              className={handleFieldClass('password')}
-            />
-          </FormCompactField>
-          {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
-        </Form.Group>
-        
-        <Form.Group controlId="repeatPassword">
-          <FormCompactField>
-            <Form.Label>Repetir contraseña</Form.Label>
-            <Form.Control 
-              type="password" 
-              {...formik.getFieldProps('repeatPassword')}
-              className={handleFieldClass('repeatPassword')}
-            />
-          </FormCompactField>
-          {(formik.touched.repeatPassword && formik.errors.repeatPassword ) && ( <div className="error-message">{formik.errors.repeatPassword}</div> )}
-        </Form.Group>
-        
-        <Form.Group controlId="nameUser">
-          <FormCompactField>
-            <Form.Label>Nombre</Form.Label>
-            <Form.Control 
-              type="text" 
-              {...formik.getFieldProps('nameUser')}
-              className={handleFieldClass('nameUser')}
-            />
-          </FormCompactField>
-          {(formik.touched.nameUser && formik.errors.nameUser ) && ( <div className="error-message">{formik.errors.nameUser}</div> )}
-        </Form.Group>
+    <div className='signup'>
+      <Formik
+        initialValues={{
+          username: '',
+          password: '',
+          name: '',
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {
+          // When button submits form and form is in the process of submitting, submit button is disabled
 
-        <Button disabled={disabledButton} type="submit" variant="primary" size="lg">Registrarse</Button>
-        
-        <section className="signupBtn">
-          <p className="mt-3">¿Ya eres usuario? <Link to={'/login'}>Inicia sesión</Link></p>
-        </section>
-      </Form>
-    </Fragment>
-  )
+          console.log('Estos son los valores', values);
+          //signupUser(values);
+          
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
+          <Fragment>
+            <Form onSubmit={handleSubmit}>
+              <Carousel
+                controls={controls}
+                touch={touch}
+                interval={interval}
+                activeIndex={activeIndex}
+              >
+                <Carousel.Item>
+                  <h1>1. DATOS DE TU CUENTA COACH</h1>
+
+                  <Form.Group controlId='username'>
+                    <Form.Control
+                      type='text'
+                      name='username'
+                      onChange={handleChange}
+                      onBlur={(event) => {
+                        handleBlur(event);
+                        // checkExistingUser(event)
+                      }}
+                      value={values.username}
+                      className={touched.username && errors.username && 'error'}
+                    />
+                    {touched.username && errors.username && (
+                      <div className='error-message'>{errors.username}</div>
+                    )}
+                  </Form.Group>
+
+                  <Form.Group controlId='password'>
+                    <Form.Control
+                      type='password'
+                      name='password'
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                      className={
+                        touched.password && errors.password ? 'error' : null
+                      }
+                    />
+                    {touched.password && errors.password && (
+                      <div className='error-message'>{errors.password}</div>
+                    )}
+                  </Form.Group>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className='d-block w-100'
+                    src='holder.js/800x400?text=Second slide&bg=282c34'
+                    alt='Third slide'
+                  />
+
+                  <Carousel.Caption>
+                    <h3>Second slide label</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className='d-block w-100'
+                    src='holder.js/800x400?text=Third slide&bg=20232a'
+                    alt='Third slide'
+                  />
+
+                  <Carousel.Caption>
+                    <h3>Third slide label</h3>
+                    <p>
+                      Praesent commodo cursus magna, vel scelerisque nisl
+                      consectetur.
+                    </p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              </Carousel>
+              <input
+                disabled={!loginValidation}
+                variant='primary'
+                size='lg'
+                type='submit'
+                value="Continuar"
+                // onClick={() => nextStep()}
+              />
+            </Form>
+            <p>Already have account?</p> <Link to={'/login'}> Login</Link>
+          </Fragment>
+        )}
+      </Formik>
+    </div>
+  );
 };
 
 export default SignupCoach;

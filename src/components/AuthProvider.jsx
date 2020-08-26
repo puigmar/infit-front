@@ -89,7 +89,7 @@ export function AuthProvider(props) {
       .then((user) => {
         console.log('user signup', user);
         getUser(user)
-        setUser({user})
+        setUser(user);
         setisLoggedin(true);
         setIsLoading(false);
         setIsLogout(false)

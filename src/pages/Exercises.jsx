@@ -23,7 +23,6 @@ function Exercises() {
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
-      console.log(coachValue)
       setCoach(coachValue);
     } catch (error) {
       console.log(error);
@@ -40,9 +39,7 @@ function Exercises() {
   }
 
   useEffect(() => {
-    console.log('usuario de useEffect', user)
     getCoach(user)
-    console.log('he encontrado el coach?', coach)
   }, [])
 
   useEffect(() => {
