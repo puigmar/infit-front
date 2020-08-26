@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import { getUser } from '../services/user/user.service';
-import { use } from '../../../infit-backend/routes/exercise.routes';
 
 
 const Exercises = () => {
@@ -25,8 +24,9 @@ const Exercises = () => {
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
-      setCoach(coach.coachID)
-      getExercises(coach)
+      setCoach(coachValue.coachID);
+      getExercises(coachValue.coachID)
+
     } catch (error) {
       console.log(error);
     }
@@ -35,21 +35,19 @@ const Exercises = () => {
   const getExercises = async (coachID) => {
     try {
       const exercisesCoach = await getExercisesByCoach(coachID);
-      setExercises (exercisesCoach.map(item => item));
+      console.log(exercisesCoach)
+      const map = exercisesCoach.map(item => item).map(item => item[0]);
+      console.log(map)
+      setExercises([]);
     } catch (error) {
       console.log(error)
     }
-  }
+  } 
 
-  useEffect(  () => {
+  useEffect( async () => {
      getCoach(coachMock)
   }, [])
 
-  useEffect(  () => {
-    getExercises(coach.coachID)
-  }, [coach])
-
-  
   return (
     <section>
       <h1>Ejercicios disponibles</h1>
