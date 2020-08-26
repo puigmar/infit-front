@@ -49,7 +49,7 @@ function ClientSignupStep1(props) {
 
   const checkFormEmptyFields = () => {
     setFormCompleted(true)
-    console.log(formik.values)
+    console.log('errors: ', formik.errors)
     for(let field in formik.values){
       if(formik.values[field] === ''){
         setFormCompleted(false)

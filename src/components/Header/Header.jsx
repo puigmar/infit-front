@@ -10,13 +10,15 @@ const Header = () => {
   console.log('user --------->', user)
   console.log('isLoggedin --------->', isLoggedin)
 
-
-
   const configMenu = (userContext, isLogged) => {
 
     const baseUrl = (userContext && userContext.isCoach) ? '/coach' : '/client'
     const myAccountUrl = `${baseUrl}/auth/my-account`;
     const anonymUrl = `${baseUrl}/auth`;
+    const clientLogin = `/client/auth/login`;
+    const clientSignup = `/client/auth/signup`;
+    const coachLogin = `/coach/auth/login`;
+    const coachSignup = `/coach/auth/signup`;
     let menuList;
 
     const menuUser = [
@@ -31,7 +33,7 @@ const Header = () => {
       {
         name: 'Cerrar sesión' ,
         action: logoutUser,
-        link: '/'
+        link: './'
       }
     ]
 
@@ -47,22 +49,25 @@ const Header = () => {
       {
         name: 'Mis clientes' ,
         link: `${myAccountUrl}/clients`
-      },
-      {
-        name: 'Cerrar sesión' ,
-        action: logoutUser,
-        link: '/'
       }
     ]
 
     const menuAnonymous = [
       {
-        name: 'Iniciar sesión' ,
-        link: `${anonymUrl}/login`
+        name: 'Quiero entrenar' ,
+        link: `${clientSignup}`
       },
       {
-        name: 'Registrarse' ,
-        link: `${anonymUrl}/signup`
+        name: 'Ya soy usuario' ,
+        link: `${clientLogin}`
+      },
+      {
+        name: 'Quiero ser entrenador' ,
+        link: `${coachSignup}`
+      },
+      {
+        name: 'Ya soy entrenador' ,
+        link: `${coachLogin}`
       }
     ]
     
@@ -74,29 +79,41 @@ const Header = () => {
 
     return menuList.map( (listItem, index) => {
       return (
-        <LinkContainer key={index} to={listItem.link}>
-          <Nav.Link onSelect={listItem.action}>{listItem.name}</Nav.Link>
-        </LinkContainer>
+        <Nav.Item>
+          <Nav.Link href={listItem.link}>{listItem.name}</Nav.Link>
+        </Nav.Item>
       )
+    })
+  }
+  const logoutButtons = (userContext) => {
+    switch(userContext.isCoach) {
+      case false:
+        return (<Nav.item>
+          <Navbar.Link href="/coach/auth/logout">Cerrar sesión</Navbar.Link>
+        </Nav.item>)
+        break;
+      
+      case true:
+        return (<Nav.item>
+          <Navbar.Link href="/client/auth/logout">Cerrar sesión</Navbar.Link>
+        </Nav.item>)
+        break;
     }
-
-    )
   }
 
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <LinkContainer to="/">
-          <Navbar.Brand>React-Bootstrap</Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            { 
+          <Nav
+            activeKey="/home"
+          >
+            {
               configMenu(user, isLoggedin)
             }
           </Nav>
-        </Navbar.Collapse>
+          {
+            logoutButtons
+          }
       </Container>
     </Navbar>
   )

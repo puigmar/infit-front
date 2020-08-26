@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import FormCompactField from '../components/FormCompactField/FormCompactField'
-import { checkExistUSer } from '../services/authenticate/auth-client.service';
 import WithAuth from '../components/AuthProvider';
 import SubHeader from '../components/SubHeader/SubHeader'
 
@@ -17,13 +16,7 @@ const SignupCoach = () => {
 
   const [disabledButton, setDisabledButton] = useState(true)
   const [formCompleted, setFormCompleted] = useState(false)
-  const [title, setTitle] = useState('Registro')
-
-
-
-  const checkExistingUser = (event) => {
-    const { value } = event.target;
-  };
+  const [title, setTitle] = useState('Registro Entrenador')
 
   // Formik
 
@@ -32,7 +25,7 @@ const SignupCoach = () => {
       username: '', 
       password: '',
       repeatPassword: '',
-      name: ''
+      nameUser: ''
     },
     validationSchema: Yup.object().shape({
       username: Yup.string()
@@ -49,10 +42,12 @@ const SignupCoach = () => {
           function (value) {
               return this.parent.password === value
           }
-      )
+      ),
+      nameUser: Yup.string()
+      .required("*Este campo no puede quedar vacío")
     }),
     onSubmit: values => {
-      const { username, password, name } = values;
+      const { username, password, nameUser } = values;
       const dataCoach = {
         user: {
           username,
@@ -60,7 +55,7 @@ const SignupCoach = () => {
           isCoach: true
         },
         Coach: {
-          name
+          name: nameUser
         }
       }
       registerDBCoach(dataCoach)
@@ -75,8 +70,7 @@ const SignupCoach = () => {
 
   const checkFormEmptyFields = () => {
     setFormCompleted(true)
-    console.log(formik.values)
-    console.log(formik.errors)
+    console.log('errors: ', formik.errors)
     for(let field in formik.values){
       if(formik.values[field] === ''){
         setFormCompleted(false)
@@ -105,6 +99,7 @@ const SignupCoach = () => {
       <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
         <Form.Group controlId='username'>
           <FormCompactField>
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type='text'
               {...formik.getFieldProps('username')}
