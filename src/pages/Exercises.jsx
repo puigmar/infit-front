@@ -39,7 +39,9 @@ function Exercises() {
   }
 
   useEffect(() => {
+    console.log('usuario de useEffect', user)
     getCoach(user)
+    console.log('he encontrado el coach?', coach)
   }, [])
 
   useEffect(() => {
