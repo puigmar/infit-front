@@ -5,7 +5,7 @@ import { getUser } from '../services/user/user.service';
 
 
 function Exercises() {
-
+  const { user } = WithAuth();
   const [coach, setCoach] = useState({});
   const [exercises, setExercises] = useState([{}])
 
@@ -39,16 +39,17 @@ function Exercises() {
   }
 
   useEffect(() => {
-    getCoach(coachMock)
+    getCoach(user)
   }, [])
 
   useEffect(() => {
-    console.log('coachID', coach.coachID)
+    console.log('coachID', coach.coachID);
     getExercises(coach.coachID)
   }, [coach])
 
 console.log('este es el coach', coach);
-console.log('este es el entrenamiento', exercises)
+console.log('este es el entrenamiento', exercises);
+
   return (
     <div>
       <h1>Ejercicios con cojones</h1>
