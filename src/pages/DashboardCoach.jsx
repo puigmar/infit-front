@@ -42,7 +42,7 @@ const DashboardClient = (props) => {
   // getTrainings({ userID: user._id, isCoach: true});
 
   useEffect(() => {
-    getCoach(userMock);
+    getCoach(user);
   }, []);
 
   return (

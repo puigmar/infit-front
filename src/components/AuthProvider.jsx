@@ -26,11 +26,13 @@ export function AuthProvider(props) {
     async function cargarUsuario () {
       if(!getToken){
         setIsLoading(false);
+        console.log('no hay token')
         return;
       }
 
       try {
         const { data: usuario } = await Axios.get('/generic/auth/me');
+        console.log('Usuario token me', usuario)
         setUser(usuario);
         setIsLoading(false);
       } catch (error) {
@@ -49,14 +51,27 @@ export function AuthProvider(props) {
     auth()
       .then((user) => {
         console.log('petición de user desde auth(): ', user)
-        if(!user === 'undefined'){
-          setisLoggedin(true)
-          setUser({user})
-          setIsLoading(false)
-        } else{
-          setUser(null)
-          setisLoggedin(false)
-          setIsLoading(false)
+        if(user !== 'undefined'){
+          console.log('Usuario del me', user);
+          const { username , isCoach } = user;
+          login( {username, password: '*', isCoach} )
+            .then((user) => {
+              console.log('AuthPovider: loginUser prevSetUser ----->: ', user);
+              setUser(user);
+              console.log('AuthPovider: loginUser ----->: ', user);
+              setisLoggedin(true);
+              setIsLoading(false);
+              setIsLogout(false)
+            })
+            .catch((err) => {
+              console.log(err);
+              console.log('withAuth.login.err => ', err);
+            });
+
+
+          // setisLoggedin(true)
+          // setUser(user)
+          // setIsLoading(false)
         }
       })
       .catch((err) => {

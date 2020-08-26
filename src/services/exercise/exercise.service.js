@@ -9,3 +9,7 @@ export async function getExercisesByCoach( coachID ) {
     console.log(error);
   }
 }
+
+export async function createNewExercise({values}) {
+  
+}
