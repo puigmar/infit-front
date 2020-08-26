@@ -2,9 +2,6 @@ import AxiosCredentials from '../axios/credentials';
 
 export async function signup(user, client) {
   const { username, password, isCoach } = user;
-  console.log('username: ----------> ', username)
-  console.log('password: ----------> ', password)
-  console.log('isCoach: ----------> ', isCoach)
   
   try {
     const signUpUser =  await AxiosCredentials.post(`${isCoach ? 'coach' : 'client'}/auth/signup`, {
@@ -26,8 +23,7 @@ export async function login({ username, password, isCoach }) {
     const userLogged = await AxiosCredentials.post(`${url}`, {
       username,
       password,
-    })
-    return userLogged;
+    }).then(({data}) => data)
   } catch (error) {
     console.log(error);
   }
@@ -73,7 +69,7 @@ export async function logout(isCoach) {
 export async function auth() {
   try {
     const me = await AxiosCredentials.get('/generic/auth/me',{})
-    return me.data._doc;
+    return me;
   } catch (error) {
     console.log(error);
   }

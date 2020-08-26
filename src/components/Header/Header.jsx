@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Navbar, Nav, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import WithAuth from '../AuthProvider'
@@ -10,15 +10,28 @@ const Header = () => {
   console.log('user --------->', user)
   console.log('isLoggedin --------->', isLoggedin)
 
+  useEffect (()=>{
+    const navMenuBtn = document.querySelectorAll('.navbar-toggler');
+    console.log('navMenuBtn: ', navMenuBtn)
+    navMenuBtn.forEach(button => {
+      button.addEventListener('click', handleMenu);
+    })
+  }, [])
+
+
+  const handleMenu = (e) => {
+    const el = e.currentTarget;
+    const toggleId = el.getAttribute('data-toggle');
+    const menu = document.getElementById(toggleId)
+    console.log(menu)
+    menu.classList.toggle('show')
+  }
+
   const configMenu = (userContext, isLogged) => {
 
     const baseUrl = (userContext && userContext.isCoach) ? '/coach' : '/client'
     const myAccountUrl = `${baseUrl}/auth/my-account`;
     const anonymUrl = `${baseUrl}/auth`;
-    const clientLogin = `/client/auth/login`;
-    const clientSignup = `/client/auth/signup`;
-    const coachLogin = `/coach/auth/login`;
-    const coachSignup = `/coach/auth/signup`;
     let menuList;
 
     const menuUser = [
@@ -33,7 +46,7 @@ const Header = () => {
       {
         name: 'Cerrar sesión' ,
         action: logoutUser,
-        link: './'
+        link: '/'
       }
     ]
 
@@ -49,25 +62,22 @@ const Header = () => {
       {
         name: 'Mis clientes' ,
         link: `${myAccountUrl}/clients`
+      },
+      {
+        name: 'Cerrar sesión' ,
+        action: logoutUser,
+        link: '/'
       }
     ]
 
     const menuAnonymous = [
       {
-        name: 'Quiero entrenar' ,
-        link: `${clientSignup}`
+        name: 'Iniciar sesión' ,
+        link: `${anonymUrl}/login`
       },
       {
-        name: 'Ya soy usuario' ,
-        link: `${clientLogin}`
-      },
-      {
-        name: 'Quiero ser entrenador' ,
-        link: `${coachSignup}`
-      },
-      {
-        name: 'Ya soy entrenador' ,
-        link: `${coachLogin}`
+        name: 'Registrarse' ,
+        link: `${anonymUrl}/signup`
       }
     ]
     
@@ -79,41 +89,30 @@ const Header = () => {
 
     return menuList.map( (listItem, index) => {
       return (
-        <Nav.Item>
-          <Nav.Link href={listItem.link}>{listItem.name}</Nav.Link>
-        </Nav.Item>
+        <LinkContainer key={index} to={listItem.link}>
+          <Nav.Link onSelect={listItem.action}>{listItem.name}</Nav.Link>
+        </LinkContainer>
       )
-    })
-  }
-  const logoutButtons = (userContext) => {
-    switch(userContext.isCoach) {
-      case false:
-        return (<Nav.item>
-          <Navbar.Link href="/coach/auth/logout">Cerrar sesión</Navbar.Link>
-        </Nav.item>)
-        break;
-      
-      case true:
-        return (<Nav.item>
-          <Navbar.Link href="/client/auth/logout">Cerrar sesión</Navbar.Link>
-        </Nav.item>)
-        break;
     }
+
+    )
   }
 
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-          <Nav
-            activeKey="/home"
-          >
-            {
+        <LinkContainer to="/">
+          <Navbar.Brand className="logo"><img src="/img/logo.svg"></img></Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="offcanvas-collapse_btnClose" data-toggle="offcanvas" onClick={(e)=>handleMenu(e)} />
+        <Navbar.Collapse id="basic-navbar-nav" className="offcanvas-collapse" id="offcanvas">
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className="offcanvas-collapse_btnClose" data-toggle="offcanvas" onClick={(e)=>handleMenu(e)} />
+          <Nav className="mr-auto">
+            { 
               configMenu(user, isLoggedin)
             }
           </Nav>
-          {
-            logoutButtons
-          }
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   )
