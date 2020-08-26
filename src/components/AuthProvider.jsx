@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
 import {
   signup,
   login,
@@ -8,15 +9,37 @@ import {
 
 import { getUser } from '../services/user/user.service';
 
+import { deleteToken, getToken, setToken, initAxiosInterceptors} from '../helpers/authHelpers';
+
 const UserContext = React.createContext();
+
+initAxiosInterceptors();
 
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoggedin, setisLoggedin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
   const [isLogout, setIsLogout] = useState(false)
 
-  let useEffectRounds = 0;
+  useEffect(() => {
+    async function cargarUsuario () {
+      if(!getToken){
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const { data: usuario } = await Axios.get('/generic/auth/me');
+        setUser(usuario);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    cargarUsuario();
+  }, [])
+
 
   useEffect(() => {
       authUser()
@@ -26,7 +49,7 @@ export function AuthProvider(props) {
     auth()
       .then((user) => {
         console.log('petición de user desde auth(): ', user)
-        if(user){
+        if(!user === 'undefined'){
           setisLoggedin(true)
           setUser(user)
           setIsLoading(false)
@@ -60,6 +83,7 @@ export function AuthProvider(props) {
   const loginUser = ({ username, password, isCoach }) => {
     login({ username, password, isCoach })
       .then((user) => {
+        console.log('AuthPovider: loginUser prevSetUser ----->: ', user);
         setUser(user);
         console.log('AuthPovider: loginUser ----->: ', user);
         setisLoggedin(true);
@@ -94,7 +118,6 @@ export function AuthProvider(props) {
     isLoading,
     isLogout,
     setIsLoading,
-    authUser
   };
 
   return <UserContext.Provider value={value} {...props} />;

@@ -26,9 +26,8 @@ export async function login({ username, password, isCoach }) {
     const userLogged = await AxiosCredentials.post(`${url}`, {
       username,
       password,
-    })
+    }).then(({data}) => data);
     return userLogged;
-
   } catch (error) {
     console.log(error);
   }
