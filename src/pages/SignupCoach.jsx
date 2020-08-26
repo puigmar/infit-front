@@ -34,11 +34,11 @@ const { signupUser } = WithAuth();
     setActiveIndex(step);
   }, [step]);
 
-  const checkExistingUser = (event) => {
-    const { value } = event.target;
-    const isUser = checkExistUSer(value);
-    console.log('isUSer: ', isUser);
-  };
+  // const checkExistingUser = (event) => {
+  //   const { value } = event.target;
+  //   const isUser = checkExistUSer(value);
+  //   console.log('isUSer: ', isUser);
+  // };
 
   // Schema for yup
 
