@@ -54,11 +54,12 @@ export async function checkExistUSer(username) {
 
 export async function logout(isCoach) {
   try {
+    const url = isCoach ? '/coach' : '/client';
+    console.log(`${url}/auth/logout`);
     return await AxiosCredentials.post(
-      '/coach/client/auth/logout',
+      `${url}/auth/logout`,
       {}
     )
-
   } catch (error) {
     console.log(error);
   }

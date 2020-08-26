@@ -11046,11 +11046,12 @@ h2 {
 }
 
 .navbar.bg-light {
-  background-color: #F7B500 !important;
+  background-color: #44D7B6 !important;
 }
 
 .navbar .navbar-brand {
   height: 40px;
+  display: block;
 }
 
 .navbar .navbar-brand img {

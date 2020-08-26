@@ -1,59 +1,89 @@
 import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import {
   signup,
   login,
   logout,
-  auth
+  auth,
 } from '../services/authenticate/auth-client.service'; // Importamos funciones para llamadas axios a la API
 
 import { getUser } from '../services/user/user.service';
+
+import { deleteToken, getToken, setToken } from '../helpers/authHelpers';
+import { Redirect } from 'react-router';
+
+// initAxiosInterceptors()
 
 const UserContext = React.createContext();
 
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
-  const [isLoggedin, setisLoggedin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLogout, setIsLogout] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function cargarUsuario() {
+    if (!getToken) {
+      setIsLoading(false);
+      console.log('no hay token');
+      return;
+    }
+
+    if (user) {
+      const usuario = await auth().then(({ user }) => user);
+
+      console.log('Usuario token me', usuario);
+      setUser(usuario);
+      login({ ...user })
+        .then((user) => {
+          console.log(
+            'AuthPovider EFFECT: loginUser prevSetUser ----->: ',
+            user
+          );
+          setUser(user);
+          console.log('AuthPovider EFFECT: loginUser ----->: ', user);
+          setToken(uuidv4());
+          setIsLoading(true);
+          console.log('loggin EFFECT --->', isLoading);
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log('withAuth.login.err => ', err);
+        });
+    }
+  }
 
   useEffect(() => {
-    return () => {
-      auth()
+    console.log('PASO DE TU CARA');
+    console.log('este es el token', getToken());
+    if (!getToken()) {
+      setIsLoading(false);
+      console.log('no hay token');
+    } else {
+      authUser();
     }
-  }, [isLoggedin, []])
+  }, []);
 
-  const authUser = () => {
+  const authUser = async () => {
     auth()
-      .then((user) => {
-        console.log('datos del user: ', user)
-        // setisLoggedin(true);
-        // setIsLoading(false);
-        // setIsLogout(false)
+      .then((authUser) => {
+        console.log('petición de user desde auth(): ', authUser);
+        console.log('He llegado hasta aquí');
+        setUser(authUser);
+        console.log('No llego hasta aquí');
       })
       .catch((err) => {
-        console.log(err);
-        console.log('withAuth.login.err => ', err);
-      })
-      .catch((err) => {
-        setUser(null)
-        setisLoggedin(false)
-        setIsLoading(false)
-      }
-      );
-  }
-  
-  const signupUser = ({user, client}) => {
+        setUser(null);
+        setIsLoading(false);
+      });
+  };
+
+  const signupUser = ({ user, client }) => {
     console.log('user ----->: ', user);
     console.log('client ----->: ', client);
     signup(user, client)
       .then((user) => {
         console.log('user signup', user);
-        getUser(user)
+        getUser(user);
         setUser(user);
-        setisLoggedin(true);
-        setIsLoading(false);
-        setIsLogout(false)
       })
       .catch(({ response }) => {
         return { message: response.data.statusMessage };
@@ -61,30 +91,32 @@ export function AuthProvider(props) {
   };
 
   const loginUser = ({ username, password, isCoach }) => {
-    login({ username, password, isCoach })
-      .then((user) => {
-        console.log('AuthPovider: loginUser prevSetUser ----->: ', user);
-        setUser(user);
-        console.log('AuthPovider: loginUser ----->: ', user);
-        setisLoggedin(true);
-        setIsLoading(false);
-        setIsLogout(false)
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log('withAuth.login.err => ', err);
-      });
+    username &&
+      login({ username, password, isCoach })
+        .then((user) => {
+          console.log('AuthPovider: loginUser prevSetUser ----->: ', user);
+          setUser(user);
+          console.log('AuthPovider: loginUser ----->: ', user);
+          setToken(uuidv4());
+          setIsLoading(true);
+          console.log('PATATA');
+          console.log('isLoading --->', isLoading);
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log('withAuth.login.err => ', err);
+        });
   };
 
   const logoutUser = () => {
-    console.log('user logout ---->:', user)
-
-      logout()
+    console.log('user logout ---->:', user);
+    user &&
+      logout(user.isCoach)
         .then(() => {
-          setisLoggedin(false);
+          deleteToken();
+          setIsLoading(false);
           setUser(null);
-          setIsLoading(true);
-          setIsLogout(true)
+          console.log('loggout --->', isLoading);
         })
         .catch((err) => console.log(err));
   };
@@ -94,9 +126,7 @@ export function AuthProvider(props) {
     logoutUser,
     signupUser,
     user,
-    isLoggedin,
     isLoading,
-    isLogout,
     setIsLoading,
   };
 

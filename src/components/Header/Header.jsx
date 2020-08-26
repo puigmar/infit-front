@@ -5,7 +5,7 @@ import WithAuth from '../AuthProvider'
 
 const Header = () => {
 
-  const { user, isLoggedin, logoutUser } = WithAuth();
+  const { user, isLoading, logoutUser } = WithAuth();
 
   useEffect (()=>{
     const navMenuBtn = document.querySelectorAll('.navbar-toggler');
@@ -81,9 +81,9 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="offcanvas-collapse_btnClose" data-toggle="offcanvas" onClick={(e)=>handleMenu(e)} />
           <Nav className="mr-auto">
             { 
-              configMenu(user, isLoggedin)
+              configMenu(user, isLoading)
             }
-            {isLoggedin ? <a onClick={logoutUser} className="nav-link" role="button">Cerrar sesión</a> : ''}
+            {isLoading ? <a onClick={logoutUser} className="nav-link" role="button">Cerrar sesión</a> : ''}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -1,7 +1,7 @@
 import React, {useState}  from 'react'
 
 function Exercise(props) {
-
+  const[exercise, setExercise] = useState(props.exercise)
   const [showNumbers, setShowNumbers] = useState(false);
   const [showText, setShowText] = useState(false);
 
