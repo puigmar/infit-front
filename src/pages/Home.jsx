@@ -6,10 +6,6 @@ function Home() {
 
   const {user, isLoggedin, isLogout} = widhAuth()
 
-  console.log('Inside Home.jsx Route user --->', user)
-  console.log('Inside Home.jsx Route isLoggedin --->', isLoggedin)
-  console.log('Inside Home.jsx Route isLogout --->', isLogout)
-
   return (
     <div> 
       <h1>Home Page</h1>

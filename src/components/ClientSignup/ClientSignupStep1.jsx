@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import FormCompactField from '../FormCompactField/FormCompactField'
+import {Link} from 'react-router-dom'
 
 function ClientSignupStep1(props) {
   
@@ -122,6 +123,10 @@ function ClientSignupStep1(props) {
       </div>
       <Button disabled={disabledButton} type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
       </Form>
+
+      <section className="signupBtn">
+        <p className="mt-3">Already have account? <Link to={'/login'}> Login</Link></p>
+      </section>
       
     </Fragment>
   )
