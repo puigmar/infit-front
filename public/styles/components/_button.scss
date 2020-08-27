@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 375px;
   height: 48px;
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 17px;
@@ -47,4 +47,20 @@
     text-decoration: none;
     font-weight: 400;
   }
+
+  &-secondary{
+    background-color: $primary-color;
+    color: #000;
+    text-decoration: none;
+    font-weight: 400;
+  }
+
+}
+
+.btn + a{
+  margin-top: 10px;
+}
+
+a{
+  display: block;
 }

@@ -6,6 +6,7 @@
   clip-path: polygon(0% 0%,100% 0,100% 100%,0% calc(100% - 20px));
   padding-bottom: 38px;
   padding-top: 20px;
+  z-index: 100;
 
   &.bg-light{
     background-color: $secondary-color!important
@@ -82,5 +83,11 @@
   .offcanvas-collapse.show {
       left: 20vw;
       visibility: visible;
+  }
+
+  .navbar{
+    &.isMenu{
+      clip-path: none
+    }
   }
 }
