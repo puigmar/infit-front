@@ -9,7 +9,14 @@ import {
 
 import { getUser } from '../services/user/user.service';
 
-import { deleteToken, getToken, setToken } from '../helpers/authHelpers';
+import {
+  deleteToken,
+  getToken,
+  setToken,
+  setTokenUser,
+  getTokenUser,
+  deleteTokenUser,
+} from '../helpers/authHelpers';
 
 const UserContext = React.createContext();
 
@@ -17,45 +24,19 @@ export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // async function cargarUsuario() {
-  //   if (!getToken) {
-  //     setIsLoading(false);
-  //     console.log('no hay token');
-  //     return;
-  //   }
-
-  //   if (user) {
-  //     const usuario = await auth().then(({ user }) => user);
-
-  //     console.log('Usuario token me', usuario);
-  //     setUser(usuario);
-  //     login({ ...user })
-  //       .then((user) => {
-  //         console.log(
-  //           'AuthPovider EFFECT: loginUser prevSetUser ----->: ',
-  //           user
-  //         );
-  //         setUser(user);
-  //         console.log('AuthPovider EFFECT: loginUser ----->: ', user);
-  //         setToken(uuidv4());
-  //         setIsLoading(true);
-  //         console.log('loggin EFFECT --->', isLoading);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         console.log('withAuth.login.err => ', err);
-  //       });
-  //   }
-  // }
-
   useEffect(() => {
-    console.log('PASO DE TU CARA');
-    console.log('este es el token', getToken());
     if (!getToken()) {
       setIsLoading(false);
       console.log('no hay token');
     } else {
-      authUser();
+      console.log('este es el token', getToken());
+      //authUser()
+      console.log('he pasado por el useeffect con este user', getTokenUser());
+      let userToken = getTokenUser();
+      console.log(userToken)
+      setUser(userToken);
+      console.log('he pasado por el useeffect con este userState', user);
+      setIsLoading(true);
     }
   }, []);
 
@@ -74,13 +55,11 @@ export function AuthProvider(props) {
   };
 
   const signupUser = ({ user, client }) => {
-    console.log('user ----->: ', user);
-    console.log('client ----->: ', client);
     signup(user, client)
       .then((user) => {
-        console.log('user signup', user);
         getUser(user);
         setUser(user);
+        setTokenUser(user);
       })
       .catch(({ response }) => {
         return { message: response.data.statusMessage };
@@ -90,14 +69,15 @@ export function AuthProvider(props) {
   const loginUser = ({ username, password, isCoach }) => {
     username &&
       login({ username, password, isCoach })
-        .then((user) => {
-          console.log('AuthPovider: loginUser prevSetUser ----->: ', user);
-          setUser(user);
-          console.log('AuthPovider: loginUser ----->: ', user);
+        .then((userLogged) => {
+          console.log('user del login--->', userLogged);
           setToken(uuidv4());
+          setTokenUser(userLogged);
           setIsLoading(true);
-          console.log('PATATA');
-          console.log('isLoading --->', isLoading);
+          console.log('setToken', getToken());
+          setUser(userLogged);
+          console.log('Seteado el userState');
+          console.log(getTokenUser());
         })
         .catch((err) => {
           console.log(err);
@@ -106,14 +86,13 @@ export function AuthProvider(props) {
   };
 
   const logoutUser = () => {
-    console.log('user logout ---->:', user);
     user &&
       logout(user.isCoach)
         .then(() => {
           deleteToken();
+          deleteTokenUser();
           setIsLoading(false);
           setUser(null);
-          console.log('loggout --->', isLoading);
         })
         .catch((err) => console.log(err));
   };
