@@ -44,7 +44,7 @@ export function AuthProvider(props) {
         setUser(user);
       })
       .catch(({ response }) => {
-        return { message: response.data.statusMessage };
+        console.log(response)
       });
   };
   const loginUser = ({ username, password, isCoach }) => {

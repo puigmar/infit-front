@@ -1,14 +1,17 @@
 import AxiosCredentials from '../axios/credentials';
 
 export async function signup(user, client) {
-  const { username, password, isCoach } = user;
-  console.log('user authclient.service------>:',user);
   try {
-    const signUpUser =  await AxiosCredentials.post(`/${isCoach ? 'coach' : 'client'}/auth/signup`, {
-      username,
-      password,
-      client
-    })
+    const { username, password, isCoach } = user;
+    console.log('user authclient.service------>:',user);
+    console.log('client authclient.service------>:',client);
+    let params;
+    if (isCoach) {
+      params = { username, password, 'coach': client }
+    }else{
+      params = { username, password, client }
+    }
+    const signUpUser =  await AxiosCredentials.post(`/${isCoach ? 'coach' : 'client'}/auth/signup`, params)
     console.log('signUpUser :', signUpUser)
     return signUpUser;
   }

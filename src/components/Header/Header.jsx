@@ -20,12 +20,11 @@ const Header = () => {
 
 
   const handleMenu = (e) => {
+
     const el = e.currentTarget;
-    const navbar = document.querySelector('#root > .navbar');
     const toggleId = el.getAttribute('data-toggle');
     const menu = document.getElementById(toggleId)
     menu.classList.toggle('show')
-    navbar.classList.toggle('isMenu')
   }
 
   const configMenu = (userContext, isLogged) => {

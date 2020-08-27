@@ -54,7 +54,7 @@ const SignupCoach = () => {
           password,
           isCoach: true
         },
-        Coach: {
+        client: {
           name: nameUser
         }
       }
