@@ -3,7 +3,6 @@ import { Button, Card, ListGroupItem, ListGroup } from 'react-bootstrap';
 
 function Exercise(props) {
   const { title, description, image, rest, showText, showNumbers } = props;
-
   return (
     <Card>
       <Card.Img variant='top' src={image} />
@@ -14,8 +13,9 @@ function Exercise(props) {
         <Button variant='primary'>Editar</Button>
       </Card.Body>
       <ListGroup className='list-group-flush'>
-        <ListGroupItem>{rest && rest.minutes}</ListGroupItem>
-        <ListGroupItem>{rest && rest.seconds}</ListGroupItem>
+        <ListGroupItem>Descanso por serie</ListGroupItem>
+        <ListGroupItem>Minutos: {rest && rest.minute}</ListGroupItem>
+        <ListGroupItem>Segundos: {rest && rest.second}</ListGroupItem>
       </ListGroup>
     </Card>
   );

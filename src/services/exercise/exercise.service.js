@@ -10,3 +10,11 @@ export async function getExercisesByCoach( coachID ) {
     console.log(error);
   }
 }
+
+export async function createExercise( values ) {
+  try {
+    AxiosCredentials.post('/exercise/newExercise', {...values});
+  } catch (error) {
+    
+  }
+}

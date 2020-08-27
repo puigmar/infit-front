@@ -10,9 +10,6 @@ import {
 import { getUser } from '../services/user/user.service';
 
 import { deleteToken, getToken, setToken } from '../helpers/authHelpers';
-import { Redirect } from 'react-router';
-
-// initAxiosInterceptors()
 
 const UserContext = React.createContext();
 
@@ -20,36 +17,36 @@ export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  async function cargarUsuario() {
-    if (!getToken) {
-      setIsLoading(false);
-      console.log('no hay token');
-      return;
-    }
+  // async function cargarUsuario() {
+  //   if (!getToken) {
+  //     setIsLoading(false);
+  //     console.log('no hay token');
+  //     return;
+  //   }
 
-    if (user) {
-      const usuario = await auth().then(({ user }) => user);
+  //   if (user) {
+  //     const usuario = await auth().then(({ user }) => user);
 
-      console.log('Usuario token me', usuario);
-      setUser(usuario);
-      login({ ...user })
-        .then((user) => {
-          console.log(
-            'AuthPovider EFFECT: loginUser prevSetUser ----->: ',
-            user
-          );
-          setUser(user);
-          console.log('AuthPovider EFFECT: loginUser ----->: ', user);
-          setToken(uuidv4());
-          setIsLoading(true);
-          console.log('loggin EFFECT --->', isLoading);
-        })
-        .catch((err) => {
-          console.log(err);
-          console.log('withAuth.login.err => ', err);
-        });
-    }
-  }
+  //     console.log('Usuario token me', usuario);
+  //     setUser(usuario);
+  //     login({ ...user })
+  //       .then((user) => {
+  //         console.log(
+  //           'AuthPovider EFFECT: loginUser prevSetUser ----->: ',
+  //           user
+  //         );
+  //         setUser(user);
+  //         console.log('AuthPovider EFFECT: loginUser ----->: ', user);
+  //         setToken(uuidv4());
+  //         setIsLoading(true);
+  //         console.log('loggin EFFECT --->', isLoading);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         console.log('withAuth.login.err => ', err);
+  //       });
+  //   }
+  // }
 
   useEffect(() => {
     console.log('PASO DE TU CARA');
