@@ -51,19 +51,24 @@ function NewExercise() {
     setExercise({ ...exercise, [name]: value });
   };
 
-  const createNewExercise = async () => {
-    try {
-      await createExercise(exercise);
-      return;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const createNewExercise = () => {
+    createExercise(exercise);
+    setExercise({
+      coachID: '',
+      title: '',
+      image: '',
+      video: '',
+      rest: {
+        minute: 0,
+        second: 0,
+      },
+    });
+  };
 
   return (
     <div>
       <h1>Crea tu nuevo programa</h1>
-      <form action='post' onSubmit={() => createNewExercise()}>
+      <form onSubmit={createNewExercise}>
         <label htmlFor='input-title'>Titulo</label>
         <input
           type='text'

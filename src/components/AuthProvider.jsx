@@ -5,7 +5,7 @@ import {
   login,
   logout,
   auth,
-} from '../services/authenticate/auth-client.service'; // Importamos funciones para llamadas axios a la API
+} from '../services/authenticate/auth-user.service'; // Importamos funciones para llamadas axios a la API
 import { getUser } from '../services/user/user.service';
 
 import {
