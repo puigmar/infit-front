@@ -18,25 +18,6 @@ function Exercise(props) {
   } = props;
 
   return (
-    <Modal className="modal-exercise-detail" show={show}>
-      <Modal.Header closeButton onClick={(e) => handleClose(e)}>
-        <Modal.Title>Eliminar Ejercicio</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="modal-exercise_img">
-          <img src={url} alt={title} />
-        </div>
-        <h3>{title}</h3>
-        <p>¿Estás seguro que quieres eliminar este ejercicio?</p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => handleClose()}>Close</Button>
-        <Button variant="secondary" onClick={() => handleDelete(_id)}>Borrar</Button>
-        <Button variant="primary" onClick={() => handleShowEdition(_id)}>Borrar</Button>
-      </Modal.Footer>
-    </Modal>
-  )
-  return (
 
     <Card>
       <Card.Img variant='top' src={image} />
@@ -49,8 +30,9 @@ function Exercise(props) {
         </Row>
       </Card.Body>
       <ListGroup className='list-group-flush'>
-        <ListGroupItem>{rest && rest.minutes}</ListGroupItem>
-        <ListGroupItem>{rest && rest.seconds}</ListGroupItem>
+        <ListGroupItem>Descanso por serie</ListGroupItem>
+        <ListGroupItem>Minutos: {rest && rest.minute}</ListGroupItem>
+        <ListGroupItem>Segundos: {rest && rest.second}</ListGroupItem>
       </ListGroup>
     </Card>
   );

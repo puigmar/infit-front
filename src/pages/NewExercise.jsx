@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getUser } from '../services/user/user.service';
-import { getProgramByUserId } from '../services/program/program.service';
+import { createExercise } from '../services/exercise/exercise.service';
 
 function NewExercise() {
   const { user } = WithAuth();
@@ -21,17 +21,6 @@ function NewExercise() {
     second: 0,
   });
 
-  //TODO DELETE MOCK
-  const userMock = {
-    _id: '5f44e55a186acf0b52cad177',
-    isCoach: true,
-    username: '2',
-    password: '$2b$10$LCbudLK5fTfJwzxQa15RLO7yTgYIEp3XLFt4LoBusB1THEI3D1D3a',
-    created_at: { $date: '2020-08-25T10:18:02.308Z' },
-    updated_at: { $date: '2020-08-25T10:18:02.308Z' },
-    __v: 0,
-  };
-
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
@@ -42,12 +31,12 @@ function NewExercise() {
   };
 
   useEffect(() => {
-    getCoach(userMock);
+    getCoach(user);
   }, []);
 
   // el objetivo del programa será el objetivo escogido por el cliente
   useEffect(() => {
-    setExercise({ ...exercise, coachID: userMock._id });
+    setExercise({ ...exercise, coachID: coach.coachID });
   }, [coach]);
 
   const handleChangeValues = (event) => {
@@ -62,14 +51,19 @@ function NewExercise() {
     setExercise({ ...exercise, [name]: value });
   };
 
-  const createNewExercise = () => {
-    
+  const createNewExercise = async () => {
+    try {
+      await createExercise(exercise);
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
     <div>
       <h1>Crea tu nuevo programa</h1>
-      <form action='post' onSubmit=''>
+      <form action='post' onSubmit={() => createNewExercise()}>
         <label htmlFor='input-title'>Titulo</label>
         <input
           type='text'
@@ -112,7 +106,7 @@ function NewExercise() {
           type='text'
           name='minute'
           value={exercise.rest.minute}
-          id='pack-name'
+          id='rest-name'
           onChange={(e) => handleChangeValues(e)}
         />
 
@@ -121,7 +115,7 @@ function NewExercise() {
           type='text'
           name='second'
           value={exercise.rest.second}
-          id='pack-duration'
+          id='rest-duration'
           onChange={(e) => handleChangeValues(e)}
         />
 
