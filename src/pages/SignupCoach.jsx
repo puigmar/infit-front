@@ -105,8 +105,8 @@ const SignupCoach = () => {
               {...formik.getFieldProps('username')}
               className={handleFieldClass('username')}
             />
+            {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
           </FormCompactField>
-          {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
         </Form.Group>
         
         <Form.Group controlId="password">

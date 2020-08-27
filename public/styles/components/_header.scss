@@ -1,12 +1,11 @@
 .navbar{
 
   &.bg-light{
-    background-color: $secondary-color!important
+    background-color: $primary-color!important
   }
 
   .navbar-brand{
     height: 40px;
-    display: block;
 
     img{
       width: 102px;

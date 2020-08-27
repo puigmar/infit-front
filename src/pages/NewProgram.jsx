@@ -68,7 +68,9 @@ function NewProgram() {
 
   //SE LLAMA AL PROGRAMA BY THIS COACH & CLIENT
   useEffect(() => {
-    programById(client.clientID, coach.coachID);
+    console.log('cliente de program', client);
+    console.log('coach del program', coach)
+    // programById(client.clientID, coach.coachID);
   },  [coach, client])
   
   //PINTAR SUS ATRIBUTOS

@@ -20,6 +20,7 @@ function App() {
   return (
     <AuthProvider>
       <Header />
+      <main>
       <Container>
         <Switch>
           <AnonRoute exact path='/' component={Home} />
@@ -48,6 +49,7 @@ function App() {
           />
         </Switch>
       </Container>
+      </main>
     </AuthProvider>
   );
 }

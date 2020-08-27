@@ -8,23 +8,8 @@ import ExerciseDetail from '../components/ExerciseDetail/ExerciseDetail'
 
 const Exercises = () => {
 
-  const [show, setShow] = useState(false); // -> show Modal Alert
-  const [showEdition, setShowEdition] = useState(false) // -> show Modal Edition
-
-  const [mdShow, setMdShow] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [modalContent, setModalContent] = useState({}) // --> Info modal alert
-  const [modalEditionContent, setModalEditionContent] = useState({}) // --> Info modal Edición
-
-  const [exerciseInfo, setExerciseInfo] = useState({})
-  const [handleDelete, setHandleDelete] = useState(false)
-
-  const handleClose = () => setShow(false);
-
-  const handleShow = () => setShow(true);
-  const handleShowEditon = () => setShowEdition(true);
-
-  const { user } = WithAuth()
+function Exercises() {
+  const { user } = WithAuth();
   const [coach, setCoach] = useState({});
   const [exercises, setExercises] = useState([]);
 
@@ -33,6 +18,7 @@ const Exercises = () => {
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
+      console.log(coachValue)
       setCoach(coachValue);
     } catch (error) {
       console.log(error);
@@ -50,32 +36,18 @@ const Exercises = () => {
   };
 
   useEffect(() => {
-    setShow(false)
-    getCoach(user);
-  }, []);
+    console.log('usuario de useEffect', user)
+    getCoach(user)
+    console.log('he encontrado el coach?', coach)
+  }, [])
 
   useEffect(() => {
-    console.log('este es el coachID', coach.coachID)
-    getExercises(coach.coachID);
-    console.log(exercises)
-  }, [coach]);
+    console.log('coachID', coach.coachID);
+    getExercises(coach.coachID)
+  }, [coach])
 
-  const handleAlertDeleteExercice = async (e) => {
-    const excerciseId = e.currentTarget.getAttribute('data-id');
-    const targetModal = await exercises.find( exercise => exercise._id === excerciseId)
-    setModalContent(targetModal)
-    handleShow()
-  }
-
-  const createNewExercice = () => {
-  }
-
-  const handleModalEdition = async (e) => {
-    const excerciseId = e.currentTarget.getAttribute('data-id');
-    const exerciseTarget = await exercises.find( exercise => exercise._id === excerciseId)
-    setModalEditionContent(exerciseTarget)
-    handleShowEditon()
-  }
+console.log('este es el coach', coach);
+console.log('este es el entrenamiento', exercises);
 
   return (
     <Fragment>

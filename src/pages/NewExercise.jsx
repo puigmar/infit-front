@@ -110,7 +110,7 @@ function NewExercise() {
           onChange={(e) => handleChangeValues(e)}
         />
 
-        <label htmlFor='pack-second'>Segundos</label>
+        <label htmlFor='rest-second'>Segundos</label>
         <input
           type='text'
           name='second'

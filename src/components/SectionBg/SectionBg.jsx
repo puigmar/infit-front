@@ -8,4 +8,4 @@ function SectionBg(props) {
   )
 }
 
-export default SectionBg;
+export default SectionBg

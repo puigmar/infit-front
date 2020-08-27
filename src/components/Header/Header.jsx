@@ -23,6 +23,26 @@ const Header = () => {
     menu.classList.toggle('show')
   }
 
+  console.log('user --------->', user)
+  console.log('isLoggedin --------->', isLoggedin)
+
+  useEffect (()=>{
+    const navMenuBtn = document.querySelectorAll('.navbar-toggler');
+    console.log('navMenuBtn: ', navMenuBtn)
+    navMenuBtn.forEach(button => {
+      button.addEventListener('click', handleMenu);
+    })
+  }, [])
+
+
+  const handleMenu = (e) => {
+    const el = e.currentTarget;
+    const toggleId = el.getAttribute('data-toggle');
+    const menu = document.getElementById(toggleId)
+    console.log(menu)
+    menu.classList.toggle('show')
+  }
+
   const configMenu = (userContext, isLogged) => {
 
     let menuList;

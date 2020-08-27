@@ -6,18 +6,17 @@ import FormCompactField from '../components/FormCompactField/FormCompactField.js
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import * as Yup from 'yup';
-import { Next } from 'react-bootstrap/esm/PageItem';
 
-const LoginCoach = () => {
+const LoginClient = () => {
   const { loginUser } = WithAuth();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     try {
       event.preventDefault();
-      loginUser({ username, password, isCoach:true });
+      loginUser({username, password, isCoach: false});
     }
     catch(err){
       console.log(err)
@@ -75,11 +74,11 @@ const LoginCoach = () => {
             </FormCompactField>
             {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
           </Form.Group>
-          <Button type="submit" variant="primary" size="lg">Iniciar sesión</Button>
+          <Button type="submit" variant="primary" size="lg">Inciiar sesión</Button>
         </Form>
       </BoxSkew>
     </SectionBg>
   );
 };
 
-export default LoginCoach;
+export default LoginClient;
