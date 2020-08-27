@@ -1,34 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getUser } from '../services/user/user.service';
-import { getProgramByUserId } from '../services/program/program.service';
 import { getClientsByCoach } from '../services/client/client.service';
+import ClientPreview from '../components/client/ClientPreview.jsx';
 
 function NewProgram() {
   const { user } = WithAuth();
-  const [coach, setCoach] = useState({})
-  const [clients, setClients] = useState([])
-
-  // //TODO DELETE MOCKS
-  // const coachMock = {
-  //   _id: '5f44e55a186acf0b52cad177',
-  //   isCoach: true,
-  //   username: '2',
-  //   password: '$2b$10$LCbudLK5fTfJwzxQa15RLO7yTgYIEp3XLFt4LoBusB1THEI3D1D3a',
-  //   created_at: { $date: '2020-08-25T10:18:02.308Z' },
-  //   updated_at: { $date: '2020-08-25T10:18:02.308Z' },
-  //   __v: 0,
-  // };
-
-  // const clientMock = {
-  //   _id: '5f40dd2d3ab5a80681229be6',
-  //   isCoach: false,
-  //   username: '2',
-  //   password: '$2b$10$LCbudLK5fTfJwzxQa15RLO7yTgYIEp3XLFt4LoBusB1THEI3D1D3a',
-  //   created_at: { $date: '2020-08-25T10:18:02.308Z' },
-  //   updated_at: { $date: '2020-08-25T10:18:02.308Z' },
-  //   __v: 0,
-  // };
+  const [coach, setCoach] = useState({});
+  const [clients, setClients] = useState([]);
 
   //LLAMAR AL COACH & CLIENT
   const getCoach = async (user) => {
@@ -43,7 +22,7 @@ function NewProgram() {
   const getClients = async (coachID) => {
     try {
       const clientsByCoach = await getClientsByCoach(coachID);
-      setClients('clients by coach',clientsByCoach);
+      setClients(clientsByCoach);
     } catch (error) {
       console.log(error);
     }
@@ -51,23 +30,51 @@ function NewProgram() {
 
   // SE LLAMA AL COACH Y CLIENT COMPONENTDIDMOUNT
   useEffect(() => {
-    console.log(user)
+    console.log(user);
     getCoach(user);
   }, []);
-  
+
   //SE LLAMA AL PROGRAMA BY THIS COACH & CLIENT
   useEffect(() => {
     getClients(coach.coachID);
-    console.log('coach del program', coach)
+    console.log('coach del program', coach);
     console.log('clientes de program', clients);
-  }, [coach])
+  }, [coach]);
 
+  // let example = {
+  //   adress: '',
+  //   avatarUrl:
+  //     'https://res.cloudinary.com/dtg4wdrbg/image/upload/v1598546335/inFit-gallery/people-2604149_1920.jpg',
+  //   biometrics: { weight: Array(1), age: 40, height: 167, sex: 'male' },
+  //   clientID: '5f47e1cab960183545545f41',
+  //   coachID: '5f47e50533502d322b081a36',
+  //   created_at: '2020-08-27T16:39:38.341Z',
+  //   name: 'Ferran',
+  //   photos: [],
+  //   savePhoto: false,
+  //   surname: 'Puig',
+  //   telephone: 453454353,
+  //   updated_at: '2020-08-27T16:39:38.341Z',
+  //   wizard: {
+  //     availability: {
+  //       max: 20,
+  //       min: 14,
+  //     },
+  //     objective: 'Ganar Músculo',
+  //     pack: { name: 'Pack 2', duration: 36, price: 180 },
+  //     sportFrecuency: '',
+  //     trainningDays: ['monday', 'wednesday'],
+  //   },
+  // };
 
   return (
     <div>
       <h1>Programa contratado</h1>
       <h3>Selecciona el cliente al que quieres agregar el programa</h3>
-
+      {clients &&
+        clients.map((client) => {
+          return <ClientPreview {...client} />;
+        })}
     </div>
   );
 }

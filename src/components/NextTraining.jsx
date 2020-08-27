@@ -5,7 +5,7 @@ function NextTraining(props) {
 
   return (
     <div>
-      <h1>entrenamiento</h1>
+      <h1>BIENVENIDO!</h1>
     </div>
   )
 }

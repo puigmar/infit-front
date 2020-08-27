@@ -4,6 +4,7 @@ import WithAuth from '../components/AuthProvider';
 import { getUser } from '../services/user/user.service';
 import { getTrainings } from '../services/training/training.service';
 import { Link } from 'react-router-dom';
+import { getTokenUser } from '../helpers/authHelpers.js';
 
 const DashboardClient = (props) => {
   const { user } = WithAuth();
@@ -19,12 +20,14 @@ const DashboardClient = (props) => {
   };
 
   useEffect(() => {
-    getCoach(user);
+    getCoach(getTokenUser());
+    console.log('coach dashboard --->',coach)
   }, []);
 
+  console.log('coach dashboard aut useEFFect --->',coach)
   return (
     <>
-      <h1>Hola {coach && coach.username}</h1>
+      <h1>Hola {coach && coach.name}</h1>
       <h2>Este es tu próximo entrenamiento</h2>
       <Link to={'/coach/auth/program'} >Crea un nuevo programa de Programa</Link>
       <br/>

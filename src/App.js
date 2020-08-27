@@ -19,6 +19,7 @@ import Exercises from './pages/Exercises.jsx'
 import NewExercise from './pages/NewExercise.jsx'
 import ArrangeMeetingPage from './pages/ArrangeMeetingPage.jsx'
 import { AuthProvider } from './components/AuthProvider.jsx';
+import ProgramDetail from './pages/ProgramDetail';
 
 function App() {
   return (
@@ -57,6 +58,11 @@ function App() {
                 exact
                 path='/coach/auth/newExercises'
                 component={NewExercise}
+              />
+              <PrivateRoute
+                exact
+                path='/coach/auth/client/programDetail'
+                component={ProgramDetail}
               />
               <PrivateRoute exact path='/client/auth/arrange-meeting' component={ ArrangeMeetingPage } />
             </Switch>
