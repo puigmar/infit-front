@@ -17,6 +17,7 @@ const LoginCoach = () => {
   const handleFormSubmit = (event) => {
     try {
       event.preventDefault();
+      const { username, password } = formik.values;
       loginUser({ username, password, isCoach:true });
     }
     catch(err){
@@ -60,8 +61,8 @@ const LoginCoach = () => {
                 {...formik.getFieldProps('username')}
                 className={handleFieldClass('username')}
               />
+              {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
             </FormCompactField>
-            {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
           </Form.Group>
 
           <Form.Group controlId="password">
@@ -72,10 +73,11 @@ const LoginCoach = () => {
                 {...formik.getFieldProps('password')}
                 className={handleFieldClass('password')}
               />
+              {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
+
             </FormCompactField>
-            {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
           </Form.Group>
-          <Button type="submit" variant="primary" size="lg">Iniciar sesión</Button>
+          <Button type="submit" variant="primary" size="lg" className="mt-4">Iniciar sesión</Button>
         </Form>
       </BoxSkew>
     </SectionBg>

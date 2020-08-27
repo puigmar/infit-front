@@ -1,4 +1,8 @@
 .btn{
+  background-color: $primary-color;
+}
+
+.btn{
   width: 100%;
   max-width: 375px;
   height: 48px;
@@ -42,15 +46,27 @@
     }
   }
   &-primary{
+    background-color: $primary-color;
+    color: #000;
+    text-decoration: none;
+    font-weight: 400;
+
+    &.disabled,
+    &:disabled{
+      background-color: $primary-color;
+    }
+  }
+
+  &-secondary{
     background-color: $secondary-color;
     color: #000;
     text-decoration: none;
     font-weight: 400;
   }
 
-  &-secondary{
-    background-color: $primary-color;
-    color: #000;
+  &-dark{
+    background-color: #333;
+    color: #fff;
     text-decoration: none;
     font-weight: 400;
   }
