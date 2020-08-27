@@ -3,8 +3,7 @@ import WithAuth from '../components/AuthProvider';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import { getUser } from '../services/user/user.service';
 import Exercise from '../components/Exercise/Exercise';
-import AlertMessage from '../components/AlertMessage/AlertMessage';
-import ExerciseDetail from '../components/ExerciseDetail/ExerciseDetail';
+
 
 const Exercises = () => {
   const { user } = WithAuth();
@@ -32,6 +31,8 @@ const Exercises = () => {
     }
   };
 
+
+
   useEffect(() => {
     getCoach(user);
   }, []);
@@ -39,7 +40,6 @@ const Exercises = () => {
   useEffect(() => {
     getExercises(coach.coachID);
   }, [coach]);
-
 
   return (
     <Fragment>
@@ -50,8 +50,6 @@ const Exercises = () => {
             <Exercise
               key={index}
               {...item}
-              // handleAlertDeleteExercice={handleAlertDeleteExercice}
-              // handleModalEdition={handleModalEdition}
               showNumbers={false}
               showText={true}
             />
@@ -59,19 +57,6 @@ const Exercises = () => {
         </div>
         <div className='addExercise' ></div>
       </section>
-
-      {/*Modals*/}
-      {/* <AlertMessage
-        modalContent={modalContent}
-        handleDelete={handleDelete}
-        handleClose={handleClose}
-        show={show}
-      />
-      <ExerciseDetail
-        exerciseInfo={exerciseInfo}
-        handleClose={handleClose}
-        showEdition={showEdition}
-      /> */}
     </Fragment>
   );
 };

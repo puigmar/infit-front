@@ -18,9 +18,9 @@ export async function createExercise( values ) {
   }
 }
 
-export async function deleteExercise( exerciseID ) {
+export async function deleteExerciseByID( exerciseID ) {
   try {
-    AxiosCredentials.post('/exercise/delete', {exerciseID});
+    AxiosCredentials.post('/exercise/delete/', {exerciseID});
   } catch (error) {
     console.log(error)
   }
