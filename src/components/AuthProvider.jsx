@@ -33,13 +33,14 @@ export function AuthProvider(props) {
 
   const signupUser = ({ user, client }) => {
     signup(user, client)
-      .then((user) => {
-        getUser(user);
-        setUser(user);
-        setTokenUser(user);
+      .then((userSigned) => {
+        setToken(uuidv4());
+        setTokenUser(userSigned);
+        setIsLoading(true);
+        setUser(userSigned);
       })
       .catch(({ response }) => {
-        return { message: response.data.statusMessage };
+        console.log(response);
       });
   };
   const loginUser = ({ username, password, isCoach }) => {

@@ -8,7 +8,7 @@ export async function signup(user, client) {
       username,
       password,
       client
-    })
+    }).then(({data}) => data)
     return signUpUser;
   }
   catch (error) {
