@@ -11191,23 +11191,14 @@ body {
 }
 
 .navbar.bg-light {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   background-color: #44D7B6 !important;
-=======
-  background-color: #F7B500 !important;
->>>>>>> ac56840d89cb1eca947935ea311778c9208dc06a
-=======
-  background-color: #44D7B6 !important;
->>>>>>> 80d8cbe9a5b5bf1dda8dd3f12e528b6f066f3718
+
 }
 
 .navbar .navbar-brand {
   height: 40px;
-<<<<<<< HEAD
   display: block;
-=======
->>>>>>> ac56840d89cb1eca947935ea311778c9208dc06a
 }
 
 .navbar .navbar-brand img {

@@ -3,12 +3,10 @@ import WithAuth from '../components/AuthProvider';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import { getUser } from '../services/user/user.service';
 import Exercise from '../components/Exercise/Exercise';
-import AlertMessage from '../components/AlertMessage/AlertMessage'
-import ExerciseDetail from '../components/ExerciseDetail/ExerciseDetail'
+import AlertMessage from '../components/AlertMessage/AlertMessage';
+import ExerciseDetail from '../components/ExerciseDetail/ExerciseDetail';
 
 const Exercises = () => {
-
-function Exercises() {
   const { user } = WithAuth();
   const [coach, setCoach] = useState({});
   const [exercises, setExercises] = useState([]);
@@ -18,7 +16,7 @@ function Exercises() {
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
-      console.log(coachValue)
+      console.log(coachValue);
       setCoach(coachValue);
     } catch (error) {
       console.log(error);
@@ -30,43 +28,57 @@ function Exercises() {
       const exercisesCoach = await getExercisesByCoach(coachID);
       setExercises(exercisesCoach);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
   };
 
   useEffect(() => {
-    console.log('usuario de useEffect', user)
-    getCoach(user)
-    console.log('he encontrado el coach?', coach)
-  }, [])
+    console.log('usuario de useEffect', user);
+    getCoach(user);
+    console.log('he encontrado el coach?', coach);
+  }, []);
 
   useEffect(() => {
     console.log('coachID', coach.coachID);
-    getExercises(coach.coachID)
-  }, [coach])
+    getExercises(coach.coachID);
+  }, [coach]);
 
-console.log('este es el coach', coach);
-console.log('este es el entrenamiento', exercises);
+  console.log('este es el coach', coach);
+  console.log('este es el entrenamiento', exercises);
+
 
   return (
     <Fragment>
       <section>
         <h1>Ejercicios disponibles</h1>
         <div className='exercise-list'>
-          {
-          exercises.map((item, index) => (
-            <Exercise key={index} {...item} handleAlertDeleteExercice={handleAlertDeleteExercice} handleModalEdition={handleModalEdition} showNumbers={false} showText= {true} />
+          {exercises.map((item, index) => (
+            <Exercise
+              key={index}
+              {...item}
+              // handleAlertDeleteExercice={handleAlertDeleteExercice}
+              // handleModalEdition={handleModalEdition}
+              showNumbers={false}
+              showText={true}
+            />
           ))}
         </div>
-        <div className="addExercise" onClick={() => createNewExercice()}></div>
+        <div className='addExercise' ></div>
       </section>
-      
-      {/*Modals*/}
-      <AlertMessage modalContent={modalContent} handleDelete={handleDelete} handleClose={handleClose} show={show}/>
-      <ExerciseDetail exerciseInfo={exerciseInfo}  handleClose={handleClose} showEdition={showEdition}/>
-    </Fragment>
 
+      {/*Modals*/}
+      {/* <AlertMessage
+        modalContent={modalContent}
+        handleDelete={handleDelete}
+        handleClose={handleClose}
+        show={show}
+      />
+      <ExerciseDetail
+        exerciseInfo={exerciseInfo}
+        handleClose={handleClose}
+        showEdition={showEdition}
+      /> */}
+    </Fragment>
   );
 };
 

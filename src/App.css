@@ -11042,13 +11042,18 @@ body {
   opacity: 0.6;
 }
 
+.home-page .fullSection.bg-coach .btn + a {
+  color: #fff;
+  font-weight: 500;
+}
+
 .btn {
   width: 100%;
   max-width: 375px;
   height: 48px;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -11102,6 +11107,21 @@ body {
   color: #000;
   text-decoration: none;
   font-weight: 400;
+}
+
+.btn-secondary {
+  background-color: #F7B500;
+  color: #000;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.btn + a {
+  margin-top: 10px;
+}
+
+a {
+  display: block;
 }
 
 .carousel .carousel-indicators {
@@ -11188,26 +11208,15 @@ body {
           clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0% calc(100% - 20px));
   padding-bottom: 38px;
   padding-top: 20px;
+  z-index: 100;
 }
 
 .navbar.bg-light {
-<<<<<<< HEAD
-<<<<<<< HEAD
   background-color: #44D7B6 !important;
-=======
-  background-color: #F7B500 !important;
->>>>>>> ac56840d89cb1eca947935ea311778c9208dc06a
-=======
-  background-color: #44D7B6 !important;
->>>>>>> 80d8cbe9a5b5bf1dda8dd3f12e528b6f066f3718
 }
 
 .navbar .navbar-brand {
   height: 40px;
-<<<<<<< HEAD
-  display: block;
-=======
->>>>>>> ac56840d89cb1eca947935ea311778c9208dc06a
 }
 
 .navbar .navbar-brand img {
@@ -11271,6 +11280,10 @@ body {
   .offcanvas-collapse.show {
     left: 20vw;
     visibility: visible;
+  }
+  .navbar.isMenu {
+    -webkit-clip-path: none;
+            clip-path: none;
   }
 }
 

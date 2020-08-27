@@ -10,12 +10,14 @@ import LoginClient from './pages/LoginClient.jsx';
 import AnonRoute from './components/AnonRoute.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import DashboardCoach from './pages/DashboardCoach.jsx';
+import DashboardClient from './pages/DashboardClient.jsx';
 import Header from './components/Header/Header.jsx';
 import Home from './pages/Home.jsx';
 import { Container, Row, Col } from 'react-bootstrap';
 import NewProgram from './pages/NewProgram.jsx'
 import Exercises from './pages/Exercises.jsx'
-import NewExercise from './pages/NewExercise'
+import NewExercise from './pages/NewExercise.jsx'
+import ArrangeMeetingPage from './pages/ArrangeMeetingPage.jsx'
 import { AuthProvider } from './components/AuthProvider.jsx';
 
 function App() {
