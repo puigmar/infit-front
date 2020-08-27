@@ -9,7 +9,6 @@ const Header = () => {
 
   useEffect (()=>{
     const navMenuBtn = document.querySelectorAll('.navbar-toggler');
-    console.log('navMenuBtn: ', navMenuBtn)
     navMenuBtn.forEach(button => {
       button.addEventListener('click', handleMenu);
     })

@@ -27,32 +27,12 @@ export function AuthProvider(props) {
   useEffect(() => {
     if (!getToken()) {
       setIsLoading(false);
-      console.log('no hay token');
     } else {
-      console.log('este es el token', getToken());
-      //authUser()
-      console.log('he pasado por el useeffect con este user', getTokenUser());
       let userToken = getTokenUser();
-      console.log(userToken)
       setUser(userToken);
-      console.log('he pasado por el useeffect con este userState', user);
       setIsLoading(true);
     }
   }, []);
-
-  const authUser = async () => {
-    auth()
-      .then((authUser) => {
-        console.log('petición de user desde auth(): ', authUser);
-        console.log('He llegado hasta aquí');
-        setUser(authUser);
-        console.log('No llego hasta aquí');
-      })
-      .catch((err) => {
-        setUser(null);
-        setIsLoading(false);
-      });
-  };
 
   const signupUser = ({ user, client }) => {
     signup(user, client)
@@ -70,13 +50,10 @@ export function AuthProvider(props) {
     username &&
       login({ username, password, isCoach })
         .then((userLogged) => {
-          console.log('user del login--->', userLogged);
           setToken(uuidv4());
           setTokenUser(userLogged);
           setIsLoading(true);
-          console.log('setToken', getToken());
           setUser(userLogged);
-          console.log('Seteado el userState');
           console.log(getTokenUser());
         })
         .catch((err) => {

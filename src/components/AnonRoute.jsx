@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import WithOut from './AuthProvider';
 import { getTokenUser} from '../helpers/authHelpers';
@@ -10,16 +10,13 @@ function AnonRoute({ component: Component }) {
   const { isLoading } = WithOut();
   let isLoggin = isLoading;
   let user = getTokenUser();
-  
-  console.log('usuario del AnonRoute', user);
   let url = '/';
   
   if(user){
     url = `${user && user.isCoach ? '/coach' : '/client'}/auth/my-account/dashboard`
     isLoggin=true;
   }
-  
-  console.log(url)
+
   return (
     <Route
       render={(props) =>
