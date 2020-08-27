@@ -174,7 +174,7 @@ const SignupClient = (props) => {
   };
 
   const registerDBClient = async () => { 
-    const data = fakeData; // dataClient || fakeData
+    const data = dataClient; // dataClient || fakeData
     const {client, user} = data;
     const registerUser = signupUser({ user, client });
   }

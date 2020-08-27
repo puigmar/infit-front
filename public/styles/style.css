@@ -10915,8 +10915,43 @@ select {
   color: #979797;
 }
 
+body {
+  font-family: 'Fira Sans', sans-serif;
+}
+
 h2 {
   font-size: 1.125rem;
+}
+
+@media (max-width: 767px) {
+  .main-layout.container {
+    margin: 0;
+    padding: 0;
+  }
+  .main-layout.container main {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+}
+
+body {
+  background-color: #F7B500;
+}
+
+.fullSection {
+  padding: 80px 50px;
+  -webkit-clip-path: polygon(0% 0%, 100% 20px, 100% 100%, 0% calc(100% - 20px));
+          clip-path: polygon(0% 0%, 100% 20px, 100% 100%, 0% calc(100% - 20px));
+  background-color: #fff;
+  position: relative;
+  z-index: 1;
+  background-size: cover;
+  margin-top: -20px;
+}
+
+.fullSection.bg-none {
+  background-color: transparent;
 }
 
 .signup-page form {
@@ -10931,9 +10966,101 @@ h2 {
   text-align: center;
 }
 
+.home-page .hero {
+  padding: 30px 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 40vh;
+  background-image: url("/img/bg_hero_home.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.home-page .hero:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(247, 181, 0, 0.7);
+  z-index: 1;
+}
+
+.home-page .hero h1 {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.home-page .hero h1 span {
+  display: block;
+  font-weight: 400;
+}
+
+.home-page .hero h1 span:first-child {
+  font-weight: 600;
+}
+
+.home-page .fullSection {
+  text-align: center;
+}
+
+.home-page .fullSection.bg-coach {
+  position: relative;
+  padding-top: 150px;
+  padding-bottom: 150px;
+  background-color: #44D7B6;
+}
+
+.home-page .fullSection.bg-coach > * {
+  z-index: 1;
+  position: relative;
+}
+
+.home-page .fullSection.bg-coach:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: url("/img/bg_client_home.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.6;
+}
+
 .btn {
   width: 100%;
   max-width: 375px;
+  height: 48px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 17px;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  border-radius: 35px;
+  border: 0;
 }
 
 .btn:disabled {
@@ -10968,6 +11095,13 @@ h2 {
 .btn.isLoading .spinner img {
   width: auto;
   height: 100%;
+}
+
+.btn-primary {
+  background-color: #44D7B6;
+  color: #000;
+  text-decoration: none;
+  font-weight: 400;
 }
 
 .carousel .carousel-indicators {
@@ -11045,12 +11179,27 @@ h2 {
   height: 100%;
 }
 
+.navbar {
+  -webkit-box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
+          box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
+  position: relative;
+  z-index: 2;
+  -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0% calc(100% - 20px));
+          clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0% calc(100% - 20px));
+  padding-bottom: 38px;
+  padding-top: 20px;
+}
+
 .navbar.bg-light {
+<<<<<<< HEAD
 <<<<<<< HEAD
   background-color: #44D7B6 !important;
 =======
   background-color: #F7B500 !important;
 >>>>>>> ac56840d89cb1eca947935ea311778c9208dc06a
+=======
+  background-color: #44D7B6 !important;
+>>>>>>> 80d8cbe9a5b5bf1dda8dd3f12e528b6f066f3718
 }
 
 .navbar .navbar-brand {
@@ -11062,8 +11211,22 @@ h2 {
 }
 
 .navbar .navbar-brand img {
-  width: 102px;
+  width: 145px;
   height: auto;
+}
+
+.navbar-toggler {
+  border-color: rgba(0, 0, 0, 0.1);
+  padding: 0;
+  font-size: 29px;
+  color: #000;
+  opacity: 1;
+  border: 0;
+  margin-bottom: -4px;
+}
+
+.navbar-toggler:focus {
+  outline: 0;
 }
 
 @media (max-width: 991px) {
@@ -11083,9 +11246,10 @@ h2 {
     transition-property: left, visibility;
     font-size: 1.8rem;
     padding: 40px;
-    background: #44D7B6;
+    background: #98e9d7;
     top: 0;
     color: #fff;
+    z-index: 101;
   }
   .offcanvas-collapse .navbar-toggler {
     top: 20px;
@@ -11102,12 +11266,11 @@ h2 {
     margin-top: 40px;
   }
   .offcanvas-collapse .navbar-nav .nav-link {
-    color: #F7B500;
+    color: #333;
   }
   .offcanvas-collapse.show {
     left: 20vw;
     visibility: visible;
-    z-index: 1;
   }
 }
 /*# sourceMappingURL=style.css.map */
