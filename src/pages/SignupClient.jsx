@@ -2,6 +2,8 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Carousel, Button, Row, Col, Modal } from 'react-bootstrap';
 //import { checkExistUSer } from '../services/auth-service';
+
+
 import WithAuth from '../components/AuthProvider';
 import SubHeader from '../components/SubHeader/SubHeader';
 import { checkExistUSer } from '../services/authenticate/auth-client.service';
@@ -23,7 +25,7 @@ const SignupClient = (props) => {
   const [totalAmount, setTotalAmount] = useState(0)
   const [funnelDone, setFunnelDone] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [show, setShow] = useState(false);
+
 
   // Form Data
   const [dataClient, setDataClient] = useState({
@@ -73,8 +75,6 @@ const SignupClient = (props) => {
 
   let history = useHistory();
   const totalSteps = 7;
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const nextStep = () => {
     console.log('estoy pulsando eh!!')
@@ -97,7 +97,7 @@ const SignupClient = (props) => {
 
   useEffect( ()=> {
     setActiveIndex(step);
-  },[setStep])
+  },[step])
 
   const checkStep = (newStep) => {
     if (newStep >= totalSteps) {
@@ -133,7 +133,7 @@ const SignupClient = (props) => {
 
   const fakeData = {
     user: {
-      username: 'ferran10@ferranpuig.com',
+      username: 'client2@client.com',
       password: '123456',
       isCoach: false,
     },
@@ -174,21 +174,16 @@ const SignupClient = (props) => {
   };
 
   const registerDBClient = async () => { 
-    const data = dataClient; // dataClient || fakeData
+    const data = fakeData; // dataClient || fakeData
     const {client, user} = data;
     const registerUser = signupUser({ user, client });
-
-    if(registerUser) {
-      console.log('se ha hecho un usuario')
-      handleShow();
-    }
   }
 
-  useEffect(() => {
-    if(funnelDone){
-      registerDBClient()
-    }
-  }, [funnelDone])
+  // useEffect(() => {
+  //   if(funnelDone){
+  //     registerDBClient()
+  //   }
+  // }, [funnelDone])
   //props.setFunnelDone(true);
   return (
     <Fragment>
@@ -197,31 +192,35 @@ const SignupClient = (props) => {
         <Carousel className={(step > 3 && 'without-dots')} controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
           
           <Carousel.Item>
-            <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step}/>
+            <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData}/>
           </Carousel.Item>
 
           <Carousel.Item>
-            <ClientSignupStep2 dataClient={dataClient}  nextStep={nextStep} handleData={handleData} step={step}/>
+            <ClientSignupStep2 dataClient={dataClient}  nextStep={nextStep} handleData={handleData}/>
           </Carousel.Item>
 
           <Carousel.Item>
-            <ClientSignupStep3 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
+            <ClientSignupStep3 dataClient={dataClient} nextStep={nextStep} handleData={handleData}/>
           </Carousel.Item> 
 
             <Carousel.Item>
-              <ClientSignupStep4 dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
+              <ClientSignupStep4 dataClient={dataClient} nextStep={nextStep} handleData={handleData}/>
             </Carousel.Item>
 
             <Carousel.Item>
-              <ClientSignupStep5 handleTotalAmount={setTotalAmount} name={clientName} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step}/>
+              <ClientSignupStep5 handleTotalAmount={setTotalAmount} name={clientName} dataClient={dataClient} nextStep={nextStep} handleData={handleData}/>
             </Carousel.Item>
 
             <Carousel.Item>
-              <ClientSignupStep6 setFunnelDone={setFunnelDone} registerDBClient={registerDBClient} totalAmount={totalAmount} dataClient={dataClient} nextStep={nextStep} handleData={handleData} step={step} />
+              <ClientSignupStep6 registerDBClient={registerDBClient} setIsLoading={setIsLoading} totalAmount={totalAmount} dataClient={dataClient} nextStep={nextStep} handleData={handleData}/>
             </Carousel.Item>
             
           </Carousel>
           
+      </div>
+      <div className={ isLoading ? 'loadingWrapper is-active' : 'loadingWrapper' }>
+          <div className="spinner"><img src="/img/loader.svg" alt="spinner"/></div>
+          <p>Cargando...</p>
       </div>
     </Fragment>
   );

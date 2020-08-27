@@ -1,0 +1,65 @@
+.navbar{
+
+  &.bg-light{
+    background-color: $primary-color!important
+  }
+
+  .navbar-brand{
+    height: 40px;
+
+    img{
+      width: 102px;
+      height: auto;
+    }
+  }
+
+}
+
+
+@media (max-width: 991px){
+  .offcanvas-collapse {
+      position: fixed;
+      left: 100%;
+      width: 80vw;
+      height: 100vh;
+      overflow-y: auto;
+      visibility: hidden;
+      background-color: #343a40;
+      transition-timing-function: ease-in-out;
+      transition-duration: .3s;
+      transition-property: left, visibility;
+      font-size: 1.8rem;
+      padding: 40px;
+      background: $secondary-color;
+      top: 0;
+      color: #fff;
+
+      .navbar-toggler{
+          top: 20px;
+          position: absolute;
+          right: 20px;
+          font-size: 26px;
+      }
+
+      &:before,
+      &:after{
+          content: '';
+          position: absolute;
+          opacity: 0.2;
+      }
+
+      .navbar-nav{
+          margin-top: 40px
+      }
+
+      .navbar-nav .nav-link{
+          color: $primary-color;
+      }
+  }
+
+  .offcanvas-collapse.show {
+      left: 20vw;
+      visibility: visible;
+      z-index: 1;
+  }
+}

@@ -42,12 +42,12 @@ function NewExercise() {
   };
 
   useEffect(() => {
-    getCoach(userMock);
+    getCoach(user);
   }, []);
 
   // el objetivo del programa será el objetivo escogido por el cliente
   useEffect(() => {
-    setExercise({ ...exercise, coachID: userMock._id });
+    setExercise({ ...exercise, coachID: user._id });
   }, [coach]);
 
   const handleChangeValues = (event) => {
@@ -62,14 +62,14 @@ function NewExercise() {
     setExercise({ ...exercise, [name]: value });
   };
 
-  const createNewExercise = () => {
+  const handlesubmit = () => {
     
   }
 
   return (
     <div>
-      <h1>Crea tu nuevo programa</h1>
-      <form action='post' onSubmit=''>
+      <h1>Crea tu nuevo Ejercicio</h1>
+      <form action='post' onSubmit={handlesubmit}>
         <label htmlFor='input-title'>Titulo</label>
         <input
           type='text'
@@ -112,16 +112,16 @@ function NewExercise() {
           type='text'
           name='minute'
           value={exercise.rest.minute}
-          id='pack-name'
+          id='rest-name'
           onChange={(e) => handleChangeValues(e)}
         />
 
-        <label htmlFor='pack-second'>Segundos</label>
+        <label htmlFor='rest-second'>Segundos</label>
         <input
           type='text'
           name='second'
           value={exercise.rest.second}
-          id='pack-duration'
+          id='rest-duration'
           onChange={(e) => handleChangeValues(e)}
         />
 
