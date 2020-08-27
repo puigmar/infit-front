@@ -5,14 +5,10 @@ import WithAuth from '../AuthProvider'
 
 const Header = () => {
 
-  const { user, isLoggedin, logoutUser } = WithAuth();
-
-  console.log('user --------->', user)
-  console.log('isLoggedin --------->', isLoggedin)
+  const { user, isLoading, logoutUser } = WithAuth();
 
   useEffect (()=>{
     const navMenuBtn = document.querySelectorAll('.navbar-toggler');
-    console.log('navMenuBtn: ', navMenuBtn)
     navMenuBtn.forEach(button => {
       button.addEventListener('click', handleMenu);
     })
@@ -28,74 +24,58 @@ const Header = () => {
     navbar.classList.toggle('isMenu')
   }
 
+
+  useEffect (()=>{
+    const navMenuBtn = document.querySelectorAll('.navbar-toggler');
+    console.log('navMenuBtn: ', navMenuBtn)
+    navMenuBtn.forEach(button => {
+      button.addEventListener('click', handleMenu);
+    })
+  }, [])
+
   const configMenu = (userContext, isLogged) => {
 
-    const baseUrl = (userContext && userContext.isCoach) ? '/coach' : '/client'
-    const myAccountUrl = `${baseUrl}/auth/my-account`;
-    const anonymUrl = `${baseUrl}/auth`;
     let menuList;
-
-    const menuUser = [
-      {
-        name: 'Dashboard' ,
-        link: `${myAccountUrl}/dashboard`
-      },
-      {
-        name: 'Mi Cuenta' ,
-        link: `${myAccountUrl}/profile`
-      },
-      {
-        name: 'Cerrar sesión' ,
-        action: logoutUser,
-        link: '/'
-      }
-    ]
 
     const menuCoach = [
       {
         name: 'Dashboard' ,
-        link: `${myAccountUrl}/dashboard`
+        link: `/coach/auth/my-account/dashboard`
       },
       {
         name: 'Mi cuenta' ,
-        link: `${myAccountUrl}/profile`
+        link: `/coach/auth/my-account/profile`
       },
       {
         name: 'Mis clientes' ,
-        link: `${myAccountUrl}/clients`
-      },
-      {
-        name: 'Cerrar sesión' ,
-        action: logoutUser,
-        link: '/'
+        link: `/coach/auth/my-account/Clients`
       }
     ]
 
     const menuAnonymous = [
       {
         name: 'Iniciar sesión' ,
-        link: `${anonymUrl}/login`
+        link: `/coach/auth/login`
       },
       {
         name: 'Registrarse' ,
-        link: `${anonymUrl}/signup`
+        link: `/coach/auth/signup`
       }
     ]
     
     if(!userContext){
       menuList = menuAnonymous
     } else {
-      menuList = (userContext && userContext.isCoach) ? menuCoach : menuUser;
+      menuList = menuCoach;
     }
-
+    
     return menuList.map( (listItem, index) => {
-      return (
-        <LinkContainer key={index} to={listItem.link}>
-          <Nav.Link onSelect={listItem.action}>{listItem.name}</Nav.Link>
-        </LinkContainer>
-      )
-    }
-
+        return (
+          <LinkContainer key={index} to={listItem.link}>
+            <Nav.Link onSelect={listItem.action}>{listItem.name}</Nav.Link>
+          </LinkContainer>
+        )
+      }
     )
   }
 
@@ -110,8 +90,9 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="offcanvas-collapse_btnClose" data-toggle="offcanvas" onClick={(e)=>handleMenu(e)} />
           <Nav className="mr-auto">
             { 
-              configMenu(user, isLoggedin)
+              configMenu(user, isLoading)
             }
+            {isLoading ? <a onClick={logoutUser} className="nav-link" role="button">Cerrar sesión</a> : ''}
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -119,4 +100,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Header;

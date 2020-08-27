@@ -2,7 +2,8 @@ import AxiosCredentials from '../axios/credentials';
 
 export async function getExercisesByCoach( coachID ) {
   try {
-    const exercises = AxiosCredentials.post(`/exercise/${coachID}`).then(({data}) => data);
+    console.log('cocheID: ------>', {coachID})
+    const exercises = AxiosCredentials.post(`/exercise/coach/${coachID}`).then(({data}) => data);
     
     return exercises;
   } catch (error) {
@@ -10,6 +11,10 @@ export async function getExercisesByCoach( coachID ) {
   }
 }
 
-export async function createNewExercise({values}) {
-  
+export async function createExercise( values ) {
+  try {
+    AxiosCredentials.post('/exercise/newExercise', {...values});
+  } catch (error) {
+    
+  }
 }
