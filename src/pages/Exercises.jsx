@@ -1,32 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import { getUser } from '../services/user/user.service';
-
+import Exercise from '../components/Exercise/Exercise';
+import AlertMessage from '../components/AlertMessage/AlertMessage'
+import ExerciseDetail from '../components/ExerciseDetail/ExerciseDetail'
 
 const Exercises = () => {
 
-  const [coach, setCoach] = useState({});
-  const [exercises, setExercises] = useState([])
+  const [show, setShow] = useState(false);
+  const [mdShow, setMdShow] = useState(false);
+  const [showEdition, setShowEdition] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [modalContent, setModalContent] = useState({})
+  const [modalEditionContent, setModalEditionContent] = useState({})
+  const [exerciseInfo, setExerciseInfo] = useState({})
+  const [handleDelete, setHandleDelete] = useState(false)
 
-  const coachMock = {
-    _id: '5f44e55a186acf0b52cad177',
-    isCoach: true,
-    username: '2',
-    password: '$2b$10$LCbudLK5fTfJwzxQa15RLO7yTgYIEp3XLFt4LoBusB1THEI3D1D3a',
-    created_at: { $date: '2020-08-25T10:18:02.308Z' },
-    updated_at: { $date: '2020-08-25T10:18:02.308Z' },
-    __v: 0,
-  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleCloseEdition = () => setShowEdition(false);
+  const handleShowEditon = () => setShowEdition(true);
+
+  const { user } = WithAuth()
+  const [coach, setCoach] = useState({});
+  const [exercises, setExercises] = useState([]);
 
   //LLAMAR AL COACH & CLIENT
 
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
-      setCoach(coachValue.coachID);
-      getExercises(coachValue.coachID)
-
+      setCoach(coachValue);
     } catch (error) {
       console.log(error);
     }
@@ -35,29 +40,64 @@ const Exercises = () => {
   const getExercises = async (coachID) => {
     try {
       const exercisesCoach = await getExercisesByCoach(coachID);
-      console.log(exercisesCoach)
-      const map = exercisesCoach.map(item => item).map(item => item[0]);
-      console.log(map)
-      setExercises([]);
+      setExercises(exercisesCoach);
     } catch (error) {
       console.log(error)
     }
-  } 
 
-  useEffect( async () => {
-     getCoach(coachMock)
-  }, [])
+  };
+
+  useEffect(() => {
+    setShow(false)
+    getCoach(user);
+  }, []);
+
+  useEffect(() => {
+    console.log('este es el coachID', coach.coachID)
+    getExercises(coach.coachID);
+    console.log(exercises)
+  }, [coach]);
+
+  const handleAlertDeleteExercice = async (e) => {
+    const excerciseId = e.currentTarget.getAttribute('data-id');
+    const targetModal = await exercises.find( exercise => exercise._id === excerciseId)
+
+    setModalContent(targetModal)
+    handleShow()
+  }
+
+  const handleModalEdition = (id) => {
+    handleShowEdition()
+  }
+
+  const createNewExercice = () => {
+
+  }
+
+  const handleShowEdition = async (id) => {
+    const exerciseTarget = await exercises.find( exercise => exercise._id === id)
+    setModalEditionContent(exerciseTarget)
+    handleShow()
+  }
 
   return (
-    <section>
-      <h1>Ejercicios disponibles</h1>
-      <div className="exercise-list">
-        {
-          exercises.map((item, index) => <Exercises key={index} exercise={item} />)
-        }
-      </div>
-    </section>
-  )
-}
+    <Fragment>
+      <section>
+        <h1>Ejercicios disponibles</h1>
+        <div className='exercise-list'>
+          {
+          exercises.map((item, index) => (
+            <Exercise key={index} {...item} handleAlertDeleteExercice={handleAlertDeleteExercice} handleShowEdition={handleShowEdition} show={show} showNumbers={false} showText= {true} />
+          ))}
+        </div>
+        <div className="addExercise" onClick={() => createNewExercice()}></div>
+      </section>
 
-export default Exercises
+      <AlertMessage modalContent={modalContent} handleDelete={handleDelete} handleClose={handleClose} show={show}/>
+      <ExerciseDetail exerciseInfo={exerciseInfo} showEdition={showEdition}/>
+    </Fragment>
+
+  );
+};
+
+export default Exercises;
