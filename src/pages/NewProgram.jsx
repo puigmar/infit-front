@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getUser } from '../services/user/user.service';
 import { getProgramByUserId } from '../services/program/program.service';
+import { getClientsByCoach } from '../services/client/client.service';
 
 function NewProgram() {
   const { user } = WithAuth();
@@ -40,7 +41,7 @@ function NewProgram() {
     }
   };
 
-  const getClient = async (user) => {
+  const getClients = async (user) => {
     try {
       const clientValue = await getUser(user);
       console.log('clientValue', clientValue)
@@ -63,12 +64,14 @@ function NewProgram() {
   // SE LLAMA AL COACH Y CLIENT COMPONENTDIDMOUNT
   useEffect(() => {
     getCoach(coachMock);
-    getClient(clientMock);
+    // getClient(clientMock);
   }, []);
 
   //SE LLAMA AL PROGRAMA BY THIS COACH & CLIENT
   useEffect(() => {
-    programById(client.clientID, coach.coachID);
+    console.log('cliente de program', client);
+    console.log('coach del program', coach)
+    // programById(client.clientID, coach.coachID);
   },  [coach, client])
   
   //PINTAR SUS ATRIBUTOS
@@ -80,11 +83,8 @@ function NewProgram() {
   return (
     <div>
       <h1>Programa contratado</h1>
+      <h3>Selecciona el cliente al que quieres agregar el programa</h3>
 
-      <h2>Duracion</h2>
-      <p></p>
-      <h2>Objetivo</h2>
-      <p>{program && program.objective}</p>
     </div>
   );
 }
