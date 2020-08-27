@@ -35,7 +35,7 @@ const errorHandler = (err) => {
 export async function handleAvatarUpload({ formData, isCoach }) {
   try {
     return await AxiosCredentials.post(
-    '/coach/auth/uploadPhotoAvatar',
+    '/generic/auth/uploadPhotoAvatar',
       formData
     ).then(({ data }) => data);
   } catch (error) {

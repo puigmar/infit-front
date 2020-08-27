@@ -133,7 +133,7 @@ const SignupClient = (props) => {
 
   const fakeData = {
     user: {
-      username: 'client2@client.com',
+      username: '8@client.com',
       password: '123456',
       isCoach: false,
     },
@@ -191,7 +191,7 @@ const SignupClient = (props) => {
         <SubHeader title={title} history={history} action={backLink} />
         <Carousel className={(step > 3 && 'without-dots')} controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
           
-          <Carousel.Item>
+          {/* <Carousel.Item>
             <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData}/>
           </Carousel.Item>
 
@@ -209,7 +209,7 @@ const SignupClient = (props) => {
 
             <Carousel.Item>
               <ClientSignupStep5 handleTotalAmount={setTotalAmount} name={clientName} dataClient={dataClient} nextStep={nextStep} handleData={handleData}/>
-            </Carousel.Item>
+            </Carousel.Item> */}
 
             <Carousel.Item>
               <ClientSignupStep6 registerDBClient={registerDBClient} setIsLoading={setIsLoading} totalAmount={totalAmount} dataClient={dataClient} nextStep={nextStep} handleData={handleData}/>
