@@ -1,29 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import { getUser } from '../services/user/user.service';
+import Exercise from '../components/Exercise/Exercise';
 
 
-function Exercises() {
+const Exercises = () => {
   const { user } = WithAuth();
   const [coach, setCoach] = useState({});
-  const [exercises, setExercises] = useState([{}])
-
-  const coachMock = {
-    _id: '5f44e55a186acf0b52cad177',
-    isCoach: true,
-    username: '2',
-    password: '$2b$10$LCbudLK5fTfJwzxQa15RLO7yTgYIEp3XLFt4LoBusB1THEI3D1D3a',
-    created_at: { $date: '2020-08-25T10:18:02.308Z' },
-    updated_at: { $date: '2020-08-25T10:18:02.308Z' },
-    __v: 0,
-  };
+  const [exercises, setExercises] = useState([]);
 
   //LLAMAR AL COACH & CLIENT
+
   const getCoach = async (user) => {
     try {
       const coachValue = await getUser(user);
-      console.log(coachValue)
+      console.log(coachValue);
       setCoach(coachValue);
     } catch (error) {
       console.log(error);
@@ -33,31 +25,40 @@ function Exercises() {
   const getExercises = async (coachID) => {
     try {
       const exercisesCoach = await getExercisesByCoach(coachID);
-      setExercises([exercisesCoach]);
+      setExercises(exercisesCoach);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+
+
 
   useEffect(() => {
-    console.log('usuario de useEffect', user)
-    getCoach(user)
-    console.log('he encontrado el coach?', coach)
-  }, [])
+    getCoach(user);
+  }, []);
 
   useEffect(() => {
-    console.log('coachID', coach.coachID);
-    getExercises(coach.coachID)
-  }, [coach])
-
-console.log('este es el coach', coach);
-console.log('este es el entrenamiento', exercises);
+    getExercises(coach.coachID);
+  }, [coach]);
 
   return (
-    <div>
-      <h1>Ejercicios con cojones</h1>
-    </div>
-  )
-}
+    <Fragment>
+      <section>
+        <h1>Ejercicios disponibles</h1>
+        <div className='exercise-list'>
+          {exercises.map((item, index) => (
+            <Exercise
+              key={index}
+              {...item}
+              showNumbers={false}
+              showText={true}
+            />
+          ))}
+        </div>
+        <div className='addExercise' ></div>
+      </section>
+    </Fragment>
+  );
+};
 
-export default Exercises
+export default Exercises;

@@ -6,7 +6,7 @@ import { Carousel, Button, Row, Col, Modal } from 'react-bootstrap';
 
 import WithAuth from '../components/AuthProvider';
 import SubHeader from '../components/SubHeader/SubHeader';
-import { checkExistUSer } from '../services/authenticate/auth-client.service';
+import { checkExistUSer } from '../services/authenticate/auth-user.service';
 import ClientSignupStep1 from '../components/ClientSignup/ClientSignupStep1';
 import ClientSignupStep2 from '../components/ClientSignup/ClientSignupStep2';
 import ClientSignupStep3 from '../components/ClientSignup/ClientSignupStep3';
@@ -133,7 +133,7 @@ const SignupClient = (props) => {
 
   const fakeData = {
     user: {
-      username: 'client2@client.com',
+      username: '8@client.com',
       password: '123456',
       isCoach: false,
     },
@@ -191,7 +191,7 @@ const SignupClient = (props) => {
         <SubHeader title={title} history={history} action={backLink} />
         <Carousel className={(step > 3 && 'without-dots')} controls={controls} touch={touch} interval={interval} activeIndex={activeIndex}>
           
-          <Carousel.Item>
+          {/* <Carousel.Item>
             <ClientSignupStep1 dataClient={dataClient}  nextStep={nextStep} handleData={handleData}/>
           </Carousel.Item>
 
@@ -209,7 +209,7 @@ const SignupClient = (props) => {
 
             <Carousel.Item>
               <ClientSignupStep5 handleTotalAmount={setTotalAmount} name={clientName} dataClient={dataClient} nextStep={nextStep} handleData={handleData}/>
-            </Carousel.Item>
+            </Carousel.Item> */}
 
             <Carousel.Item>
               <ClientSignupStep6 registerDBClient={registerDBClient} setIsLoading={setIsLoading} totalAmount={totalAmount} dataClient={dataClient} nextStep={nextStep} handleData={handleData}/>
