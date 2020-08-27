@@ -11200,12 +11200,12 @@ a {
 }
 
 .navbar {
-  -webkit-box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
-          box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
+  /* -webkit-box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
+          box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18); */
   position: relative;
   z-index: 2;
-  -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0% calc(100% - 20px));
-          clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0% calc(100% - 20px));
+  /* -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0% calc(100% - 20px));
+          clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0% calc(100% - 20px)); */
   padding-bottom: 38px;
   padding-top: 20px;
   z-index: 100;

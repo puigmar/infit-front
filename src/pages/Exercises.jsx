@@ -40,6 +40,10 @@ const Exercises = () => {
   useEffect(() => {
     getExercises(coach.coachID);
   }, [coach]);
+  
+  const reloadPage = () => {
+    getExercises(coach.coachID);
+  }
 
   return (
     <Fragment>
@@ -52,6 +56,7 @@ const Exercises = () => {
               {...item}
               showNumbers={false}
               showText={true}
+              reloadPage={reloadPage}
             />
           ))}
         </div>

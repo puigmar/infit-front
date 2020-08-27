@@ -67,7 +67,7 @@ function NewExercise() {
 
   return (
     <div>
-      <h1>Crea tu nuevo programa</h1>
+      <h1>Crea tu nuevo Ejercicio</h1>
       <form onSubmit={createNewExercise}>
         <label htmlFor='input-title'>Titulo</label>
         <input
@@ -124,7 +124,7 @@ function NewExercise() {
           onChange={(e) => handleChangeValues(e)}
         />
 
-        <input type='submit' value='Nuevo programa!' />
+        <input type='submit' value='Nuevo Ejercicio!' />
       </form>
     </div>
   );

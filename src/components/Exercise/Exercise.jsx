@@ -16,6 +16,7 @@ function Exercise(props) {
     description,
     image,
     rest,
+    reloadPage
   } = props;
 
   console.log('id por ejercicio',_id)
@@ -74,6 +75,7 @@ function Exercise(props) {
           setShow={setShow}
           isDelete={isDelete}
           title={title}
+          reloadPage={reloadPage}
           />
       )}
     </>
