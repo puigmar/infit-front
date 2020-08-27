@@ -32,7 +32,7 @@ function EditableField({key, value, handleUpdateField }) {
           </Fragment>
         )
         :
-        (value)
+        (value) // falta botón
       }
     </div>
   )

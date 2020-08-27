@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, ListGroupItem, ListGroup, Row, Col, Modal } from 'react-bootstrap';
+import { Button, Card, ListGroupItem, ListGroup, Row, Col } from 'react-bootstrap';
 
 
 function Exercise(props) {
@@ -11,10 +11,7 @@ function Exercise(props) {
     url,
     rest, 
     handleAlertDeleteExercice, 
-    handleClose, 
-    handleDelete,
-    handleShowEdition,
-    show 
+    handleModalEdition,
   } = props;
 
   return (
@@ -26,7 +23,7 @@ function Exercise(props) {
         <Card.Text>{description}</Card.Text>
         <Row>
           <Col><Button data-id={_id} variant='primary btn-outline-primary' onClick={ (e)=> handleAlertDeleteExercice(e)}>Eliminar</Button></Col>
-          <Col><Button data-id={_id} variant='primary' onClick={ (e)=> handleShowEdition(e)}>Editar</Button></Col>
+          <Col><Button data-id={_id} variant='primary' onClick={ (e)=> handleModalEdition(e)}>Editar</Button></Col>
         </Row>
       </Card.Body>
       <ListGroup className='list-group-flush'>

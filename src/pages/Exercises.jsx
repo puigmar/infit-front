@@ -8,18 +8,20 @@ import ExerciseDetail from '../components/ExerciseDetail/ExerciseDetail'
 
 const Exercises = () => {
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false); // -> show Modal Alert
+  const [showEdition, setShowEdition] = useState(false) // -> show Modal Edition
+
   const [mdShow, setMdShow] = useState(false);
-  const [showEdition, setShowEdition] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [modalContent, setModalContent] = useState({})
-  const [modalEditionContent, setModalEditionContent] = useState({})
+  const [modalContent, setModalContent] = useState({}) // --> Info modal alert
+  const [modalEditionContent, setModalEditionContent] = useState({}) // --> Info modal Edición
+
   const [exerciseInfo, setExerciseInfo] = useState({})
   const [handleDelete, setHandleDelete] = useState(false)
 
   const handleClose = () => setShow(false);
+
   const handleShow = () => setShow(true);
-  const handleCloseEdition = () => setShowEdition(false);
   const handleShowEditon = () => setShowEdition(true);
 
   const { user } = WithAuth()
@@ -61,23 +63,18 @@ const Exercises = () => {
   const handleAlertDeleteExercice = async (e) => {
     const excerciseId = e.currentTarget.getAttribute('data-id');
     const targetModal = await exercises.find( exercise => exercise._id === excerciseId)
-
     setModalContent(targetModal)
     handleShow()
   }
 
-  const handleModalEdition = (id) => {
-    handleShowEdition()
-  }
-
   const createNewExercice = () => {
-
   }
 
-  const handleShowEdition = async (id) => {
-    const exerciseTarget = await exercises.find( exercise => exercise._id === id)
+  const handleModalEdition = async (e) => {
+    const excerciseId = e.currentTarget.getAttribute('data-id');
+    const exerciseTarget = await exercises.find( exercise => exercise._id === excerciseId)
     setModalEditionContent(exerciseTarget)
-    handleShow()
+    handleShowEditon()
   }
 
   return (
@@ -87,14 +84,15 @@ const Exercises = () => {
         <div className='exercise-list'>
           {
           exercises.map((item, index) => (
-            <Exercise key={index} {...item} handleAlertDeleteExercice={handleAlertDeleteExercice} handleShowEdition={handleShowEdition} show={show} showNumbers={false} showText= {true} />
+            <Exercise key={index} {...item} handleAlertDeleteExercice={handleAlertDeleteExercice} handleModalEdition={handleModalEdition} showNumbers={false} showText= {true} />
           ))}
         </div>
         <div className="addExercise" onClick={() => createNewExercice()}></div>
       </section>
-
+      
+      {/*Modals*/}
       <AlertMessage modalContent={modalContent} handleDelete={handleDelete} handleClose={handleClose} show={show}/>
-      <ExerciseDetail exerciseInfo={exerciseInfo} showEdition={showEdition}/>
+      <ExerciseDetail exerciseInfo={exerciseInfo}  handleClose={handleClose} showEdition={showEdition}/>
     </Fragment>
 
   );
