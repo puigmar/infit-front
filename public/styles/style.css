@@ -11042,13 +11042,18 @@ body {
   opacity: 0.6;
 }
 
+.home-page .fullSection.bg-coach .btn + a {
+  color: #fff;
+  font-weight: 500;
+}
+
 .btn {
   width: 100%;
   max-width: 375px;
   height: 48px;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -11102,6 +11107,21 @@ body {
   color: #000;
   text-decoration: none;
   font-weight: 400;
+}
+
+.btn-secondary {
+  background-color: #F7B500;
+  color: #000;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.btn + a {
+  margin-top: 10px;
+}
+
+a {
+  display: block;
 }
 
 .carousel .carousel-indicators {
@@ -11184,10 +11204,8 @@ body {
           box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
   position: relative;
   z-index: 2;
-  -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0% calc(100% - 20px));
-          clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0% calc(100% - 20px));
-  padding-bottom: 38px;
   padding-top: 20px;
+  z-index: 100;
 }
 
 .navbar.bg-light {
@@ -11262,6 +11280,10 @@ body {
   .offcanvas-collapse.show {
     left: 20vw;
     visibility: visible;
+  }
+  .navbar.isMenu {
+    -webkit-clip-path: none;
+            clip-path: none;
   }
 }
 /*# sourceMappingURL=style.css.map */

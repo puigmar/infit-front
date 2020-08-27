@@ -16,10 +16,10 @@ const Header = () => {
 
 
   const handleMenu = (e) => {
+
     const el = e.currentTarget;
     const toggleId = el.getAttribute('data-toggle');
     const menu = document.getElementById(toggleId)
-    console.log(menu)
     menu.classList.toggle('show')
   }
 
