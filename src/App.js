@@ -15,7 +15,7 @@ import DashboardClient from './pages/DashboardClient.jsx';
 import DashboardCoach from './pages/DashboardCoach.jsx';
 import Header from './components/Header/Header.jsx';
 import Home from './pages/Home.jsx';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import NewProgram from './pages/NewProgram.jsx'
 import Exercises from './pages/Exercises.jsx'
 import NewExercise from './pages/NewExercise'
@@ -26,43 +26,45 @@ function App() {
   return (
     <AuthProvider>
       <Header />
-      <main>
-      <Container>
-        <Switch>
-          <AnonRoute exact path='/' component={Home} />
-          <AnonRoute exact path='/client/auth/signup' component={SignupClient} />
-          <AnonRoute exact path='/client/auth/login' component={LoginClient} />
-          <AnonRoute exact path='/coach/auth/signup' component={SignupCoach} />
-          <AnonRoute exact path='/coach/auth/login' component={LoginCoach} />
-          <PrivateRoute
-            exact
-            path='/client/auth/my-account/dashboard'
-            component={DashboardClient}
-          />
-          <PrivateRoute
-            exact
-            path='/coach/auth/my-account/dashboard'
-            component={DashboardCoach}
-          />
-          <PrivateRoute
-            exact
-            path='/coach/auth/program'
-            component={NewProgram}
-          />
-          <PrivateRoute
-            exact
-            path='/coach/auth/exercises'
-            component={Exercises}
-          />
-          <PrivateRoute
-            exact
-            path='/coach/auth/newExercises'
-            component={NewExercise}
-          />
-          <PrivateRoute exact path='/client/auth/arrange-meeting' component={ ArrangeMeetingPage } />
-        </Switch>
+      <Container className="main-layout">
+        <Row>
+          <Col md={12}>
+            <Switch>
+              <AnonRoute exact path='/' component={Home} />
+              <AnonRoute exact path='/client/auth/signup' component={SignupClient} />
+              <AnonRoute exact path='/client/auth/login' component={LoginClient} />
+              <AnonRoute exact path='/coach/auth/signup' component={SignupCoach} />
+              <AnonRoute exact path='/coach/auth/login' component={LoginCoach} />
+              <PrivateRoute
+                exact
+                path='/client/auth/my-account/dashboard'
+                component={DashboardClient}
+              />
+              <PrivateRoute
+                exact
+                path='/coach/auth/my-account/dashboard'
+                component={DashboardCoach}
+              />
+              <PrivateRoute
+                exact
+                path='/coach/auth/program'
+                component={NewProgram}
+              />
+              <PrivateRoute
+                exact
+                path='/coach/auth/exercises'
+                component={Exercises}
+              />
+              <PrivateRoute
+                exact
+                path='/coach/auth/newExercises'
+                component={NewExercise}
+              />
+              <PrivateRoute exact path='/client/auth/arrange-meeting' component={ ArrangeMeetingPage } />
+            </Switch>
+          </Col>
+        </Row>
       </Container>
-      </main>
     </AuthProvider>
   );
 }

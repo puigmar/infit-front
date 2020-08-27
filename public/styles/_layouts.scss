@@ -1,1 +1,33 @@
+@media (max-width: 767px){
+  .main-layout {
+    &.container{
+      margin: 0;
+      padding: 0;
 
+      main{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+    }
+  }
+}
+
+body{
+  background-color: $primary-color; 
+}
+
+
+.fullSection{
+  padding: 80px 50px;
+  clip-path: polygon(0% 0%,100% 20px,100% 100%,0% calc(100% - 20px));
+  background-color: #fff;
+  position: relative;
+  z-index: 1;
+  background-size: cover;
+  margin-top: -20px
+}
+
+.fullSection.bg-none{
+  background-color: transparent
+}

@@ -1,15 +1,36 @@
 .navbar{
 
+  box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
+  position: relative;
+  z-index: 2;
+  clip-path: polygon(0% 0%,100% 0,100% 100%,0% calc(100% - 20px));
+  padding-bottom: 38px;
+  padding-top: 20px;
+
   &.bg-light{
-    background-color: $primary-color!important
+    background-color: $secondary-color!important
   }
 
   .navbar-brand{
     height: 40px;
 
     img{
-      width: 102px;
+      width: 145px;
       height: auto;
+    }
+  }
+
+  &-toggler{
+    border-color: rgba(0, 0, 0, 0.1);
+    padding: 0;
+    font-size: 29px;
+    color: #000;
+    opacity: 1;
+    border: 0;
+    margin-bottom: -4px;
+
+    &:focus{
+      outline: 0;
     }
   }
 
@@ -30,9 +51,10 @@
       transition-property: left, visibility;
       font-size: 1.8rem;
       padding: 40px;
-      background: $secondary-color;
+      background: lighten($color: $secondary-color, $amount: 20);
       top: 0;
       color: #fff;
+      z-index: 101;
 
       .navbar-toggler{
           top: 20px;
@@ -53,13 +75,12 @@
       }
 
       .navbar-nav .nav-link{
-          color: $primary-color;
+          color: #333
       }
   }
 
   .offcanvas-collapse.show {
       left: 20vw;
       visibility: visible;
-      z-index: 1;
   }
 }
