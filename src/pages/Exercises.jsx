@@ -33,18 +33,12 @@ const Exercises = () => {
   };
 
   useEffect(() => {
-    console.log('usuario de useEffect', user);
     getCoach(user);
-    console.log('he encontrado el coach?', coach);
   }, []);
 
   useEffect(() => {
-    console.log('coachID', coach.coachID);
     getExercises(coach.coachID);
   }, [coach]);
-
-  console.log('este es el coach', coach);
-  console.log('este es el entrenamiento', exercises);
 
 
   return (

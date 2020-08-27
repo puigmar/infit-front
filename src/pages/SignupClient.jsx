@@ -6,7 +6,7 @@ import { Carousel, Button, Row, Col, Modal } from 'react-bootstrap';
 
 import WithAuth from '../components/AuthProvider';
 import SubHeader from '../components/SubHeader/SubHeader';
-import { checkExistUSer } from '../services/authenticate/auth-client.service';
+import { checkExistUSer } from '../services/authenticate/auth-user.service';
 import ClientSignupStep1 from '../components/ClientSignup/ClientSignupStep1';
 import ClientSignupStep2 from '../components/ClientSignup/ClientSignupStep2';
 import ClientSignupStep3 from '../components/ClientSignup/ClientSignupStep3';
