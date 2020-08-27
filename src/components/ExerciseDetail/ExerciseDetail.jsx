@@ -4,8 +4,10 @@ import { Button, Modal } from 'react-bootstrap';
 
 
 function ExerciseDetail(exerciseInfo, showEdition, handleClose, handleDelete) {
-  const keys = Object.keys(exerciseInfo);
-  const { _id, title, description, url } = exerciseInfo;
+
+  const keys = Object.keys(exerciseInfo); // --> Array keys
+  const { _id, title, description, url } = exerciseInfo; // --> Values
+  
   return (
     <Modal className="modal-exercise-detail" showEdition={showEdition}>
       <Modal.Header closeButton onClick={(e) => handleClose(e)}>
