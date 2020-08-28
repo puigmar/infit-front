@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import NextTraining from '../components/NextTraining.jsx';
-import WithAuth from '../components/AuthProvider';
 import { getUser } from '../services/user/user.service';
 import { getTrainings } from '../services/training/training.service';
+import NextTraining from '../components/NextTraining.jsx';
 import { Link } from 'react-router-dom';
 import { getTokenUser } from '../helpers/authHelpers.js';
 
 const DashboardClient = (props) => {
-  const { user } = WithAuth();
-  const [coach, setCoach] = useState({});
+  const [coach, setCoach] = useState(getTokenUser());
 
   const getCoach = async (user) => {
     try {
@@ -20,11 +18,9 @@ const DashboardClient = (props) => {
   };
 
   useEffect(() => {
-    getCoach(getTokenUser());
-    console.log('coach dashboard --->',coach)
+    getCoach(coach);
   }, []);
 
-  console.log('coach dashboard aut useEFFect --->',coach)
   return (
     <>
       <h1>Hola {coach && coach.name}</h1>

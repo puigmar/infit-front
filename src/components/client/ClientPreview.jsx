@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card, Row, Col, Button} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Card, Row, Col, Button } from 'react-bootstrap';
+import { Link, Route } from 'react-router-dom';
+import ProgramDetail from '../../pages/ProgramDetail'
 
-
-function ClientPreview(props ) {
+function ClientPreview(props) {
   const { name, wizard, avatarUrl } = props;
   return (
     <div>
@@ -11,20 +11,16 @@ function ClientPreview(props ) {
         <Card.Img variant='left' src={avatarUrl} />
         <Card.Body>
           <Card.Title>{name}</Card.Title>
-          <Card.Text>
-            
-          </Card.Text>
+          <Card.Text></Card.Text>
           <Row>
             <Col>
-            <Button
-              variant='primary btn-outline-primary'
-            >
-              <Link
+              <Button variant='primary btn-outline-primary'>
+                <Link
                 to='/coach/auth/client/programDetail'
               >
                 Crear programa a {name}
               </Link>
-            </Button>
+              </Button>
             </Col>
           </Row>
         </Card.Body>
