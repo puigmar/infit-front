@@ -18,9 +18,19 @@ export async function createExercise( values ) {
   }
 }
 
+export async function editExerciseByID( exerciseID, values ) {
+  try {
+    console.log('Estos son los valores de exerciseEdit', values);
+    console.log('Este es el id del exercise', exerciseID)
+    await AxiosCredentials.post(`/exercise/editExercise/${exerciseID}`, {...values});
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export async function deleteExerciseByID( exerciseID ) {
   try {
-    AxiosCredentials.post(`/exercise/delete/${exerciseID}`);
+    await AxiosCredentials.post(`/exercise/delete/${exerciseID}`);
   } catch (error) {
     console.log(error)
   }

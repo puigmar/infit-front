@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import WithAut from '../components/AuthProvider'
-import WithAuth from '../components/AuthProvider'
+import React, { useState, useEffect } from 'react';
 import { getUser } from '../services/user/user.service';
 import { getTokenUser } from '../helpers/authHelpers';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
-import { Link, Route } from 'react-router-dom';
-import ProgramDetail from '../../pages/ProgramDetail'
+import { Link } from 'react-router-dom';
 
 function ClientPreview(props) {
   const { name, wizard, avatarUrl } = props;
@@ -28,7 +27,6 @@ function ClientPreview(props) {
           <small className='text-muted'>Objetivo: {wizard.objective}</small>
         </Card.Footer>
       </Card>
-      <Card></Card>
     </div>
   );
 }

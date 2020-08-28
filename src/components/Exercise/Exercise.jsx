@@ -8,6 +8,7 @@ import {
   Col,
 } from 'react-bootstrap';
 import AlertMessage from '../AlertMessage/AlertMessage';
+import AlertMessageEdit from '../AlertMessageEdit/AlertMessageEdit.jsx';
 
 function Exercise(props) {
   const {
@@ -66,7 +67,8 @@ function Exercise(props) {
         </ListGroup>
       </Card>
 
-      {show && (
+      {show &&
+        isDelete ? (
         <AlertMessage 
           id={_id} 
           show={show}
@@ -75,7 +77,18 @@ function Exercise(props) {
           title={title}
           reloadPage={reloadPage}
           />
-      )}
+        ) : (
+          <AlertMessageEdit
+          {...props}
+          show={show}
+          setShow={setShow}
+          isDelete={isDelete}
+          title={title}
+          reloadPage={reloadPage}
+          />
+        )
+      
+      }
     </>
   );
 }

@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getUser } from '../services/user/user.service';
 import { createExercise } from '../services/exercise/exercise.service';
-import { getTokenUser } from '../helpers/authHelpers';
 
 function NewExercise() {
   const { user } = WithAuth();
-  const [coach, setCoach] = useState(getTokenUser());
+  const [coach, setCoach] = useState({});
   const [exercise, setExercise] = useState({
-    coachID: user._id,
+    coachID: '',
     title: '',
     image: '',
     video: '',
@@ -32,11 +31,13 @@ function NewExercise() {
   };
 
   useEffect(() => {
-    getCoach(coach);
+    getCoach(user);
   }, []);
 
   // el objetivo del programa será el objetivo escogido por el cliente
-
+  useEffect(() => {
+    setExercise({ ...exercise, coachID: coach.coachID });
+  }, [coach]);
 
   const handleChangeValues = (event) => {
     event.preventDefault();
@@ -58,7 +59,6 @@ function NewExercise() {
       title: '',
       image: '',
       video: '',
-      description: '',
       rest: {
         minute: 0,
         second: 0,
@@ -79,11 +79,11 @@ function NewExercise() {
           onChange={(e) => handleChangeValues(e)}
         />
 
-        <label htmlFor='input-objective'>Description</label>
+        <label htmlFor='input-objective'>Descripcion</label>
         <input
           type='text'
           name='description'
-          value={exercise.description}
+          value={exercise.objective}
           id='input-objective'
           onChange={(e) => handleChangeValues(e)}
         />
@@ -106,7 +106,7 @@ function NewExercise() {
           onChange={(e) => handleChangeValues(e)}
         />
 
-        <p>Rest</p>
+        <p>Pack</p>
         <label htmlFor='rest-minute'>Minutos</label>
         <input
           type='text'

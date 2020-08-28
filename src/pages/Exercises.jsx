@@ -37,9 +37,13 @@ const Exercises = () => {
 
   useEffect(() => {
     getExercises(coach.coachID);
+    return () => {
+      getExercises(coach.coachID);
+    }
   }, [coach]);
   
   const reloadPage = () => {
+    console.log('He hecho el reload')
     getExercises(coach.coachID);
   }
 

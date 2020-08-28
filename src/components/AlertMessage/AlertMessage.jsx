@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { deleteExerciseByID } from '../../services/exercise/exercise.service';
+import { Link } from 'react-router-dom';
 
 const AlertMessage = (props) => {
   const { title, url, id, isDelete, show, setShow, reloadPage } = props;
@@ -47,9 +48,13 @@ const AlertMessage = (props) => {
         <Button variant='secondary' onClick={() => handleClose()}>
           Close
         </Button>
-        <Button variant='primary' onClick={() => handleToDo(id)}>
-          {isDelete ? 'Eliminar' : 'Editar'}
-        </Button>
+        {isDelete ? (
+          <Button variant='primary' onClick={() => handleToDo(id)}>
+            Eliminar
+          </Button>
+        ) : (
+          <Link to='/coach/auth/exercise/editExercise'>Editar</Link>
+        )}
       </Modal.Footer>
     </Modal>
   );
