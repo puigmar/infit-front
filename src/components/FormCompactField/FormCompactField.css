@@ -1,0 +1,74 @@
+.field-compact {
+  position: relative;
+  height: 69px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  padding-bottom: 15px;
+  margin-bottom: 4px;
+}
+
+.field-compact .form-label {
+  position: absolute;
+  top: 7px;
+  text-align: left;
+  width: 100%;
+  left: 5px;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  font-weight: 300;
+}
+
+.field-compact .form-control {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  padding: 0 4px;
+  text-align: left;
+  height: 31px;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.field-compact:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  outline: none;
+  box-shadow: none !important;
+}
+
+.field-compact .error-message {
+  font-size: 0.8rem;
+  color: red;
+  padding-top: 5px;
+  text-align: left;
+  position: absolute;
+  bottom: 17px;
+  left: 0;
+  font-weight: 300;
+}
+
+.field-compact.isFilled .form-label, .field-compact.isFocus .form-label {
+  top: -10px;
+  font-size: 0.75rem;
+  left: 2px;
+}
+
+#root .form-control:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  outline: none;
+  box-shadow: none !important;
+}
+/*# sourceMappingURL=FormCompactField.css.map */

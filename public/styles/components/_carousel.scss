@@ -1,0 +1,25 @@
+.carousel{
+  .carousel-indicators{
+    bottom: auto;
+    top: 8px;
+    padding: 0;
+    padding-top: 20px;
+    position: absolute;
+    pointer-events: none;
+
+    li{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: grey;
+      margin: 0 8px
+    }
+  }
+
+  &-item {
+    h2{
+      text-align: center;
+      margin-bottom: 47px;
+    }
+  }
+}

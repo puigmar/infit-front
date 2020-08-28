@@ -1,0 +1,15 @@
+.field-compact{
+  .form-label{
+    font-size: 0.875
+  }
+  .form-contron{
+    &:focus{
+      box-shadow: none;
+    }
+  }
+}
+
+.form-group{
+  margin: 0;
+}
+
