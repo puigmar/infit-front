@@ -54,7 +54,7 @@ const SignupCoach = () => {
           password,
           isCoach: true
         },
-        Coach: {
+        coach: {
           name: nameUser
         }
       }
@@ -65,7 +65,7 @@ const SignupCoach = () => {
   const registerDBCoach = (dataCoach) => { 
     const data = dataCoach; // dataCoach || fakeData
     const {coach, user} = data;
-    const registerCoach = signupUser({ user, coach });
+    signupUser({ user, client: coach });
   }
 
   const checkFormEmptyFields = () => {
@@ -117,8 +117,8 @@ const SignupCoach = () => {
               {...formik.getFieldProps('password')}
               className={handleFieldClass('password')}
             />
+            {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
           </FormCompactField>
-          {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
         </Form.Group>
         
         <Form.Group controlId="repeatPassword">
@@ -129,8 +129,8 @@ const SignupCoach = () => {
               {...formik.getFieldProps('repeatPassword')}
               className={handleFieldClass('repeatPassword')}
             />
+            {(formik.touched.repeatPassword && formik.errors.repeatPassword ) && ( <div className="error-message">{formik.errors.repeatPassword}</div> )}
           </FormCompactField>
-          {(formik.touched.repeatPassword && formik.errors.repeatPassword ) && ( <div className="error-message">{formik.errors.repeatPassword}</div> )}
         </Form.Group>
         
         <Form.Group controlId="nameUser">
@@ -141,13 +141,13 @@ const SignupCoach = () => {
               {...formik.getFieldProps('nameUser')}
               className={handleFieldClass('nameUser')}
             />
+            {(formik.touched.nameUser && formik.errors.nameUser ) && ( <div className="error-message">{formik.errors.nameUser}</div> )}
           </FormCompactField>
-          {(formik.touched.nameUser && formik.errors.nameUser ) && ( <div className="error-message">{formik.errors.nameUser}</div> )}
         </Form.Group>
 
-        <Button disabled={disabledButton} type="submit" variant="primary" size="lg">Registrarse</Button>
+        <Button disabled={disabledButton} type="submit" variant="primary" size="lg" className="mt-4">Registrarse</Button>
         
-        <section className="signupBtn">
+        <section className="signupBtn text-center">
           <p className="mt-3">¿Ya eres usuario? <Link to={'/login'}>Inicia sesión</Link></p>
         </section>
       </Form>

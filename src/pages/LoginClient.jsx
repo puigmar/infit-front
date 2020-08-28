@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import WithAuth from '../components/AuthProvider';
 import BoxSkew from '../components/BoxSkew/BoxSkew';
 import SectionBg from '../components/SectionBg/SectionBg';
@@ -10,12 +10,10 @@ import * as Yup from 'yup';
 const LoginClient = () => {
   const { loginUser } = WithAuth();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
   const handleFormSubmit = async (event) => {
     try {
       event.preventDefault();
+      const { username, password } = formik.values;
       loginUser({username, password, isCoach: false});
     }
     catch(err){
@@ -74,7 +72,7 @@ const LoginClient = () => {
             </FormCompactField>
             {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
           </Form.Group>
-          <Button type="submit" variant="primary" size="lg">Inciiar sesión</Button>
+          <Button type="submit" variant="primary" size="lg" className="mt-4">Inciiar sesión</Button>
         </Form>
       </BoxSkew>
     </SectionBg>

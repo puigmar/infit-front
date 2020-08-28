@@ -16,17 +16,16 @@ const Header = () => {
 
 
   const handleMenu = (e) => {
+
     const el = e.currentTarget;
     const toggleId = el.getAttribute('data-toggle');
-    const menu = document.getElementById(toggleId)
-    console.log(menu)
+    const menu = document.getElementById(toggleId);
     menu.classList.toggle('show')
   }
 
 
   useEffect (()=>{
     const navMenuBtn = document.querySelectorAll('.navbar-toggler');
-    console.log('navMenuBtn: ', navMenuBtn)
     navMenuBtn.forEach(button => {
       button.addEventListener('click', handleMenu);
     })

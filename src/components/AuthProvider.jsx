@@ -21,6 +21,7 @@ const UserContext = React.createContext();
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [provClientId, setProvClientId] = useState({})
   useEffect(() => {
     if (!getToken()) {
       setIsLoading(false);
@@ -32,6 +33,9 @@ export function AuthProvider(props) {
   }, []);
 
   const signupUser = ({ user, client }) => {
+    console.log('USER AuthProvider: ------->', user)
+    console.log('Client AuthProvider: ------->', client)
+
     signup(user, client)
       .then((userSigned) => {
         setToken(uuidv4());
@@ -76,6 +80,8 @@ export function AuthProvider(props) {
     user,
     isLoading,
     setIsLoading,
+    provClientId, 
+    setProvClientId
   };
   return <UserContext.Provider value={value} {...props} />;
 }

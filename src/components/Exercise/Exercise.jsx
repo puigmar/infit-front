@@ -8,6 +8,9 @@ import {
   Col,
 } from 'react-bootstrap';
 import AlertMessage from '../AlertMessage/AlertMessage';
+import AlertMessageEdit from '../AlertMessageEdit/AlertMessageEdit.jsx';
+import "../../../node_modules/video-react/dist/video-react.css";
+import { Player } from 'video-react';
 
 function Exercise(props) {
   const {
@@ -16,6 +19,8 @@ function Exercise(props) {
     description,
     image,
     rest,
+    reloadPage,
+    video,
   } = props;
 
   console.log('id por ejercicio',_id)
@@ -36,13 +41,20 @@ function Exercise(props) {
     <>
       <Card>
         <Card.Img variant='top' src={image} />
+        <div className="wrapImage">
+          {video &&    
+            <Player
+              playsInline
+              src={video}
+            /> 
+          }
+        </div>
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{description}</Card.Text>
           <Row>
             <Col>
               <Button
-                data-id={_id}
                 variant='primary btn-outline-primary'
                 onClick={() => handleShowAlertDelete()}
               >
@@ -51,7 +63,6 @@ function Exercise(props) {
             </Col>
             <Col>
               <Button
-                data-id={_id}
                 variant='primary'
                 onClick={() => handleShowAlertEdit()}
               >
@@ -67,15 +78,28 @@ function Exercise(props) {
         </ListGroup>
       </Card>
 
-      {show && (
+      {show &&
+        isDelete ? (
         <AlertMessage 
           id={_id} 
           show={show}
           setShow={setShow}
           isDelete={isDelete}
           title={title}
+          reloadPage={reloadPage}
           />
-      )}
+        ) : (
+          <AlertMessageEdit
+          {...props}
+          show={show}
+          setShow={setShow}
+          isDelete={isDelete}
+          title={title}
+          reloadPage={reloadPage}
+          />
+        )
+      
+      }
     </>
   );
 }
