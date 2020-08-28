@@ -6,15 +6,12 @@ import FormCompactField from '../components/FormCompactField/FormCompactField.js
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import * as Yup from 'yup';
-import { Next } from 'react-bootstrap/esm/PageItem';
 
 const LoginCoach = () => {
   const { loginUser } = WithAuth();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
   const handleFormSubmit = (event) => {
+    const { username, password } = formik.values;
     try {
       event.preventDefault();
       const { username, password } = formik.values;

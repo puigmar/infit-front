@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import WithAuth from '../components/AuthProvider';
 import BoxSkew from '../components/BoxSkew/BoxSkew';
 import SectionBg from '../components/SectionBg/SectionBg';
@@ -10,10 +10,8 @@ import * as Yup from 'yup';
 const LoginClient = () => {
   const { loginUser } = WithAuth();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
   const handleFormSubmit = async (event) => {
+    const { username, password } = formik.values;
     try {
       event.preventDefault();
       const { username, password } = formik.values;

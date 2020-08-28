@@ -18,12 +18,12 @@ const FormAvatar = (props) => {
     const inputFile = e.currentTarget;
     const uploadData = new FormData();
     uploadData.append(fieldName, inputFile.files[0]);
-    const uploadAvatar = await handleAvatarUpload({formData: uploadData, isCoach: false});
+    const uploadAvatar = await handleAvatarUpload({formData: uploadData});
     console.log('imagen subida!')
     setIsLoading(false)
-    setAvatarImgRoute(uploadAvatar.avatar_url)
-    props.handleAvatarFile(uploadAvatar.avatar_url)
-    props.setAvatarUrl(uploadAvatar.avatar_url)
+    setAvatarImgRoute(uploadAvatar.media_url)
+    props.handleAvatarFile(uploadAvatar.media_url)
+    props.setAvatarUrl(uploadAvatar.media_url)
   }
 
   const handleSubmit = (e) => {

@@ -8,6 +8,8 @@ import {
   Col,
 } from 'react-bootstrap';
 import AlertMessage from '../AlertMessage/AlertMessage';
+import "../../../node_modules/video-react/dist/video-react.css";
+import { Player } from 'video-react';
 
 function Exercise(props) {
   const {
@@ -16,6 +18,8 @@ function Exercise(props) {
     description,
     image,
     rest,
+    reloadPage,
+    video,
   } = props;
 
   console.log('id por ejercicio',_id)
@@ -36,6 +40,14 @@ function Exercise(props) {
     <>
       <Card>
         <Card.Img variant='top' src={image} />
+        <div className="wrapImage">
+          {video &&    
+            <Player
+              playsInline
+              src={video}
+            /> 
+          }
+        </div>
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{description}</Card.Text>
@@ -74,6 +86,7 @@ function Exercise(props) {
           setShow={setShow}
           isDelete={isDelete}
           title={title}
+          reloadPage={reloadPage}
           />
       )}
     </>

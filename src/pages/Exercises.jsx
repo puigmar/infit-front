@@ -4,7 +4,6 @@ import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import { getUser } from '../services/user/user.service';
 import Exercise from '../components/Exercise/Exercise';
 
-
 const Exercises = () => {
   const { user } = WithAuth();
   const [coach, setCoach] = useState({});
@@ -40,6 +39,10 @@ const Exercises = () => {
   useEffect(() => {
     getExercises(coach.coachID);
   }, [coach]);
+  
+  const reloadPage = () => {
+    getExercises(coach.coachID);
+  }
 
   return (
     <Fragment>
@@ -52,6 +55,7 @@ const Exercises = () => {
               {...item}
               showNumbers={false}
               showText={true}
+              reloadPage={reloadPage}
             />
           ))}
         </div>

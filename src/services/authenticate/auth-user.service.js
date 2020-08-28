@@ -33,10 +33,32 @@ const errorHandler = (err) => {
   throw err;
 };
 
-export async function handleAvatarUpload({ formData, isCoach }) {
+export async function handleAvatarUpload({ formData }) {
   try {
     return await AxiosCredentials.post(
     '/generic/auth/uploadPhotoAvatar',
+      formData
+    ).then(({ data }) => data);
+  } catch (error) {
+    console.log(errorHandler(error));
+  }
+}
+
+export async function handleImageUpload({ formData }) {
+  try {
+    return await AxiosCredentials.post(
+    '/generic/auth/uploadImage',
+      formData
+    ).then(({ data }) => data);
+  } catch (error) {
+    console.log(errorHandler(error));
+  }
+}
+
+export async function handleVideoUpload({ formData }) {
+  try {
+    return await AxiosCredentials.post(
+    '/generic/auth/uploadVideo',
       formData
     ).then(({ data }) => data);
   } catch (error) {
