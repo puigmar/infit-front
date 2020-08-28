@@ -17,6 +17,7 @@
     padding: 0;
     margin: 0;
     pointer-events: none;
+    font-weight: 300;
   }
 
   .form-control{
@@ -28,6 +29,7 @@
     text-align: left;
     height: 31px;
     font-size: 15px;
+    font-weight: 300;
   }
 
   &:focus{
@@ -44,6 +46,7 @@
     position: absolute;
     bottom: 17px;
     left: 0;
+    font-weight: 300;
   }
 
   &.isFilled,

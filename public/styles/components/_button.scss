@@ -73,6 +73,12 @@
 
 }
 
+#root .btn-primary:not(:disabled):not(.disabled):active, #root .btn-primary:not(:disabled):not(.disabled).active, #root .show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: $primary-color!important;
+  border-color: none;
+}
+
 .btn + a{
   margin-top: 10px;
 }

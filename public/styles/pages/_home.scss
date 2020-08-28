@@ -27,13 +27,14 @@
       text-align: center;
       z-index: 2;
       position: relative;
+      font-size: 2rem;
       
       span{
         display: block;
-        font-weight: 400;
+        font-weight: 600;
 
         &:first-child{
-          font-weight: 600;
+          font-weight: 800;
         }
       }
     }

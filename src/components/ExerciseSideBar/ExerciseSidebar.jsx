@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { getExercises, getExercisesByCoach } from '../../services/exercise/exercise.service';
 import ExerciseSidebarBox from '../ExerciseSidebarBox/ExerciseSidebarBox.jsx';
+import './ExerciseSisebar.css';
+
 function ExerciseSidebar(props) {
 
   const [exercises, setExercises] = useState([]);

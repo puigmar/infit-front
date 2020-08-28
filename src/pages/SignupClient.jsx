@@ -165,8 +165,8 @@ const SignupClient = (props) => {
 
   return (
     <Fragment>
-      <div className={`signup-page${isLoading ? ' isLoading' : ''}`}>
-        <SubHeader title={title} history={history} action={backLink} />
+      <SubHeader title={title} history={history} action={backLink} />
+      <div className={`signup-page box-layout`}>
         <Carousel
           className={step > 3 && 'without-dots'}
           controls={controls}
