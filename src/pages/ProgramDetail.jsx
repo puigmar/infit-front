@@ -5,18 +5,18 @@ import { getTokenUser } from '../helpers/authHelpers';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import SubHeader from '../components/SubHeader/SubHeader';
 import { useHistory } from "react-router-dom";
-
-
+import ExerciseSidebar from '../components/ExerciseSideBar/ExerciseSidebar';
 
 function ProgramDetail(props) {
-  // get trainings this coach
-  // llamar al coach
 
   const { provClientId } = WithAuth();
 
   const [coach, setCoach] = useState(getTokenUser());
+  const [clientId, setClientId] = useState({})
+  const [title, setTitle] = useState('')
   const [newTraining, setNewTraining] = useState([]); // array para rellenar con myExercises
   let myExercises = []; // todos los ejercicios del Coach
+  let history = useHistory();
   
   const getCoach = async (user) => {
     try {
@@ -31,7 +31,8 @@ function ProgramDetail(props) {
     try{
       console.log('id del cliente: ---->', id)
       const client = await getClientId(id)
-      console.log('Client: --->:', client)
+      setClientId(client)
+      setTitle(client.wizard.objective)
     }
     catch(err){
       console.log(err)
@@ -61,7 +62,10 @@ function ProgramDetail(props) {
   console.log('provClientID: ---->', provClientId)
   return (
     <div>
-      {/* <SubHeader title={} /> */}
+      {
+        clientId && <SubHeader title={title} history={history}/>
+      }
+      <ExerciseSidebar coach={coach} />
     </div>
   )
 }
