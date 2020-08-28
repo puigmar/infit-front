@@ -41,12 +41,13 @@ const DashboardClient = (props) => {
 
   return (
     <Fragment>
-      <h1>Hola {client.name}</h1>
 {/*       
       <section>
-
+      
       </section>
-      <NextTraining /> */}
+    <NextTraining /> */}
+    <section className="box-layout">
+      <h1>Hola {client.name}</h1>
 
       {/* Meeting Calendar */}
       <Modal
@@ -56,7 +57,7 @@ const DashboardClient = (props) => {
         keyboard={false}
         className="fullScreen payment-confrmation"
       >
-        <Modal.Body>
+      <Modal.Body>
           <div className="box box-skew">
             <div className="modal-highlightedTitle">
               <p>Tu pago de {props.totalAmount}€ se ha realizado correctamente.</p>
@@ -72,6 +73,8 @@ const DashboardClient = (props) => {
           <Link to="/client/auth/my-account/dashboard"><Button variant="primary">Quiero ir a mi cuenta</Button></Link>
         </Modal.Body>
       </Modal>
+
+    </section>
 
     </Fragment>
   );

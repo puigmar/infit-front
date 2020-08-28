@@ -2,6 +2,14 @@
   form{
     text-align: center;
 
+    .form-group{
+      text-align: left;
+
+      select{
+        margin-bottom: 20px;
+      }
+    }
+
     .btn{
       margin-top: 20px;
     }

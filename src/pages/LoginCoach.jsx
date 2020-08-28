@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import WithAuth from '../components/AuthProvider';
 import BoxSkew from '../components/BoxSkew/BoxSkew';
 import SectionBg from '../components/SectionBg/SectionBg';
 import FormCompactField from '../components/FormCompactField/FormCompactField.jsx'
 import { useFormik } from 'formik';
+import { Link, useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import * as Yup from 'yup';
+import SubHeader from '../components/SubHeader/SubHeader';
+
 
 const LoginCoach = () => {
   const { loginUser } = WithAuth();
+  const [title, setTitle] = useState('Login Entrenador')
+  let history = useHistory();
 
   const handleFormSubmit = (event) => {
     const { username, password } = formik.values;
@@ -46,8 +51,9 @@ const LoginCoach = () => {
   }
 
   return (
+    <Fragment>
+    <SubHeader title={title} history={history} />
     <SectionBg bgImage="">
-      <h1>Login</h1>
       <BoxSkew>
         <Form onSubmit={handleFormSubmit}>
           <Form.Group controlId="username">
@@ -78,6 +84,7 @@ const LoginCoach = () => {
         </Form>
       </BoxSkew>
     </SectionBg>
+    </Fragment>
   );
 };
 

@@ -100,7 +100,26 @@ function ClientSignupStep2(props) {
         {formik.touched.avatarUrl && formik.errors.avatarUrl && (
           <div className='error-message'>{formik.errors.avatarUrl}</div>
         )}
-
+        
+        <Form.Group controlId='sex'>
+          <Form.Label>Sexo</Form.Label>
+          <Form.Group controlId='sex'>
+            <Form.Control
+              as='select'
+              value='Escoge un sexo'
+              {...formik.getFieldProps('sex')}
+            >
+              <option value='Escoge un sexo'></option>
+              <option value='male'>Hombre</option>
+              <option value='female'>Mujer</option>
+              <option vale='other'>Other</option>
+            </Form.Control>
+          </Form.Group>
+          {formik.touched.telephone && formik.errors.telephone && (
+            <div className='error-message'>{formik.errors.telephone}</div>
+          )}
+        </Form.Group>
+        
         <Form.Group controlId='nameUser'>
           <FormCompactField>
             <Form.Label>Nombre</Form.Label>
@@ -199,24 +218,7 @@ function ClientSignupStep2(props) {
           )}
         </Form.Group>
 
-        <Form.Group controlId='sex'>
-          <Form.Label>Sexo</Form.Label>
-          <Form.Group controlId='sex'>
-            <Form.Control
-              as='select'
-              value='Escoge un sexo'
-              {...formik.getFieldProps('sex')}
-            >
-              <option value='Escoge un sexo'></option>
-              <option value='male'>Hombre</option>
-              <option value='female'>Mujer</option>
-              <option vale='other'>Other</option>
-            </Form.Control>
-          </Form.Group>
-          {formik.touched.telephone && formik.errors.telephone && (
-            <div className='error-message'>{formik.errors.telephone}</div>
-          )}
-        </Form.Group>
+        
         <Button
           disabled={disabledButton}
           type='submit'

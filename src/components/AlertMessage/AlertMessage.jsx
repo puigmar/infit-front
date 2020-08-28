@@ -4,7 +4,7 @@ import { deleteExerciseByID } from '../../services/exercise/exercise.service';
 import { Link } from 'react-router-dom';
 
 const AlertMessage = (props) => {
-  const { title, url, id, isDelete, show, setShow, reloadPage } = props;
+  const { title, image, id, isDelete, show, setShow, reloadPage } = props;
 
   const handleClose = () => {
     setShow(false);
@@ -38,9 +38,6 @@ const AlertMessage = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className='modal-exercise_img'>
-          <img src={url} alt={title} />
-        </div>
         <h3>{title}</h3>
         <p>¿Estás seguro que quieres eliminar este ejercicio?</p>
       </Modal.Body>

@@ -4,7 +4,7 @@ import {
   getExercisesByCoach,
 } from '../../services/exercise/exercise.service';
 import ExerciseSidebarBox from '../ExerciseSidebarBox/ExerciseSidebarBox.jsx';
-import './ExerciseSidebar.style.scss'
+import './ExerciseSisebar.css';
 
 function ExerciseSidebar(props) {
 

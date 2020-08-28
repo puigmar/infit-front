@@ -10916,7 +10916,7 @@ select {
 }
 
 body {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Maven Pro', sans-serif;
 }
 
 h1 {
@@ -10929,8 +10929,8 @@ h2 {
 }
 
 a {
-  color: #333333;
-  font-weight: 500;
+  color: #44D7B6;
+  font-weight: 300;
 }
 
 @media (max-width: 767px) {
@@ -10974,8 +10974,20 @@ body {
   background-color: transparent;
 }
 
+.box-layout {
+  padding: 40px;
+}
+
 .signup-page form {
   text-align: center;
+}
+
+.signup-page form .form-group {
+  text-align: left;
+}
+
+.signup-page form .form-group select {
+  margin-bottom: 20px;
 }
 
 .signup-page form .btn {
@@ -11020,15 +11032,16 @@ body {
   text-align: center;
   z-index: 2;
   position: relative;
+  font-size: 2rem;
 }
 
 .home-page .hero h1 span {
   display: block;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .home-page .hero h1 span:first-child {
-  font-weight: 600;
+  font-weight: 800;
 }
 
 .home-page .fullSection {
@@ -11153,6 +11166,12 @@ body {
   font-weight: 400;
 }
 
+#root .btn-primary:not(:disabled):not(.disabled):active, #root .btn-primary:not(:disabled):not(.disabled).active, #root .show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #F7B500 !important;
+  border-color: none;
+}
+
 .btn + a {
   margin-top: 10px;
 }
@@ -11180,7 +11199,7 @@ a {
 
 .carousel-item h2 {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 47px;
 }
 
 .loadingWrapper {
@@ -11237,8 +11256,8 @@ a {
 }
 
 .navbar {
-  /* -webkit-box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
-          box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18); */
+  -webkit-box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
+          box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
   position: relative;
   z-index: 2;
   padding-top: 4px;
@@ -11324,26 +11343,6 @@ a {
   }
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  border: 1px solid none;
-  -webkit-text-fill-color: transparent;
-  -webkit-box-shadow: 0 0 0px 1000px none inset;
-  -webkit-transition: background-color 5000s ease-in-out 0s;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-#root input:-internal-autofill-selected {
-  background-color: transparent !important;
-}
-
 .field-compact .form-label {
   font-size: 0.875;
 }
@@ -11355,6 +11354,25 @@ select:-webkit-autofill:focus {
 
 .form-group {
   margin: 0;
+}
+
+.dashboard-coach a {
+  margin-top: 20px;
+  width: 100%;
+  display: block;
+  padding: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  border: 1px solid #44D7B6;
+  border-radius: 20px;
 }
 
 .error {

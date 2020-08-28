@@ -26,6 +26,7 @@
   padding: 0;
   margin: 0;
   pointer-events: none;
+  font-weight: 300;
 }
 
 .field-compact .form-control {
@@ -37,6 +38,7 @@
   text-align: left;
   height: 31px;
   font-size: 15px;
+  font-weight: 300;
 }
 
 .field-compact:focus {
@@ -54,6 +56,7 @@
   position: absolute;
   bottom: 17px;
   left: 0;
+  font-weight: 300;
 }
 
 .field-compact.isFilled .form-label, .field-compact.isFocus .form-label {
