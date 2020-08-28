@@ -21,6 +21,7 @@ const UserContext = React.createContext();
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [provClientId, setProvClientId] = useState({})
   useEffect(() => {
     if (!getToken()) {
       setIsLoading(false);
@@ -79,6 +80,8 @@ export function AuthProvider(props) {
     user,
     isLoading,
     setIsLoading,
+    provClientId, 
+    setProvClientId
   };
   return <UserContext.Provider value={value} {...props} />;
 }
