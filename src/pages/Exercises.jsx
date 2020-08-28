@@ -3,6 +3,7 @@ import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import { getUser } from '../services/user/user.service';
 import Exercise from '../components/Exercise/Exercise';
 import { getTokenUser } from '../helpers/authHelpers';
+import { v4 as uuidv4 } from 'uuid';
 
 const Exercises = () => {
   const [coach, setCoach] = useState(getTokenUser());
@@ -51,15 +52,15 @@ const Exercises = () => {
       <section>
         <h1>Ejercicios disponibles</h1>
         <div className='exercise-list'>
-          {exercises.map((item, index) => (
+          {exercises.map((item, index) => 
             <Exercise
-              key={index}
+              key={uuidv4()}
               {...item}
               showNumbers={false}
               showText={true}
               reloadPage={reloadPage}
             />
-          ))}
+          )}
         </div>
         <div className='addExercise' ></div>
       </section>
