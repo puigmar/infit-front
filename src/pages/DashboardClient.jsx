@@ -8,7 +8,7 @@ import { getIdClient } from '../services/user/user.service';
 
 const DashboardClient = (props) => {
   const { provClientId } = WithAuth();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [client, setClient] = useState(getTokenUser())
 
 
