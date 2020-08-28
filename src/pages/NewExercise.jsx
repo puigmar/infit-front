@@ -4,19 +4,31 @@ import { getUser } from '../services/user/user.service';
 import { createExercise } from '../services/exercise/exercise.service';
 import { getTokenUser } from '../helpers/authHelpers';
 
+import {
+  handleImageUpload,
+  handleVideoUpload,
+} from '../services/authenticate/auth-client.service';
+import '../../node_modules/video-react/dist/video-react.css';
+import { Player } from 'video-react';
+
 function NewExercise() {
   const { user } = WithAuth();
+
   const [coach, setCoach] = useState(getTokenUser());
+  const [videoUrl, setVideoUrl] = useState('');
+  const [isVideo, setIsVideo] = useState(false);
   const [exercise, setExercise] = useState({
     coachID: user._id,
     title: '',
     image: '',
     video: '',
+    description: '',
     rest: {
       minute: 0,
       second: 0,
     },
   });
+
   const [rest, setRest] = useState({
     minute: 0,
     second: 0,
@@ -37,7 +49,6 @@ function NewExercise() {
 
   // el objetivo del programa será el objetivo escogido por el cliente
 
-
   const handleChangeValues = (event) => {
     event.preventDefault();
     const { name, value, id } = event.target;
@@ -49,6 +60,50 @@ function NewExercise() {
     }
 
     setExercise({ ...exercise, [name]: value });
+  };
+
+  const handleChangeVideoUrl = () => {
+    setExercise({
+      ...exercise,
+      video: videoUrl,
+    });
+    setIsVideo(true);
+  };
+
+  const handleInputVideo = (e) => {
+    if (e.target.value === '') {
+      return;
+    }
+    setVideoUrl(e.target.value);
+    setIsVideo(false);
+  };
+
+  const handleChangeMedia = async (e) => {
+    const inputFile = e.currentTarget;
+    const uploadData = new FormData();
+    uploadData.append(inputFile.name, inputFile.files[0]);
+
+    let media;
+    switch (inputFile.name) {
+      case 'image':
+        media = await handleImageUpload({ formData: uploadData });
+        setExercise({
+          ...exercise,
+          image: media.media_url,
+        });
+        break;
+      case 'video':
+        media = await handleVideoUpload({ formData: uploadData });
+        setExercise({
+          ...exercise,
+          video: media.media_url,
+        });
+        break;
+        default:
+          return;
+    }
+
+    console.log('Exercise: ', exercise);
   };
 
   const createNewExercise = () => {
@@ -87,24 +142,31 @@ function NewExercise() {
           id='input-objective'
           onChange={(e) => handleChangeValues(e)}
         />
-
+        <div className='wrapImage'>
+          {exercise.image !== '' ? <img src={exercise.image} alt='exercisePicture'/> : ''}
+        </div>
         <label htmlFor='input-pictureProgram'>Image</label>
         <input
           type='file'
           name='image'
           value={exercise.picture}
           id='input-pictureProgram'
-          onChange={(e) => handleChangeValues(e)}
+          onChange={(e) => handleChangeMedia(e)}
         />
-
-        <label htmlFor='input-videoProgram'>Video</label>
+        <div className='wrapImage'>
+          {isVideo && <Player playsInline src={videoUrl} />}
+        </div>
+        <label htmlFor='input-pictureProgramVideo'>Video</label>
         <input
-          type='file'
+          type='text'
           name='video'
-          value={exercise.picture}
-          id='input-pictureProgram'
-          onChange={(e) => handleChangeValues(e)}
+          value={videoUrl}
+          id='input-pictureProgramVideo'
+          onChange={(e) => handleInputVideo(e)}
         />
+        <button type='button' onClick={() => handleChangeVideoUrl()}>
+          Cargar vídeo
+        </button>
 
         <p>Rest</p>
         <label htmlFor='rest-minute'>Minutos</label>

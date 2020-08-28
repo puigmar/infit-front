@@ -1,17 +1,38 @@
-import React, { Fragment, useState } from 'react';
-import NextTraining from '../components/NextTraining.jsx';
+import React, { Fragment, useState, useEffect } from 'react';
+// import NextTraining from '../components/NextTraining.jsx';
 import WithAuth from '../components/AuthProvider';
-import { getTraining } from '../services/training/training.service';
-import { Modal, Form, Button, Accordion, Card, Row, Col } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
+import { getTokenUser } from '../helpers/authHelpers.js';
+import { getIdClient } from '../services/user/user.service';
 
 const DashboardClient = (props) => {
-  const { user, isLoggedin, isLogout } = WithAuth();
-  const [show, setShow] = useState(false);
+  const { provClientId } = WithAuth();
+  const [show, setShow] = useState(true);
+  const [client, setClient] = useState(getTokenUser())
+
+
+  const getClient = async (id) => {
+    try{
+      console.log('id del cliente: ---->', id)
+      const clientService = await getIdClient(id)
+      setClient(clientService)
+      console.log('Client: --->:', client)
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    client && getClient(client._id);
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log('USER----->', user)
+
+
+  console.log('CLIENT----->', client)
   // const trainings = getTraining({...user})
   // console.log('entrenamientos del usuario', trainings)
 
@@ -20,12 +41,12 @@ const DashboardClient = (props) => {
 
   return (
     <Fragment>
-      <h1>Hola {}</h1>
+      <h1>Hola {client.name}</h1>
+{/*       
       <section>
 
       </section>
-      
-      <NextTraining />
+      <NextTraining /> */}
 
       {/* Meeting Calendar */}
       <Modal

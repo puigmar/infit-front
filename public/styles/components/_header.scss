@@ -3,12 +3,11 @@
   box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
   position: relative;
   z-index: 2;
-  clip-path: polygon(0% 0%,100% 0,100% 100%,0% calc(100% - 20px));
-  padding-bottom: 38px;
-  padding-top: 20px;
+  padding-top: 4px;
+  z-index: 101;
 
   &.bg-light{
-    background-color: $secondary-color!important
+    background-color: $primary-color!important
   }
 
   .navbar-brand{
@@ -82,5 +81,15 @@
   .offcanvas-collapse.show {
       left: 20vw;
       visibility: visible;
+  }
+
+  .navbar{
+    &.isMenu{
+      clip-path: none
+    }
+
+    .navbar-nav .nav-link{
+      font-size: 1.125rem;
+    }
   }
 }

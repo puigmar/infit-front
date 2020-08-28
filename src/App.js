@@ -25,7 +25,8 @@ function App() {
   return (
     <AuthProvider>
       <Header />
-      <Container className="main-layout">
+      <div className="main-layout">
+      <Container>
         <Row>
           <Col md={12}>
             <Switch>
@@ -69,6 +70,7 @@ function App() {
           </Col>
         </Row>
       </Container>
+      </div>
     </AuthProvider>
   );
 }

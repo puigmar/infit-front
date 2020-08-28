@@ -8,6 +8,7 @@
       -ms-flex-align: center;
           align-items: center;
   position: relative;
+  margin-bottom: 15px;
 }
 
 .subHeader h1 {

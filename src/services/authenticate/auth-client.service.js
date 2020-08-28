@@ -5,11 +5,14 @@ export async function signup(user, client) {
     const { username, password, isCoach } = user;
     console.log('user authclient.service------>:',user);
     console.log('client authclient.service------>:',client);
-    const signUpUser =  await AxiosCredentials.post(`/${isCoach ? 'coach' : 'client'}/auth/signup`, {
-      username,
-      password,
-      client
-    }).then(({data}) => data)
+    let params;
+    if (isCoach) {
+      params = { username, password, 'coach': client }
+    }else{
+      params = { username, password, client }
+    }
+    const signUpUser =  await AxiosCredentials.post(`/${isCoach ? 'coach' : 'client'}/auth/signup`, params)
+    console.log('signUpUser :', signUpUser)
     return signUpUser;
   }
   catch (error) {
@@ -18,8 +21,9 @@ export async function signup(user, client) {
 }
 
 export async function login({ username, password, isCoach }) {
+  const url = `${isCoach ? '/coach' : '/client'}/auth/login`;
   try {
-    const userLogged = await AxiosCredentials.post('/coach/auth/login', {
+    const userLogged = await AxiosCredentials.post(`${url}`, {
       username,
       password,
     }).then(({data}) => data);
@@ -36,7 +40,7 @@ const errorHandler = (err) => {
 export async function handleAvatarUpload({ formData }) {
   try {
     return await AxiosCredentials.post(
-    '/generic/auth/uploadPhotoAvatar',
+      '/generic/auth/uploadPhotoAvatar',
       formData
     ).then(({ data }) => data);
   } catch (error) {
@@ -47,7 +51,7 @@ export async function handleAvatarUpload({ formData }) {
 export async function handleImageUpload({ formData }) {
   try {
     return await AxiosCredentials.post(
-    '/generic/auth/uploadImage',
+      '/generic/auth/uploadImage',
       formData
     ).then(({ data }) => data);
   } catch (error) {
@@ -58,7 +62,7 @@ export async function handleImageUpload({ formData }) {
 export async function handleVideoUpload({ formData }) {
   try {
     return await AxiosCredentials.post(
-    '/generic/auth/uploadVideo',
+      '/generic/auth/uploadVideo',
       formData
     ).then(({ data }) => data);
   } catch (error) {
@@ -91,9 +95,8 @@ export async function logout(isCoach) {
 
 export async function auth() {
   try {
-    return await AxiosCredentials.get(
-      '/generic/auth/me',{}
-    ).then(({ data }) => data);
+    const me = await AxiosCredentials.get('/generic/auth/me',{})
+    return me;
   } catch (error) {
     console.log(error);
   }

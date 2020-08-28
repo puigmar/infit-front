@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { getUser } from '../services/user/user.service';
+import React, { useState, useEffect } from 'react'
+import WithAuth from '../components/AuthProvider'
+import { getClientId, getUser } from '../services/user/user.service';
 import { getTokenUser } from '../helpers/authHelpers';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 
-
-function ProgramDetail() {
+function ProgramDetail(props) {
   // get trainings this coach
   // llamar al coach
+
+  const { provClientId } = WithAuth();
+
   const [coach, setCoach] = useState(getTokenUser());
   const [newTraining, setNewTraining] = useState([]); // array para rellenar con myExercises
   let myExercises = []; // todos los ejercicios del Coach
@@ -19,6 +22,17 @@ function ProgramDetail() {
       console.log(error);
     }
   };
+
+  const handleUSer = async (id) => {
+    try{
+      console.log('id del cliente: ---->', id)
+      const client = await getClientId(id)
+      console.log('Client: --->:', client)
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
   
   const getExercises = async (coachID) => {
     try {
@@ -31,18 +45,19 @@ function ProgramDetail() {
   };
   
   useEffect(() => {
-    getCoach(coach);
+    coach && getCoach(coach);
+    handleUSer(provClientId)
   }, []);
 
   useEffect(() => {
-    getExercises(coach.coachID);
+    coach && getExercises(coach.coachID);
   }, [coach]);
 
   console.log('Estos son mis ejercicios', myExercises)
-  
+  console.log('provClientID: ---->', provClientId)
   return (
     <div>
-
+      {/* <SubHeader title={} /> */}
     </div>
   )
 }

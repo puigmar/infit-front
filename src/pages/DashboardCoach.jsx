@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getUser } from '../services/user/user.service';
-import { getTrainings } from '../services/training/training.service';
-import NextTraining from '../components/NextTraining.jsx';
 import { Link } from 'react-router-dom';
 import { getTokenUser } from '../helpers/authHelpers.js';
 
@@ -21,8 +19,10 @@ const DashboardClient = (props) => {
     getCoach(coach);
   }, []);
 
+  console.log(coach)
+
   return (
-    <>
+    <section>
       <h1>Hola {coach && coach.name}</h1>
       <h2>Este es tu próximo entrenamiento</h2>
       <Link to={'/coach/auth/program'} >Crea un nuevo programa de Programa</Link>
@@ -30,7 +30,7 @@ const DashboardClient = (props) => {
       <Link to={'/coach/auth/exercises'} >Estos son tus ejercicios</Link>
       <br/>
       <Link to={'/coach/auth/newExercises'} >Crea ejercicios</Link>
-    </>
+    </section>
   );
 };
 

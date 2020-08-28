@@ -11,9 +11,9 @@ const LoginClient = () => {
   const { loginUser } = WithAuth();
 
   const handleFormSubmit = async (event) => {
-    const { username, password } = formik.values;
     try {
       event.preventDefault();
+      const { username, password } = formik.values;
       loginUser({username, password, isCoach: false});
     }
     catch(err){
@@ -72,7 +72,7 @@ const LoginClient = () => {
             </FormCompactField>
             {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
           </Form.Group>
-          <Button type="submit" variant="primary" size="lg">Inciiar sesión</Button>
+          <Button type="submit" variant="primary" size="lg" className="mt-4">Inciiar sesión</Button>
         </Form>
       </BoxSkew>
     </SectionBg>

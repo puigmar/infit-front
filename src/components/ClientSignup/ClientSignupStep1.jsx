@@ -86,8 +86,8 @@ function ClientSignupStep1(props) {
               {...formik.getFieldProps('username')}
               className={handleFieldClass('username')}
             />
+            {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
           </FormCompactField>
-          {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
         </Form.Group>
 
         <Form.Group controlId="password">
@@ -98,8 +98,8 @@ function ClientSignupStep1(props) {
               {...formik.getFieldProps('password')}
               className={handleFieldClass('password')}
             />
+            {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
           </FormCompactField>
-          {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
         </Form.Group>
 
         <Form.Group controlId="repeatPassword">
@@ -110,8 +110,8 @@ function ClientSignupStep1(props) {
               {...formik.getFieldProps('repeatPassword')}
               className={handleFieldClass('repeatPassword')}
             />
+            {(formik.touched.repeatPassword && formik.errors.repeatPassword ) && ( <div className="error-message">{formik.errors.repeatPassword}</div> )}
           </FormCompactField>
-          {(formik.touched.repeatPassword && formik.errors.repeatPassword ) && ( <div className="error-message">{formik.errors.repeatPassword}</div> )}
         </Form.Group>
       </div>
       <Button disabled={disabledButton} type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>

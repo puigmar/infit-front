@@ -10,7 +10,7 @@ function PrivateRoute({ component: Component }) {
   return (
     <Route
       render={(props) =>
-        isLoading ? <Component /> : <Redirect to={'/'} />
+        isLoading ? <Component  /> : <Redirect to={'/'} />
       }
     />
   );

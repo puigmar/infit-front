@@ -3,6 +3,7 @@ import './FormCompactField.css';
 
 const FormCompactField = (props) => {  
 
+
   const handleFocus = (e) => {
     const target = e.target.parentNode;
     const input = target.querySelector('.form-control');

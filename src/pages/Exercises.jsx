@@ -4,7 +4,6 @@ import { getUser } from '../services/user/user.service';
 import Exercise from '../components/Exercise/Exercise';
 import { getTokenUser } from '../helpers/authHelpers';
 
-
 const Exercises = () => {
   const [coach, setCoach] = useState(getTokenUser());
   const [exercises, setExercises] = useState([]);
