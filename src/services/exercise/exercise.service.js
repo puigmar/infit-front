@@ -3,7 +3,7 @@ import AxiosCredentials from '../axios/credentials';
 export async function getExercisesByCoach( coachID ) {
   try {
     const exercises = AxiosCredentials.post(`/exercise/coach/${coachID}`).then(({data}) => data);
-    console.log('coachID exercises: ------>', exercises)
+    console.log('esto es del servicio', exercises)
     return exercises;
   } catch (error) {
     console.log(error);

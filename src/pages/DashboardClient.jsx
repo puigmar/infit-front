@@ -12,8 +12,8 @@ const DashboardClient = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   console.log('USER----->', user)
-  const trainings = getTraining({...user})
-  console.log('entrenamientos del usuario', trainings)
+  // const trainings = getTraining({...user})
+  // console.log('entrenamientos del usuario', trainings)
 
   const handleMeetingCalendar = () => {
   }
@@ -48,7 +48,7 @@ const DashboardClient = (props) => {
           <div className="meetingCalendar">
 
           </div>
-          <Link to="/client/auth/my-account/dashboard"><Button variant="primary">Quiero ir a mi centa</Button></Link>
+          <Link to="/client/auth/my-account/dashboard"><Button variant="primary">Quiero ir a mi cuenta</Button></Link>
         </Modal.Body>
       </Modal>
 

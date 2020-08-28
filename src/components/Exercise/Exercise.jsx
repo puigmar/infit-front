@@ -54,7 +54,6 @@ function Exercise(props) {
           <Row>
             <Col>
               <Button
-                data-id={_id}
                 variant='primary btn-outline-primary'
                 onClick={() => handleShowAlertDelete()}
               >
@@ -63,7 +62,6 @@ function Exercise(props) {
             </Col>
             <Col>
               <Button
-                data-id={_id}
                 variant='primary'
                 onClick={() => handleShowAlertEdit()}
               >

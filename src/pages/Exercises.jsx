@@ -1,12 +1,11 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import WithAuth from '../components/AuthProvider';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import { getUser } from '../services/user/user.service';
 import Exercise from '../components/Exercise/Exercise';
+import { getTokenUser } from '../helpers/authHelpers';
 
 const Exercises = () => {
-  const { user } = WithAuth();
-  const [coach, setCoach] = useState({});
+  const [coach, setCoach] = useState(getTokenUser());
   const [exercises, setExercises] = useState([]);
 
   //LLAMAR AL COACH & CLIENT
@@ -24,16 +23,15 @@ const Exercises = () => {
   const getExercises = async (coachID) => {
     try {
       const exercisesCoach = await getExercisesByCoach(coachID);
+      console.log('exercises coach getExercises', exercisesCoach)
       setExercises(exercisesCoach);
     } catch (error) {
       console.log(error);
     }
   };
 
-
-
   useEffect(() => {
-    getCoach(user);
+    getCoach(coach);
   }, []);
 
   useEffect(() => {

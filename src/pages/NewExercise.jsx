@@ -46,6 +46,7 @@ function NewExercise() {
   }, [coach]);
 
   const handleChangeValues = (event) => {
+    event.preventDefault();
     const { name, value, id } = event.target;
 
     if (id.includes('rest')) {

@@ -54,7 +54,7 @@ const SignupCoach = () => {
           password,
           isCoach: true
         },
-        client: {
+        coach: {
           name: nameUser
         }
       }
@@ -64,8 +64,8 @@ const SignupCoach = () => {
 
   const registerDBCoach = (dataCoach) => { 
     const data = dataCoach; // dataCoach || fakeData
-    const {user, client} = data;
-    const registerCoach = signupUser({ user, client });
+    const {coach, user} = data;
+    signupUser({ user, client: coach });
   }
 
   const checkFormEmptyFields = () => {
