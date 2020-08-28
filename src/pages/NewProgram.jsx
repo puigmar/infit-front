@@ -36,7 +36,7 @@ function NewProgram() {
 
   //SE LLAMA AL PROGRAMA BY THIS COACH & CLIENT
   useEffect(() => {
-    coach.coachID && getClients(coach.coachID);
+    coach && getClients(coach.coachID);
   }, [coach]);
 
 
