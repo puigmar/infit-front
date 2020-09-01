@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom'
 
 function ClientSignupStep1(props) {
   
-  const [disabledButton, setDisabledButton] = useState(true)
   const [formCompleted, setFormCompleted] = useState(false)
 
   const formik = useFormik({
@@ -23,15 +22,13 @@ function ClientSignupStep1(props) {
       password: Yup.string()
       .min(6, "*Tiene que contener 6 letras o más")
       .required("*La contraseña es necesaria"),
-      repeatPassword: Yup.string()
-      .required('Required')
-      .test(
-          'password-match',
-          'Debe coincidir con tu contraseña',
-          function (value) {
-              return this.parent.password === value
-          }
-      )
+      repeatPassword: Yup.string().when("password", {
+        is: val => (val && val.length > 0 ? true : false),
+        then: Yup.string().oneOf(
+          [Yup.ref("password")],
+          "Both password need to be the same"
+        )
+      }),
     }),
     onSubmit: values => {
       const { username, password, isCoach} = values;
@@ -49,21 +46,16 @@ function ClientSignupStep1(props) {
 
   const checkFormEmptyFields = () => {
     setFormCompleted(true)
-    console.log('errors: ', formik.errors)
     for(let field in formik.values){
-      if(formik.values[field] === ''){
+      if(formik.values[field] === '' || Object.keys(formik.errors).length > 0){
         setFormCompleted(false)
       }
-    }
-    if(formCompleted === true){
-      setDisabledButton(false)
     }
   }
   
   useEffect(() => {
-    console.log('formCompleted: ', formCompleted)
     checkFormEmptyFields()
-  }, [formik.values])
+  }, [formik.values, formik.errors])
 
   const handleFieldClass = (name) => {
     return ({
@@ -76,7 +68,7 @@ function ClientSignupStep1(props) {
   return (
     <Fragment>
       <h2>1. DATOS DE TU CUENTA</h2>
-      <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
+      <Form onSubmit={formik.handleSubmit}>
       <div className="formGrupBlock">
         <Form.Group controlId="username">
           <FormCompactField>
@@ -114,13 +106,12 @@ function ClientSignupStep1(props) {
           </FormCompactField>
         </Form.Group>
       </div>
-      <Button disabled={disabledButton} type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
+      <Button disabled={!formCompleted} type="submit" variant="secondary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
       </Form>
 
       <section className="signupBtn">
         <p className="mt-3">¿Ya eres usuario? <Link to={'/login'}>Inicia sesión</Link></p>
       </section>
-      
     </Fragment>
   )
 }

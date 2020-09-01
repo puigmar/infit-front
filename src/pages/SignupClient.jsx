@@ -14,7 +14,7 @@ import ClientSignupStep5 from '../components/ClientSignup/ClientSignupStep5';
 import ClientSignupStep6 from '../components/ClientSignup/ClientSignupStep6';
 
 const SignupClient = (props) => {
-  const { signupUser } = WithAuth();
+  const { signupUser, setHeaderBackground } = WithAuth();
   const [step, setStep] = useState(0);
   const [backLink, setBackLink] = useState(null);
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -23,7 +23,7 @@ const SignupClient = (props) => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [funnelDone, setFunnelDone] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  
   // Form Data
   const [dataClient, setDataClient] = useState({
     user: {
@@ -93,7 +93,12 @@ const SignupClient = (props) => {
   };
 
   useEffect(() => {
+    setHeaderBackground(false)
+  }, []);
+
+  useEffect(() => {
     setActiveIndex(step);
+    setHeaderBackground(false)
   }, [step]);
 
   const checkStep = (newStep) => {
@@ -174,17 +179,18 @@ const SignupClient = (props) => {
           interval={interval}
           activeIndex={activeIndex}
         >
-          <Carousel.Item>
+          {/* <Carousel.Item>
             <ClientSignupStep1
               dataClient={dataClient}
               nextStep={nextStep}
               handleData={handleData}
             />
-          </Carousel.Item>
+          </Carousel.Item> 
 
           <Carousel.Item>
             <ClientSignupStep2
               dataClient={dataClient}
+              setClientName={setClientName}
               nextStep={nextStep}
               handleData={handleData}
             />
@@ -204,9 +210,9 @@ const SignupClient = (props) => {
               nextStep={nextStep}
               handleData={handleData}
             />
-          </Carousel.Item>
+          </Carousel.Item> */}
 
-          <Carousel.Item>
+          <Carousel.Item className="slide-packs">
             <ClientSignupStep5
               handleTotalAmount={setTotalAmount}
               name={clientName}
@@ -228,9 +234,7 @@ const SignupClient = (props) => {
           </Carousel.Item>
         </Carousel>
       </div>
-      <div
-        className={isLoading ? 'loadingWrapper is-active' : 'loadingWrapper'}
-      >
+      <div className={isLoading ? 'loadingWrapper is-active' : 'loadingWrapper'}>
         <div className='spinner'>
           <img src='/img/loader.svg' alt='spinner' />
         </div>

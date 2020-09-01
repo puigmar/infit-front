@@ -1,15 +1,99 @@
 .field-compact{
   .form-label{
-    font-size: 0.875
+    font-size: 1rem;
   }
-  .form-contron{
+  .form-control{
     &:focus{
       box-shadow: none;
     }
+    font-size: 1rem;
   }
+}
+
+.form-label{
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+select.form-control{
+  margin-bottom: 5px;
 }
 
 .form-group{
   margin: 0;
 }
 
+.button-check,
+.pack-check {
+
+  padding-left: 0;
+  margin-bottom: 20px;
+
+  input{
+    position: absolute;
+    z-index: 0;
+  }
+
+  label{
+    width: 100%;
+    border-radius: 24px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $secondary-color;
+    color: $secondary-color;
+    background-color: white;
+    z-index: 1;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    span{
+      font-size: 1.4em;
+      margin-right: 10px;
+    }
+  }
+
+  input:checked + label{
+    background-color: rgba($secondary-color, 1);
+    color: white;
+  }
+}
+
+.pack-check {
+  .form-check-label{
+    display: flex;
+    padding: 10px 40px;
+    height: auto;
+    border-radius: 30px;
+
+    > * {
+      width: 50%;
+      text-align: right;
+    }
+
+    &_content{
+      text-align: left;
+
+      .pack-check_name{
+        font-size: 1rem;
+        font-weight: 800;
+      }
+
+      .pack-check_duration{
+        font-weight: 300;
+      }
+    }
+
+    .pack-check_price,
+    .pack-check_price span{
+      font-size: 1.3rem;
+      font-weight: 800;
+
+      span{
+        margin: 0;
+      }
+    }
+  }
+}

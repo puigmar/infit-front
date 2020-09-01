@@ -59,7 +59,7 @@
 
   &-secondary{
     background-color: $secondary-color;
-    color: #000;
+    color: #fff;
     text-decoration: none;
     font-weight: 400;
   }
@@ -73,11 +73,23 @@
 
 }
 
+
+#root .btn:focus,
+#root .btn-primary:hover{
+  box-shadow: none;
+  background-color: $secondary-color!important;
+}
+
 #root .btn-primary:not(:disabled):not(.disabled):active, #root .btn-primary:not(:disabled):not(.disabled).active, #root .show > .btn-primary.dropdown-toggle {
   color: #fff;
   background-color: $primary-color!important;
   border-color: none;
 }
+#root .btn-secondary:disabled{
+  background-color: $secondary-color!important;
+  opacity: 0.4;
+}
+
 
 .btn + a{
   margin-top: 10px;

@@ -42,17 +42,17 @@ function ClientSignupStep4(props) {
 
         <div className="form-check button-check">
           <input id="objective1" value="Perder Peso" onChange={(e) => handleCheckBox(e)} checked={objectiveSelected === 'Perder Peso'} value="Perder Peso" type="radio" className="form-check-input"/>
-          <label htmlFor="objective1" className="form-check-label">Perder Peso</label>
+          <label htmlFor="objective1" className="form-check-label"><span class="icon-perder-peso"></span> Perder Peso</label>
         </div>
         <div className="form-check button-check">
           <input id="objective2" onChange={(e) => handleCheckBox(e)} type="radio" className="form-check-input" checked={objectiveSelected === 'Ganar Músculo'} value="Ganar Músculo"/>
-          <label htmlFor="objective2" className="form-check-label">Ganar Músculo</label>
+          <label htmlFor="objective2" className="form-check-label"><span class="icon-fuerza"></span> Ganar Músculo</label>
         </div>
         <div className="form-check button-check">
           <input id="objective3" onChange={(e) => handleCheckBox(e)} type="radio" className="form-check-input"  checked={objectiveSelected === 'Mantenerse'} value="Mantenerse"/>
-          <label htmlFor="objective3" className="form-check-label">Mantenerse</label>
+          <label htmlFor="objective3" className="form-check-label"><span class="icon-mantenerse"></span> Mantenerse</label>
         </div>
-        <Button disabled={ disabledButton} type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
+        <Button className="mt-5" disabled={ disabledButton} type="submit" variant="primary" size="lg" onClick={() => props.nextStep()}>Continuar</Button>
       </Form>
     </Fragment>
   )

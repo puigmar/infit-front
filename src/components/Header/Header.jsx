@@ -5,7 +5,7 @@ import WithAuth from '../AuthProvider'
 
 const Header = () => {
 
-  const { user, isLoading, logoutUser } = WithAuth();
+  const { user, isLoading, logoutUser, headerBackground } = WithAuth();
 
   useEffect (()=>{
     const navMenuBtn = document.querySelectorAll('.navbar-toggler');
@@ -78,7 +78,7 @@ const Header = () => {
   }
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" className={(headerBackground && 'hasBackground')}>
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand className="logo"><img src="/img/logo.svg"></img></Navbar.Brand>

@@ -22,6 +22,8 @@ export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [provClientId, setProvClientId] = useState({})
+  const [headerBackground, setHeaderBackground] = useState(true)
+
   useEffect(() => {
     if (!getToken()) {
       setIsLoading(false);
@@ -81,7 +83,9 @@ export function AuthProvider(props) {
     isLoading,
     setIsLoading,
     provClientId, 
-    setProvClientId
+    setProvClientId,
+    headerBackground,
+    setHeaderBackground
   };
   return <UserContext.Provider value={value} {...props} />;
 }

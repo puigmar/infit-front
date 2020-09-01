@@ -90,8 +90,11 @@ function ClientSignupStep6(props) {
   return (
     <Fragment>
       <h2>Datos bancarios</h2>
-      <h3>Total a pagar: {props.totalAmount}€</h3>
-      <h3 className="h5">Escoge tu método de pago</h3>
+      <p className="signup-page_paymentResume">
+        <div>Total a pagar:</div>
+        <div>{props.totalAmount}€</div>  
+      </p>
+      <h3 className="h5 text-center mb-3">Escoge tu método de pago</h3>
       <PayPalButton 
           amount={props.totalAmount}
           currency= {'USD'}
@@ -104,7 +107,7 @@ function ClientSignupStep6(props) {
       <Accordion defaultActiveKey="0">
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="1">
-            Targeta de crédito
+          <span class="icon-card"></span> Targeta de crédito
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
@@ -117,8 +120,8 @@ function ClientSignupStep6(props) {
                     {...formik.getFieldProps('owner')}
                     className={handleFieldClass('owner')}
                   />
+                  {(formik.touched.owner && formik.errors.owner ) && ( <div className="error-message">{formik.errors.owner}</div> )}
                 </FormCompactField>
-                {(formik.touched.owner && formik.errors.owner ) && ( <div className="error-message">{formik.errors.owner}</div> )}
               </Form.Group>
 
               <Form.Group controlId="number">
@@ -129,8 +132,8 @@ function ClientSignupStep6(props) {
                     {...formik.getFieldProps('number')}
                     className={handleFieldClass('number')}
                   />
+                  {(formik.touched.number && formik.errors.number ) && ( <div className="error-message">{formik.errors.number}</div> )}
                 </FormCompactField>
-                {(formik.touched.number && formik.errors.number ) && ( <div className="error-message">{formik.errors.number}</div> )}
               </Form.Group>
               
               <Row>
@@ -143,8 +146,8 @@ function ClientSignupStep6(props) {
                         {...formik.getFieldProps('expireAt')}
                         className={handleFieldClass('expireAt')}
                       />
+                      {(formik.touched.expireAt && formik.errors.expireAt ) && ( <div className="error-message">{formik.errors.expireAt}</div> )}
                     </FormCompactField>
-                    {(formik.touched.expireAt && formik.errors.expireAt ) && ( <div className="error-message">{formik.errors.expireAt}</div> )}
                   </Form.Group>
                 </Col>
                 <Col>
@@ -158,8 +161,8 @@ function ClientSignupStep6(props) {
                         {...formik.getFieldProps('cvv')}
                         className={handleFieldClass('cvv')}
                       />
+                      {(formik.touched.cvv && formik.errors.cvv ) && ( <div className="error-message">{formik.errors.cvv}</div> )}
                     </FormCompactField>
-                    {(formik.touched.cvv && formik.errors.cvv ) && ( <div className="error-message">{formik.errors.cvv}</div> )}
                   </Form.Group>
                 </Col>
               </Row>

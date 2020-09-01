@@ -47,7 +47,7 @@ const DashboardClient = (props) => {
       </section>
     <NextTraining /> */}
     <section className="box-layout">
-      <h1>Hola {client.name}</h1>
+      <h1>Hola {client && client.name}</h1>
 
       {/* Meeting Calendar */}
       <Modal

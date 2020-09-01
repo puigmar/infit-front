@@ -1,4 +1,6 @@
 .signup-page{
+  position: relative;
+
   form{
     text-align: center;
 
@@ -9,13 +11,62 @@
         margin-bottom: 20px;
       }
     }
+  }
 
-    .btn{
-      margin-top: 20px;
-    }
+  &:before,
+  &:after{
+    content: "";
+    clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
+    height: 228px;
+    top: -145px;
+    background-color: $primary-color;
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+
+  &:after{
+    content: "";
+    background-image: url('/img/bg_hero_home.jpg');
+    background-size: cover;
+    background-repeat: none;
+    opacity: 0.1;
   }
 
   .signupBtn{
     text-align: center;
+
+    .btn{
+      background-color: $secondary-color;
+      color: #fff;
+    }
   }
+
+  &_paymentResume{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 19px;
+    margin-bottom: 19px;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 1rem;
+  }
+
+  .accordion {
+
+    margin-top: 10px;
+
+    .card{
+
+      border: 1px solid $secondary-color;
+
+      &-header{
+        padding: 6px;
+        text-align: center;
+        background-color: transparent;
+        color: $secondary-color
+      }
+    }
+  }
+
+
 }

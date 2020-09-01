@@ -9,12 +9,14 @@
           align-items: center;
   position: relative;
   margin-bottom: 15px;
+  z-index: 1;
 }
 
 .subHeader h1 {
   font-size: 1.125rem;
   width: 100%;
   text-align: center;
+  font-family: 'Lato';
 }
 
 .subHeader .backLink {
@@ -23,5 +25,9 @@
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   left: 20px;
+}
+
+.subHeader .backLink:before {
+  color: #fff;
 }
 /*# sourceMappingURL=SubHeader.css.map */

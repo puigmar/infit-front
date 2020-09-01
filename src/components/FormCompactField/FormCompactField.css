@@ -17,7 +17,7 @@
 
 .field-compact .form-label {
   position: absolute;
-  top: 7px;
+  top: 5px;
   text-align: left;
   width: 100%;
   left: 5px;
@@ -27,6 +27,7 @@
   margin: 0;
   pointer-events: none;
   font-weight: 300;
+  font-size: 0.9rem;
 }
 
 .field-compact .form-control {
@@ -37,8 +38,8 @@
   padding: 0 4px;
   text-align: left;
   height: 31px;
-  font-size: 15px;
   font-weight: 300;
+  font-size: 1.2rem;
 }
 
 .field-compact:focus {
