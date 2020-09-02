@@ -1,7 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
-import BoxSkew from '../components/BoxSkew/BoxSkew';
-import SectionBg from '../components/SectionBg/SectionBg';
 import FormCompactField from '../components/FormCompactField/FormCompactField.jsx'
 import { useFormik } from 'formik';
 import { Link, useHistory } from 'react-router-dom';

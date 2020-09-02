@@ -87,7 +87,7 @@ const DashboardClient = (props) => {
   return (
     <Fragment>
       <div className="privateArea-page">
-        <SubHeader title={'TU ÁREA PRIVADA'} />
+        <SubHeader title={'Tu Área Privada'} />
         <div className="home-section box-layout">
           { client && <UserIntro nexTraining={nextTraining} client={client} /> }
           { Object.keys(meeting).length !== 0 && !nextTraining
