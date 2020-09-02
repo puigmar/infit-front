@@ -106,7 +106,8 @@ function NewExercise() {
     console.log('Exercise: ', exercise);
   };
 
-  const createNewExercise = () => {
+  const createNewExercise = (event) => {
+    event.preventDefault()
     createExercise(exercise);
     setExercise({
       coachID: '',
@@ -123,8 +124,8 @@ function NewExercise() {
 
   return (
     <div>
-      <h1>Crea tu nuevo Ejercicio</h1>
-      <form onSubmit={createNewExercise}>
+      <h1>Crea tu nuevo ejercicio</h1>
+      <form onSubmit={(e)=>createNewExercise(e)}>
         <label htmlFor='input-title'>Titulo</label>
         <input
           type='text'
