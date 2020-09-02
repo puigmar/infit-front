@@ -107,7 +107,7 @@ function ClientSignupStep6(props) {
       <Accordion defaultActiveKey="0">
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="1">
-          <span class="icon-card"></span> Targeta de crédito
+          <span class="icon-card"></span> <span>Targeta de crédito</span>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
@@ -137,7 +137,7 @@ function ClientSignupStep6(props) {
               </Form.Group>
               
               <Row>
-                <Col>
+                <Col sm="7">
                   <Form.Group controlId="expireAt">
                     <FormCompactField>
                       <Form.Label>¿Cuándo caduca?</Form.Label>
@@ -150,7 +150,7 @@ function ClientSignupStep6(props) {
                     </FormCompactField>
                   </Form.Group>
                 </Col>
-                <Col>
+                <Col sm="5">
                   <Form.Group controlId="cvv">
                     <FormCompactField>
                       <Form.Label>CVV</Form.Label>

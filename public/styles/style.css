@@ -10885,8 +10885,8 @@ select {
 
 @font-face {
   font-family: "inFit";
-  src: url("/fonts/inFit.eot?8wpkdh");
-  src: url("/fonts/inFit.eot?8wpkdh#iefix") format("embedded-opentype"), url("/fonts/inFit.woff2?8wpkdh") format("woff2"), url("/fonts/inFit.ttf?8wpkdh") format("truetype"), url("/fonts/inFit.woff?8wpkdh") format("woff"), url("/fonts/inFit.svg?8wpkdh#inFit") format("svg");
+  src: url("/fonts/inFit.eot?ojhx8i");
+  src: url("/fonts/inFit.eot?ojhx8i#iefix") format("embedded-opentype"), url("/fonts/inFit.woff2?ojhx8i") format("woff2"), url("/fonts/inFit.ttf?ojhx8i") format("truetype"), url("/fonts/inFit.woff?ojhx8i") format("woff"), url("/fonts/inFit.svg?ojhx8i#inFit") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -10904,6 +10904,10 @@ select {
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arrangeMeeting:before {
+  content: "";
 }
 
 .icon-card:before {
@@ -10993,7 +10997,62 @@ body {
 }
 
 .box-layout {
-  padding: 40px;
+  padding: 30px;
+}
+
+.BgDiagonal,
+.home-section {
+  position: relative;
+}
+
+.BgDiagonal:before, .BgDiagonal:after,
+.home-section:before,
+.home-section:after {
+  content: "";
+  -webkit-clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
+          clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
+  height: 228px;
+  top: -145px;
+  background-color: #F7B500;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.BgDiagonal:after,
+.home-section:after {
+  content: "";
+  background-image: url("/img/bg_hero_home.jpg");
+  background-size: cover;
+  background-repeat: none;
+  opacity: 0.1;
+}
+
+.BgDiagonal.login-page--client:after,
+.home-section.login-page--client:after {
+  background-image: url("/img/bg_client_home.jpg");
+}
+
+.home-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-section:before {
+  content: "";
+  -webkit-clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
+  clip-path: polygon(0% 5%, 100% 0, 100% 60%, 0% 69%);
+  height: 350px;
+  top: -39px;
+  background-color: rgba(68, 215, 182, 0.1);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.home-section:after {
+  display: none;
 }
 
 .signup-page {
@@ -11010,26 +11069,6 @@ body {
 
 .signup-page form .form-group select {
   margin-bottom: 20px;
-}
-
-.signup-page:before, .signup-page:after {
-  content: "";
-  -webkit-clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
-          clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
-  height: 228px;
-  top: -145px;
-  background-color: #F7B500;
-  position: absolute;
-  left: 0;
-  width: 100%;
-}
-
-.signup-page:after {
-  content: "";
-  background-image: url("/img/bg_hero_home.jpg");
-  background-size: cover;
-  background-repeat: none;
-  opacity: 0.1;
 }
 
 .signup-page .signupBtn {
@@ -11067,6 +11106,20 @@ body {
   text-align: center;
   background-color: transparent;
   color: #44D7B6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.signup-page .accordion .card-header .icon-card {
+  font-size: 1.7em;
+  margin-right: 10px;
 }
 
 .home-page .hero {
@@ -11155,6 +11208,35 @@ body {
   font-weight: 500;
 }
 
+.privateArea-page .box-layout {
+  padding-top: 0;
+}
+
+.privateArea-page .subHeader {
+  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 57%, 0% 80%);
+          clip-path: polygon(0% 0%, 100% 0%, 100% 57%, 0% 80%);
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 80px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  position: relative;
+  margin-bottom: 4px;
+  z-index: 1;
+  padding-bottom: 0px;
+  padding-top: 11px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #F7B500;
+}
+
+.privateArea-page .subHeader .backLink {
+  top: 18px;
+}
+
 .btn {
   background-color: #F7B500;
 }
@@ -11175,7 +11257,6 @@ body {
   font-size: 17px;
   justify-content: center;
   align-items: center;
-  font-size: 17px;
   border-radius: 35px;
   border: 0;
 }
@@ -11237,6 +11318,12 @@ body {
   color: #fff;
   text-decoration: none;
   font-weight: 400;
+}
+
+.btn-md {
+  font-size: 14px;
+  padding: 14px;
+  height: 40px;
 }
 
 #root .btn:focus,

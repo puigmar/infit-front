@@ -2,12 +2,12 @@
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?8wpkdh');
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?8wpkdh#iefix') format('embedded-opentype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff2?8wpkdh') format('woff2'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?8wpkdh') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?8wpkdh') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?8wpkdh##{$icomoon-font-family}') format('svg');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?ojhx8i');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?ojhx8i#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff2?ojhx8i') format('woff2'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?ojhx8i') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?ojhx8i') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?ojhx8i##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -28,6 +28,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-arrangeMeeting {
+  &:before {
+    content: $icon-arrangeMeeting; 
+  }
+}
 .icon-card {
   &:before {
     content: $icon-card; 

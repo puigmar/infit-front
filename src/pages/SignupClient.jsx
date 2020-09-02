@@ -98,7 +98,6 @@ const SignupClient = (props) => {
 
   useEffect(() => {
     setActiveIndex(step);
-    setHeaderBackground(false)
   }, [step]);
 
   const checkStep = (newStep) => {
@@ -171,7 +170,7 @@ const SignupClient = (props) => {
   return (
     <Fragment>
       <SubHeader title={title} history={history} action={backLink} />
-      <div className={`signup-page box-layout`}>
+      <div className={`signup-page BgDiagonal box-layout`}>
         <Carousel
           className={step > 3 && 'without-dots'}
           controls={controls}
@@ -179,7 +178,7 @@ const SignupClient = (props) => {
           interval={interval}
           activeIndex={activeIndex}
         >
-          {/* <Carousel.Item>
+          <Carousel.Item>
             <ClientSignupStep1
               dataClient={dataClient}
               nextStep={nextStep}
@@ -210,7 +209,7 @@ const SignupClient = (props) => {
               nextStep={nextStep}
               handleData={handleData}
             />
-          </Carousel.Item> */}
+          </Carousel.Item>
 
           <Carousel.Item className="slide-packs">
             <ClientSignupStep5

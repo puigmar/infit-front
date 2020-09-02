@@ -12,7 +12,6 @@
   font-size: 17px;
   justify-content: center;
   align-items: center;
-  font-size: 17px;
   border-radius: 35px;
   border: 0;
 
@@ -69,6 +68,12 @@
     color: #fff;
     text-decoration: none;
     font-weight: 400;
+  }
+
+  &-md{
+    font-size: 14px;
+    padding: 14px;
+    height: 40px;
   }
 
 }

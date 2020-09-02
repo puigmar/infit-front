@@ -35,8 +35,6 @@ export function AuthProvider(props) {
   }, []);
 
   const signupUser = ({ user, client }) => {
-    console.log('USER AuthProvider: ------->', user)
-    console.log('Client AuthProvider: ------->', client)
 
     signup(user, client)
       .then((userSigned) => {

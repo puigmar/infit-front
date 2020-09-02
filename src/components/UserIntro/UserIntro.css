@@ -1,0 +1,38 @@
+.userIntro {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.userIntro_avatar {
+  padding-right: 20px;
+}
+
+.userIntro_avatar_image {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+          clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.userIntro_content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.userIntro_content_title {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+/*# sourceMappingURL=UserIntro.css.map */

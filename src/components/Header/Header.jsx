@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import {Navbar, Nav, Container } from 'react-bootstrap';
+import React, { useEffect } from 'react'
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import WithAuth from '../AuthProvider'
 
@@ -50,6 +50,17 @@ const Header = () => {
       }
     ]
 
+    const menuUser = [
+      {
+        name: 'Dashboard' ,
+        link: `/client/auth/my-account/dashboard`
+      },
+      {
+        name: 'Mis entrenamientos' ,
+        link: `/client/auth/my-account/trainings`
+      }
+    ]
+
     const menuAnonymous = [
       {
         name: 'Iniciar sesión' ,
@@ -64,7 +75,7 @@ const Header = () => {
     if(!userContext){
       menuList = menuAnonymous
     } else {
-      menuList = menuCoach;
+      (user.isCoach) ? menuList = menuCoach : menuList = menuUser
     }
     
     return menuList.map( (listItem, index) => {

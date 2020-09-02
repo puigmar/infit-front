@@ -45,5 +45,63 @@ body{
 }
 
 .box-layout{
-  padding: 40px;
+  padding: 30px;
+}
+
+
+.BgDiagonal,
+.home-section{
+  position: relative;
+  
+  &:before,
+  &:after{
+    content: "";
+    clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
+    height: 228px;
+    top: -145px;
+    background-color: $primary-color;
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+
+  &:after{
+    content: "";
+    background-image: url('/img/bg_hero_home.jpg');
+    background-size: cover;
+    background-repeat: none;
+    opacity: 0.1;
+  }
+
+  &.login-page--client{
+    &:after{
+      background-image: url('/img/bg_client_home.jpg');
+    }
+  }
+
+}
+
+.home-section{
+
+  > *{
+    position: relative;
+    z-index: 1;
+  }
+
+  &:before{
+    content: "";
+    -webkit-clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
+    clip-path: polygon(0% 5%, 100% 0, 100% 60%, 0% 69%);
+    height: 350px;
+    top: -39px;
+    background-color: rgba( $secondary-color, 0.1);
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+  }
+
+  &:after{
+    display: none;
+  }
 }

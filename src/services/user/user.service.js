@@ -29,8 +29,7 @@ export async function getIdClient(clientId){
   const url = `/client/auth/clientID/${clientId}`;
   console.log('Esta es la url', url)
   try {
-    console.log('Esta es la url try', url)
-    const user = await AxiosCredentials.post(`${url}`).then(({data})=> data);
+    const user = await AxiosCredentials.get(`${url}`).then(({data})=> data);
     console.log('Este es el resultado', user)
     return user;
   } catch (error) {

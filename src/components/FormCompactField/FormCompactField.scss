@@ -18,7 +18,7 @@
     margin: 0;
     pointer-events: none;
     font-weight: 300;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .form-control{
@@ -30,7 +30,7 @@
     text-align: left;
     height: 31px;
     font-weight: 300;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   &:focus{
@@ -53,7 +53,7 @@
   &.isFilled,
   &.isFocus{
     .form-label{
-      top: -10px;
+      top: -12px;
       font-size: 0.75rem;
       left: 2px;
     }

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
 import BoxSkew from '../components/BoxSkew/BoxSkew';
 import SectionBg from '../components/SectionBg/SectionBg';
@@ -11,8 +11,10 @@ import SubHeader from '../components/SubHeader/SubHeader';
 
 
 const LoginCoach = () => {
-  const { loginUser } = WithAuth();
+  const { loginUser, setHeaderBackground } = WithAuth();
   const [title, setTitle] = useState('Login Entrenador')
+  const [formCompleted, setFormCompleted] = useState(false)
+
   let history = useHistory();
 
   const handleFormSubmit = (event) => {
@@ -50,11 +52,27 @@ const LoginCoach = () => {
     })
   }
 
+  const checkFormEmptyFields = () => {
+    setFormCompleted(true)
+    for(let field in formik.values){
+      if(formik.values[field] === '' || Object.keys(formik.errors).length > 0){
+        setFormCompleted(false)
+      }
+    }
+  }
+
+  useEffect(() => {
+    setHeaderBackground(false)
+  }, []);
+
+  useEffect(() => {
+    checkFormEmptyFields()
+  }, [formik.values, formik.errors]);
+
   return (
     <Fragment>
     <SubHeader title={title} history={history} />
-    <SectionBg bgImage="">
-      <BoxSkew>
+    <section className="login-page login-page--coach box-layout BgDiagonal">
         <Form onSubmit={handleFormSubmit}>
           <Form.Group controlId="username">
             <FormCompactField>
@@ -82,8 +100,7 @@ const LoginCoach = () => {
           </Form.Group>
           <Button type="submit" variant="primary" size="lg" className="mt-4">Iniciar sesión</Button>
         </Form>
-      </BoxSkew>
-    </SectionBg>
+    </section>
     </Fragment>
   );
 };

@@ -10,13 +10,19 @@ import SubHeader from '../components/SubHeader/SubHeader'
 
 const SignupCoach = () => {
 
-  const { signupUser } = WithAuth();
+  const { signupUser, setHeaderBackground } = WithAuth();
 
   let history = useHistory();
 
   const [disabledButton, setDisabledButton] = useState(true)
   const [formCompleted, setFormCompleted] = useState(false)
   const [title, setTitle] = useState('Registro Entrenador')
+
+  
+
+  useEffect(() => {
+    setHeaderBackground(false)
+  }, [])
 
   // Formik
 
@@ -84,6 +90,7 @@ const SignupCoach = () => {
   useEffect(() => {
     checkFormEmptyFields()
   }, [formik.values])
+  
 
   const handleFieldClass = (name) => {
     return ({
@@ -96,30 +103,31 @@ const SignupCoach = () => {
   return (
     <Fragment>
       <SubHeader title={title} history={history} />
-      <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
-        <Form.Group controlId='username'>
-          <FormCompactField>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type='text'
-              {...formik.getFieldProps('username')}
-              className={handleFieldClass('username')}
-            />
-            {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
-          </FormCompactField>
-        </Form.Group>
+      <section className="signup-page box-layout BgDiagonalBg">
+        <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
+          <Form.Group controlId='username'>
+            <FormCompactField>
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type='text'
+                {...formik.getFieldProps('username')}
+                className={handleFieldClass('username')}
+              />
+              {(formik.touched.username && formik.errors.username ) && ( <div className="error-message">{formik.errors.username}</div> )}
+            </FormCompactField>
+          </Form.Group>
         
-        <Form.Group controlId="password">
-          <FormCompactField>
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control 
-              type="password" 
-              {...formik.getFieldProps('password')}
-              className={handleFieldClass('password')}
-            />
-            {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
-          </FormCompactField>
-        </Form.Group>
+          <Form.Group controlId="password">
+            <FormCompactField>
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control 
+                type="password" 
+                {...formik.getFieldProps('password')}
+                className={handleFieldClass('password')}
+              />
+              {(formik.touched.password && formik.errors.password ) && ( <div className="error-message">{formik.errors.password}</div> )}
+            </FormCompactField>
+          </Form.Group>
         
         <Form.Group controlId="repeatPassword">
           <FormCompactField>
@@ -133,17 +141,17 @@ const SignupCoach = () => {
           </FormCompactField>
         </Form.Group>
         
-        <Form.Group controlId="nameUser">
-          <FormCompactField>
-            <Form.Label>Nombre</Form.Label>
-            <Form.Control 
-              type="text" 
-              {...formik.getFieldProps('nameUser')}
-              className={handleFieldClass('nameUser')}
-            />
-            {(formik.touched.nameUser && formik.errors.nameUser ) && ( <div className="error-message">{formik.errors.nameUser}</div> )}
-          </FormCompactField>
-        </Form.Group>
+          <Form.Group controlId="nameUser">
+            <FormCompactField>
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control 
+                type="text" 
+                {...formik.getFieldProps('nameUser')}
+                className={handleFieldClass('nameUser')}
+              />
+              {(formik.touched.nameUser && formik.errors.nameUser ) && ( <div className="error-message">{formik.errors.nameUser}</div> )}
+            </FormCompactField>
+          </Form.Group>
 
         <Button disabled={disabledButton} type="submit" variant="primary" size="lg" className="mt-4">Registrarse</Button>
         
@@ -151,8 +159,9 @@ const SignupCoach = () => {
           <p className="mt-3">¿Ya eres usuario? <Link to={'/login'}>Inicia sesión</Link></p>
         </section>
       </Form>
+      </section>
     </Fragment>
-  )
+  ) 
 };
 
 export default SignupCoach;
