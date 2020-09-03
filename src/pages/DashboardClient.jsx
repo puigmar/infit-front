@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 // import NextTraining from '../components/NextTraining.jsx';
 import WithAuth from '../components/AuthProvider';
-import { Modal, Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { getTokenUser } from '../helpers/authHelpers.js';
 import { getIdClient } from '../services/user/user.service';
@@ -15,17 +14,13 @@ import MeetingAlertBox from '../components/MeetingAlertBox/MeetingAlertBox'
 
 const DashboardClient = (props) => {
 
-  const { provClientId } = WithAuth();
-  const [show, setShow] = useState(false);
+  const { setHeaderBackground } = WithAuth();
   const [userInfo, setUserInfo] = useState({})
   const [client, setClient] = useState({})
   const [meeting, setMeeting] = useState({})
   const [nextTraining, setNextTraining] = useState(false)
 
   let history = useHistory();
-
-  const handleClose = () => setShow(false)
-  const handleOpen = () => setShow(true)
 
   const getClient = async (id, userInfo) => {
     try{
@@ -69,20 +64,17 @@ const DashboardClient = (props) => {
   const getData = async () => {
     const getToken = await getTokenUser();
     setUserInfo(getToken);
-    //console.log('getToken:', getToken)
     await getClient(getToken._id, getToken);
   }
 
   useEffect(() => {
     getData()
+    setHeaderBackground(true)
   }, []);
 
   useEffect (() => {
     handleMessagesProgram(client._id);
   }, [client])
-
-  const handleMeetingCalendar = () => {
-  }
 
   return (
     <Fragment>
@@ -94,32 +86,6 @@ const DashboardClient = (props) => {
             ? <ArrangeMeetingBox />
             : <MeetingAlertBox />
           }
-          
-          {/* Meeting Calendar */}
-          <Modal
-            show={show}
-            onHide={handleClose}
-            backdrop="static"
-            keyboard={false}
-            className="fullScreen payment-confrmation"
-          >
-          <Modal.Body>
-              <div className="box box-skew">
-                <div className="modal-highlightedTitle">
-                  <p>Tu pago de {props.totalAmount}€ se ha realizado correctamente.</p>
-                </div>
-                <div className="mt-3">
-                  <p><strong>Para que podamos asignarte el mejor entrenador</strong>, necesitamos que pidas cita para poder acordar tu programa</p>
-                  <Button variant="secondary" onClick={()=>handleMeetingCalendar()}>Pedir cita</Button>
-                </div>
-              </div>
-              <div className="meetingCalendar">
-
-              </div>
-              <Link to="/client/auth/my-account/dashboard"><Button variant="primary">Quiero ir a mi cuenta</Button></Link>
-            </Modal.Body>
-          </Modal>
-
         </div>
       </div>
     </Fragment>

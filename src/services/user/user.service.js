@@ -36,3 +36,13 @@ export async function getIdClient(clientId){
     console.log(error)
   }
 }
+
+
+export async function filterByAvailability({min, max}) {
+  try {
+    const theCoach = await AxiosCredentials.post('/coaches/byAvailability', {min, max}).then(({data}) => data);
+    return theCoach;
+  } catch (error) {
+    console.log(error);
+  }
+}

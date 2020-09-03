@@ -31,4 +31,12 @@
   font-size: 15px;
   margin-bottom: 30px;
 }
+
+.modal-arrangeMeeting .subHeader {
+  background-color: #44D7B6;
+}
+
+.modal-arrangeMeeting .subHeader h1 {
+  color: #fff;
+}
 /*# sourceMappingURL=ArrangeMeetingBox.css.map */
