@@ -5,10 +5,12 @@ import widthAuth from '../AuthProvider';
 
 function ClientPreview(props) {
   const { name, wizard, avatarUrl, _id } = props;
-  const { setProvClientId } = widthAuth();
+  const { setProvClient } = widthAuth();
+
   const handleSetProvClientId= (id) => {
-    setProvClientId(id)
+    setProvClient(props)
   }
+
   return (
     <div>
       <Card>

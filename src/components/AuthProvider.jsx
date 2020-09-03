@@ -21,7 +21,7 @@ const UserContext = React.createContext();
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [provClientId, setProvClientId] = useState({})
+  const [provClient, setProvClient] = useState({})
   const [headerBackground, setHeaderBackground] = useState(true)
 
   useEffect(() => {
@@ -80,8 +80,8 @@ export function AuthProvider(props) {
     user,
     isLoading,
     setIsLoading,
-    provClientId, 
-    setProvClientId,
+    provClient, 
+    setProvClient,
     headerBackground,
     setHeaderBackground
   };

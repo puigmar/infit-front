@@ -15,7 +15,7 @@ import MeetingAlertBox from '../components/MeetingAlertBox/MeetingAlertBox'
 
 const DashboardClient = (props) => {
 
-  const { provClientId } = WithAuth();
+  const { provClient } = WithAuth();
   const [show, setShow] = useState(false);
   const [userInfo, setUserInfo] = useState({})
   const [client, setClient] = useState({})

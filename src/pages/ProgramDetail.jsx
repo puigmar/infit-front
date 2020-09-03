@@ -12,7 +12,7 @@ import { createTraining } from '../services/training/training.service'
 import { Button } from 'react-bootstrap';
 
 function ProgramDetail(props) {
-  const { provClientId } = WithAuth();
+  const { provClient } = WithAuth();
 
   const [coach, setCoach] = useState(getTokenUser());
   const [clientId, setClientId] = useState({});
@@ -59,7 +59,7 @@ function ProgramDetail(props) {
 
   useEffect(() => {
     coach && getCoach(coach);
-    handleUSer(provClientId);
+    handleUSer(provClient);
   }, []);
 
   useEffect(() => {
@@ -67,11 +67,11 @@ function ProgramDetail(props) {
   }, [coach]);
 
   const handleOnClickSaveTraining = () => {
-    createTraining({myExercises, coachID: coach.coachID, clientID: provClientId});
+    createTraining({myExercises, coachID: coach.coachID, clientID: provClient});
   }
 
   console.log('Estos son myExercises', myExercises);
-  console.log('provClientID: ---->', provClientId);
+  console.log('provClient: ---->', provClient);
   return (
     <div>
       {clientId && <SubHeader title={title} history={history} />}
