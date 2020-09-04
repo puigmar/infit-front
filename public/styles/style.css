@@ -10883,6 +10883,15 @@ select {
   }
 }
 
+a:-webkit-any-link:focus {
+  outline-offset: 0;
+}
+
+a:focus {
+  outline: 0;
+  text-decoration: underline;
+}
+
 @font-face {
   font-family: "inFit";
   src: url("/fonts/inFit.eot?wk1neo");
@@ -11556,9 +11565,25 @@ a {
           box-shadow: none;
 }
 
-.form-label {
-  font-size: 0.9rem;
+.error-message {
+  font-size: 0.8rem;
+  color: red;
+  padding-top: 5px;
+  text-align: left;
   font-weight: 300;
+}
+
+.form-label {
+  text-align: left;
+  width: 100%;
+  left: 5px;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  font-weight: 300;
+  font-size: 1rem;
 }
 
 select.form-control {
@@ -11653,6 +11678,38 @@ select.form-control {
 .pack-check .form-check-label .pack-check_price span,
 .pack-check .form-check-label .pack-check_price span span {
   margin: 0;
+}
+
+.availabilityCoach .form-label {
+  margin-bottom: 8px;
+}
+
+.availabilityCoach .form-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.availabilityCoach .form-group .form-label {
+  width: auto;
+  padding: 0 8px;
+  margin: 0;
+}
+
+.availabilityCoach .form-group .form-label:first-of-type {
+  padding-left: 0;
+}
+
+.availabilityCoach .form-group .form-control {
+  width: auto;
+}
+
+.availabilityCoach .form-group .form-control.is-valid {
+  padding-right: 0.75rem;
+  background-image: none;
 }
 
 .dashboard-coach a {

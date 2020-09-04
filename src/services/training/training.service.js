@@ -18,9 +18,12 @@ export async function getTrainings({userID, isCoach}) {
   }
 }
 
-export async function createTraining({myTraining, coachID, provClient}) {
+export async function createTraining({myExercises, coachID, provClient}) {
   try {
-    const training = await AxiosCredentials.post('/training/newTraining', {myTraining, coachID, provClient}).then(({data}) => data);
+    console.log('values: myTraining',myExercises )
+    console.log('values: coachID',coachID )
+    console.log('values: provClient',provClient )
+    const training = await AxiosCredentials.post('/training/newTraining', {myExercises, coachID, provClient}).then(({data}) => data);
     return training;
   } catch (error) {
     console.log(error)

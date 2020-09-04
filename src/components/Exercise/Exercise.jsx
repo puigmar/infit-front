@@ -19,7 +19,7 @@ function Exercise(props) {
     description,
     image,
     rest,
-    reloadPage,
+    getExercises,
     video,
   } = props;
 
@@ -86,7 +86,7 @@ function Exercise(props) {
           setShow={setShow}
           isDelete={isDelete}
           title={title}
-          reloadPage={reloadPage}
+          getExercises={getExercises}
           />
         ) : (
           <AlertMessageEdit
@@ -95,7 +95,7 @@ function Exercise(props) {
           setShow={setShow}
           isDelete={isDelete}
           title={title}
-          reloadPage={reloadPage}
+          getExercises={getExercises}
           />
         )
       

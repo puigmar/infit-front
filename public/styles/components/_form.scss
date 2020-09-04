@@ -10,9 +10,24 @@
   }
 }
 
-.form-label{
-  font-size: 0.9rem;
+.error-message{
+  font-size: 0.8rem;
+  color: red;
+  padding-top: 5px;
+  text-align: left;
   font-weight: 300;
+}
+
+.form-label{
+  text-align: left;
+  width: 100%;
+  left: 5px;
+  transition: all 0.2s ease-in-out;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  font-weight: 300;
+  font-size: 1rem;
 }
 
 select.form-control{
@@ -93,6 +108,38 @@ select.form-control{
 
       span{
         margin: 0;
+      }
+    }
+  }
+}
+
+// coach availability
+
+.availabilityCoach{
+
+  .form-label{
+    margin-bottom: 8px;
+  }
+
+  .form-group{
+    display: flex;
+    align-items: center;
+
+    .form-label{
+      width: auto;
+      padding: 0 8px;
+      margin: 0;
+
+      &:first-of-type{
+        padding-left: 0;
+      }
+    }
+    .form-control{
+      width: auto;
+
+      &.is-valid{
+        padding-right: 0.75rem;
+        background-image: none;
       }
     }
   }

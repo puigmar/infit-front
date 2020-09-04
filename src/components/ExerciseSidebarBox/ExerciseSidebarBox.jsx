@@ -4,11 +4,9 @@ function ExerciseSidebarBox(props) {
   const { newTraining, setNewTraining, exercise } = props;
 
   const handleAddExercise = () => setNewTraining([...newTraining, exercise]);
-  console.log('Ejercicio dentro del sidebar', exercise);
   return (
     <Fragment>
       <div
-        id={exercise._id}
         className='exerciseBox'
         style={{ backgroundImage: `url(${exercise.image})` }}
       >

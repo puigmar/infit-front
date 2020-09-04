@@ -19,8 +19,6 @@ const DashboardClient = (props) => {
     getCoach(coach);
   }, []);
 
-  console.log(coach)
-
   return (
     <section className="box-layout dashboard-coach">
       <h1>Hola {coach && coach.name}</h1>

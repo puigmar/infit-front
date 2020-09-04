@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getClientId, getUser } from '../services/user/user.service';
-import { getTokenUser } from '../helpers/authHelpers';
 import { getExercisesByCoach } from '../services/exercise/exercise.service';
 import SubHeader from '../components/SubHeader/SubHeader';
 import { useHistory } from 'react-router-dom';
@@ -12,32 +11,28 @@ import { createTraining } from '../services/training/training.service'
 import { Button } from 'react-bootstrap';
 
 function ProgramDetail(props) {
-  const { provClient } = WithAuth();
+  const { provClient, user } = WithAuth();
 
-  const [coach, setCoach] = useState(getTokenUser());
   const [clientId, setClientId] = useState({});
   const [title, setTitle] = useState('');
   const [newTraining, setNewTraining] = useState([]); // array para rellenar con myExercises
   const [myExercises, setMyExercises] = useState([]);
-  const [trainingModel, setTrainingModel] = useState({
-    
-  })
+  const [trainingModel, setTrainingModel] = useState({})
   // todos los ejercicios del Coach
 
   let history = useHistory();
 
-  const getCoach = async (user) => {
-    try {
-      const coachValue = await getUser(user);
-      setCoach(coachValue);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getCoach = async (user) => {
+  //   try {
+  //     const coachValue = await getUser(user);
+  //     setCoach(coachValue);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleUSer = async (id) => {
     try {
-      console.log('id del cliente: ---->', id);
       const client = await getClientId(id);
       setClientId(client);
       setTitle(client.wizard.objective);
@@ -46,10 +41,9 @@ function ProgramDetail(props) {
     }
   };
 
-  const getExercises = async (coachID) => {
+  const getExercises = async (userID) => {
     try {
-      const exercisesCoach = await getExercisesByCoach(coachID);
-      console.log('exercises coach getExercises', exercisesCoach);
+      const exercisesCoach = await getExercisesByCoach(userID);
       setMyExercises(exercisesCoach);
       return exercisesCoach;
     } catch (error) {
@@ -58,20 +52,15 @@ function ProgramDetail(props) {
   };
 
   useEffect(() => {
-    coach && getCoach(coach);
+    getExercises(user._id);
     handleUSer(provClient);
   }, []);
 
-  useEffect(() => {
-    coach && getExercises(coach.coachID);
-  }, [coach]);
 
   const handleOnClickSaveTraining = () => {
-    createTraining({myExercises, coachID: coach.coachID, clientID: provClient});
+    console.log('myExercises from program detail', myExercises)
+    createTraining({myExercises, coachID: user._id, clientID: provClient});
   }
-
-  console.log('Estos son myExercises', myExercises);
-  console.log('provClient: ---->', provClient);
   return (
     <div>
       {clientId && <SubHeader title={title} history={history} />}
@@ -90,7 +79,6 @@ function ProgramDetail(props) {
 
       <ExerciseSidebar
         myExercises={myExercises}
-        coach={coach}
         newTraining={newTraining}
         setNewTraining={setNewTraining}
       />

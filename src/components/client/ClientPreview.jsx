@@ -1,13 +1,13 @@
 import React from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import widthAuth from '../AuthProvider';
+import WithAuth from '../AuthProvider';
 
 function ClientPreview(props) {
-  const { name, wizard, avatarUrl, _id } = props;
-  const { setProvClient } = widthAuth();
+  const { setProvClient } = WithAuth();
+  const { name, wizard, avatarUrl } = props;
 
-  const handleSetProvClientId= (id) => {
+  const handleSetProvClientId= () => {
     setProvClient(props)
   }
 
@@ -22,7 +22,7 @@ function ClientPreview(props) {
             <Col>
               <Button variant='primary btn-outline-primary'>
                 <Link
-                to={`/coach/auth/client/programDetail`} onClick={() => handleSetProvClientId(_id)}
+                to={`/coach/auth/client/programDetail`} onClick={() => handleSetProvClientId()}
               >
                 Crear programa a {name}
               </Link>

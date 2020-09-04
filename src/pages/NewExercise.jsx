@@ -15,7 +15,6 @@ function NewExercise() {
   const { user } = WithAuth();
 
   const [coach, setCoach] = useState(getTokenUser());
-  const [videoUrl, setVideoUrl] = useState('');
   const [isVideo, setIsVideo] = useState(false);
   const [exercise, setExercise] = useState({
     coachID: user._id,
@@ -58,24 +57,29 @@ function NewExercise() {
       setExercise({ ...exercise, rest: { ...rest, [name]: value } });
       return;
     }
+    if (name === 'video') {
+      if (value === '') {
+        setExercise({
+          ...exercise, video: value,
+        });
+        setIsVideo(false);
+        return;
+      }
+      setExercise({
+        ...exercise, video: value,
+      });
+      setIsVideo(true);
+    }
 
     setExercise({ ...exercise, [name]: value });
   };
 
   const handleChangeVideoUrl = () => {
-    setExercise({
-      ...exercise,
-      video: videoUrl,
-    });
-    setIsVideo(true);
-  };
-
-  const handleInputVideo = (e) => {
-    if (e.target.value === '') {
+    if (exercise.video === '') {
+      setIsVideo(false);
       return;
     }
-    setVideoUrl(e.target.value);
-    setIsVideo(false);
+    setIsVideo(true);
   };
 
   const handleChangeMedia = async (e) => {
@@ -99,15 +103,15 @@ function NewExercise() {
           video: media.media_url,
         });
         break;
-        default:
-          return;
+      default:
+        return;
     }
 
     console.log('Exercise: ', exercise);
   };
 
   const createNewExercise = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     createExercise(exercise);
     setExercise({
       coachID: '',
@@ -125,7 +129,7 @@ function NewExercise() {
   return (
     <div>
       <h1>Crea tu nuevo ejercicio</h1>
-      <form onSubmit={(e)=>createNewExercise(e)}>
+      <form onSubmit={(e) => createNewExercise(e)}>
         <label htmlFor='input-title'>Titulo</label>
         <input
           type='text'
@@ -144,7 +148,11 @@ function NewExercise() {
           onChange={(e) => handleChangeValues(e)}
         />
         <div className='wrapImage'>
-          {exercise.image !== '' ? <img src={exercise.image} alt='exercisePicture'/> : ''}
+          {exercise.image !== '' ? (
+            <img src={exercise.image} alt='exercisePicture' />
+          ) : (
+            ''
+          )}
         </div>
         <label htmlFor='input-pictureProgram'>Image</label>
         <input
@@ -155,15 +163,15 @@ function NewExercise() {
           onChange={(e) => handleChangeMedia(e)}
         />
         <div className='wrapImage'>
-          {isVideo && <Player playsInline src={videoUrl} />}
+          {isVideo && <Player playsInline src={exercise.video} />}
         </div>
         <label htmlFor='input-pictureProgramVideo'>Video</label>
         <input
           type='text'
           name='video'
-          value={videoUrl}
+          value={exercise.video}
           id='input-pictureProgramVideo'
-          onChange={(e) => handleInputVideo(e)}
+          onChange={(e) => handleChangeValues(e)}
         />
         <button type='button' onClick={() => handleChangeVideoUrl()}>
           Cargar vídeo

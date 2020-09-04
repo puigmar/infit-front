@@ -21,9 +21,9 @@ const Exercises = () => {
     }
   };
 
-  const getExercises = async (coachID) => {
+  const getExercises = async (userID) => {
     try {
-      const exercisesCoach = await getExercisesByCoach(coachID);
+      const exercisesCoach = await getExercisesByCoach(userID);
       console.log('exercises coach getExercises', exercisesCoach)
       setExercises(exercisesCoach);
     } catch (error) {
@@ -36,16 +36,12 @@ const Exercises = () => {
   }, []);
 
   useEffect(() => {
-    getExercises(coach.coachID);
+    getExercises(coach.userID);
     return () => {
-      getExercises(coach.coachID);
+      getExercises(coach.userID);
     }
   }, [coach]);
-  
-  const reloadPage = () => {
-    console.log('He hecho el reload')
-    getExercises(coach.coachID);
-  }
+
 
   return (
     <Fragment>
@@ -58,7 +54,7 @@ const Exercises = () => {
               {...item}
               showNumbers={false}
               showText={true}
-              reloadPage={reloadPage}
+              getExercises={getExercises}
             />
           )}
         </div>
