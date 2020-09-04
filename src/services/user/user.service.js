@@ -38,10 +38,19 @@ export async function getIdClient(clientId){
 }
 
 
-export async function filterByAvailability({min, max}) {
+export async function filterByAvailability(min, max) {
   try {
     const theCoach = await AxiosCredentials.post('/coaches/byAvailability', {min, max}).then(({data}) => data);
     return theCoach;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function filterByCallAvailability(arrayCoaches) {
+  try {
+    const calendarAvailability = await AxiosCredentials.post('/coaches/byCallAvailability', {availableCoaches: arrayCoaches}).then(({data}) => data);
+    return calendarAvailability;
   } catch (error) {
     console.log(error);
   }

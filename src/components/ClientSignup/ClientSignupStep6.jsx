@@ -91,8 +91,8 @@ function ClientSignupStep6(props) {
     <Fragment>
       <h2>Datos bancarios</h2>
       <p className="signup-page_paymentResume">
-        <div>Total a pagar:</div>
-        <div>{props.totalAmount}€</div>  
+        <span>Total a pagar:</span>
+        <span>{props.totalAmount}€</span>  
       </p>
       <h3 className="h5 text-center mb-3">Escoge tu método de pago</h3>
       <PayPalButton 
@@ -107,7 +107,7 @@ function ClientSignupStep6(props) {
       <Accordion defaultActiveKey="0">
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="1">
-          <span class="icon-card"></span> <span>Targeta de crédito</span>
+          <span className="icon-card"></span> <span>Targeta de crédito</span>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="1">
             <Card.Body>

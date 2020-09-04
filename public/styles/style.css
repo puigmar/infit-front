@@ -11730,4 +11730,8 @@ select.form-control {
   border: 1px solid #44D7B6;
   border-radius: 20px;
 }
+
+.meetingCalendar .react-calendar {
+  border: none;
+}
 /*# sourceMappingURL=style.css.map */

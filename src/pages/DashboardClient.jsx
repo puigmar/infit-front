@@ -37,13 +37,13 @@ const DashboardClient = (props) => {
     }
   }
 
-  const handleMessagesProgram = async (clientID) => {
-    console.log('clientID -----> ', clientID)
+  const handleMessagesProgram = async (userID) => {
+    console.log('clientID -----> ', userID)
     try{
-      const program = await getIDInactiveProgram(clientID);
+      const program = await getIDInactiveProgram(userID);
       console.log('program ---------->', program)
       if(program){
-        checkMeeting(clientID, program._id)
+        checkMeeting(userID, program._id)
       } else {
 
       }
@@ -53,8 +53,8 @@ const DashboardClient = (props) => {
     }
   }
 
-  const checkMeeting = async (clientID, programID) => {
-    const newMeeting = await nextMeeting(clientID, programID)
+  const checkMeeting = async (userID, programID) => {
+    const newMeeting = await nextMeeting(userID, programID)
     console.log('newMeeting: ----------->', newMeeting)
     if(newMeeting){
       setMeeting(newMeeting)
@@ -83,7 +83,7 @@ const DashboardClient = (props) => {
         <div className="home-section box-layout">
           { client && <UserIntro nexTraining={nextTraining} client={client} /> }
           { Object.keys(meeting).length !== 0 && !nextTraining
-            ? <ArrangeMeetingBox />
+            ? <ArrangeMeetingBox clientInfo={client} />
             : <MeetingAlertBox />
           }
         </div>

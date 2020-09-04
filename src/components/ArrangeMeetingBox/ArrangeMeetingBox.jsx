@@ -1,28 +1,37 @@
-import React, { useState, Fragment } from 'react'
-import { Card, Button, Modal } from 'react-bootstrap';
+import React, { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom';
-import Calendar from 'react-calendar'
-
-import SubHeader from '../SubHeader/SubHeader'
+import {filterByAvailability, filterByCallAvailability} from '../../services/user/user.service'
+import { Card, Button } from 'react-bootstrap';
+import ModalCalendar from '../ModalCalendar/ModalCalendar'
 
 import './ArrangeMeetingBox.css';
 
 function ArrangeMeetingBox(props) {
+
+  const {clientInfo} = props;
   
   const [show, setShow] = useState(false);
-  const [value, onChange] = useState(new Date());
+  const [availableCoachHours, setAvailableCoachHours] = useState({})
 
   const handleClose = () => setShow(false)
   const handleOpen = () => setShow(true)
 
   const handleChooseCoach = async () => {
+    console.log('cliente-------------->', clientInfo)
     try{
-
-      
+      const coaches = await filterByAvailability(clientInfo.wizard.availability.min, clientInfo.wizard.availability.max);
+      console.log('coaches ------>', coaches)
+      const availability = await filterByCallAvailability(coaches);
+      setAvailableCoachHours(availability)
+      handleLaunchCalendar();
 
     } catch(err){
       console.log(err)
     }
+  }
+
+  const handleLaunchCalendar = () => {
+    handleOpen()
   }
 
   return (
@@ -40,24 +49,7 @@ function ArrangeMeetingBox(props) {
         </Card.Body>
       </Card>
 
-    <Modal
-      show={show}
-      onHide={handleClose}
-      backdrop="static"
-      keyboard={false}
-      className="fullScreen modal-arrangeMeeting"
-    >
-    <SubHeader title={'Pedir Cita'} action={() => handleClose()} />
-    <Modal.Body>
-        <div className="meetingCalendar">
-          <Calendar
-            onChange={onChange}
-            value={value}
-          />
-        </div>
-        {/* <Link to="/client/auth/my-account/dashboard"><Button variant="primary">Quiero ir a mi cuenta</Button></Link> */}
-      </Modal.Body>
-    </Modal>
+      <ModalCalendar handleOpen={handleOpen} handleClose={handleClose} show={show} availableCoachHours={availableCoachHours} />
   </Fragment>
   )
 }

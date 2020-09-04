@@ -11731,6 +11731,10 @@ select.form-control {
   border-radius: 20px;
 }
 
+.meetingCalendar .react-calendar {
+  border: none;
+}
+
 .error {
   border: 2px solid #FF6565;
 }
