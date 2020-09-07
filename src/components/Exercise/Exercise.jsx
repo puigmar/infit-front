@@ -40,7 +40,7 @@ function Exercise(props) {
   return (
     <>
       <Card>
-        <Card.Img variant='top' src={image} />
+        <Card.Img variant='top' src={image} alt={title}/>
         <div className="wrapImage">
           {video &&    
             <Player

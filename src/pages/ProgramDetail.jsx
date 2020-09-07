@@ -17,7 +17,7 @@ function ProgramDetail(props) {
   const [title, setTitle] = useState('');
   const [newTraining, setNewTraining] = useState([]); // array para rellenar con myExercises
   const [myExercises, setMyExercises] = useState([]);
-  const [trainingModel, setTrainingModel] = useState({})
+  const [date, setDate] = useState('');
   // todos los ejercicios del Coach
 
   let history = useHistory();
@@ -56,14 +56,15 @@ function ProgramDetail(props) {
     handleUSer(provClient);
   }, []);
 
+  console.log('Este es el provClient', provClient)
 
   const handleOnClickSaveTraining = () => {
     console.log('myExercises from program detail', myExercises)
-    createTraining({myExercises, coachID: user._id, clientID: provClient});
+    createTraining({myExercises, coachID: user._id, clientID: provClient._id, date});
   }
   return (
     <div>
-      {clientId && <SubHeader title={title} history={history} />}
+      {provClient && <SubHeader title={title} history={history} />}
       <section className='exercises-list'>
         {
           newTraining.map((item) => (

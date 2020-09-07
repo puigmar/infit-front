@@ -25,8 +25,9 @@ const AlertMessage = (props) => {
     if (isDelete) {
       console.log('Este es el id del objeto a borrar', id);
       deleteExercises(id);
-      setShow(false);
       getExercises(user._id);
+      setShow(false);
+      console.log('te he renderizado')
     }
   };
 

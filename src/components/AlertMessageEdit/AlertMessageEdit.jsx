@@ -32,10 +32,10 @@ const AlertMessageEdit = (props) => {
     console.log('Este es el id del objeto a borrar', _id);
     // editar aqui los ejercicios
     editExerciseByID(_id, exercise)
-    setShow(false);
     getExercises(user._id);
+    setShow(false);
+    console.log('te he renderizado')
   };
-  console.log('Este es el id del objeto a borrar', _id);
 
   //EDITAR EL EJERCICIO
   //RECARGAR LA PAGINA
