@@ -19,7 +19,7 @@ function Exercise(props) {
     description,
     image,
     rest,
-    reloadPage,
+    getExercises,
     video,
   } = props;
 
@@ -40,7 +40,7 @@ function Exercise(props) {
   return (
     <>
       <Card>
-        <Card.Img variant='top' src={image} />
+        <Card.Img variant='top' src={image} alt={title}/>
         <div className="wrapImage">
           {video &&    
             <Player
@@ -86,7 +86,7 @@ function Exercise(props) {
           setShow={setShow}
           isDelete={isDelete}
           title={title}
-          reloadPage={reloadPage}
+          getExercises={getExercises}
           />
         ) : (
           <AlertMessageEdit
@@ -95,7 +95,7 @@ function Exercise(props) {
           setShow={setShow}
           isDelete={isDelete}
           title={title}
-          reloadPage={reloadPage}
+          getExercises={getExercises}
           />
         )
       

@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 // import NextTraining from '../components/NextTraining.jsx';
 import WithAuth from '../components/AuthProvider';
-import { Link, useHistory } from 'react-router-dom';
 import { getTokenUser } from '../helpers/authHelpers.js';
 import { getIdClient } from '../services/user/user.service';
 import { getIDInactiveProgram } from '../services/program/program.service';
@@ -19,8 +18,6 @@ const DashboardClient = (props) => {
   const [ client, setClient ] = useState({})
   const [ meeting, setMeeting ] = useState({})
   const [ nextTraining, setNextTraining ] = useState(false)
-
-  let history = useHistory();
 
   const getClient = async (id, userInfo) => {
     try{

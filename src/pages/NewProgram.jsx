@@ -4,42 +4,25 @@ import { getUser } from '../services/user/user.service';
 import { getClientsByCoach } from '../services/client/client.service';
 import ClientPreview from '../components/client/ClientPreview.jsx';
 import { v4 as uuidv4 } from 'uuid';
-import { getTokenUser } from '../helpers/authHelpers';
 
 function NewProgram() {
-  const [coach, setCoach] = useState(getTokenUser());
+  const { user } = WithAuth();
   const [clients, setClients] = useState([]);
 
-  //LLAMAR AL COACH & CLIENT
-  const getCoach = async (user) => {
-    try {
-      const coachValue = await getUser(user);
-      setCoach(coachValue);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const getClients = async (coachID) => {
+  const getClients = async (userID) => {
     try {
-      const clientsByCoach = await getClientsByCoach(coachID);
+      const clientsByCoach = await getClientsByCoach(userID);
       setClients(clientsByCoach);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // SE LLAMA AL COACH Y CLIENT COMPONENTDIDMOUNT
-  useEffect(() => {
-    getCoach(coach);
-  }, []);
-
   //SE LLAMA AL PROGRAMA BY THIS COACH & CLIENT
   useEffect(() => {
-    coach.coachID && getClients(coach.coachID);
-  }, [coach]);
-
-
+    getClients(user._id);
+  }, []);
 
   return (
     <div>

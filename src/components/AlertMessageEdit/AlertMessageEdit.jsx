@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { editExerciseByID } from '../../services/exercise/exercise.service';
+import WithAuth from '../AuthProvider';
 
 const AlertMessageEdit = (props) => {
-  const { title, show, setShow, reloadPage, _id} = props;
+  const { user } = WithAuth();
+  const { title, show, setShow, getExercises, _id} = props;
 
   const [exercise, setExercise] = useState({
     coachID: props.coachID,
@@ -30,11 +32,10 @@ const AlertMessageEdit = (props) => {
     console.log('Este es el id del objeto a borrar', _id);
     // editar aqui los ejercicios
     editExerciseByID(_id, exercise)
+    getExercises(user._id);
     setShow(false);
-    reloadPage();
-    return;
+    console.log('te he renderizado')
   };
-  console.log('Este es el id del objeto a borrar', _id);
 
   //EDITAR EL EJERCICIO
   //RECARGAR LA PAGINA
