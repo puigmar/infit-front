@@ -10,8 +10,14 @@ function ArrangeMeetingBox(props) {
 
   const {clientInfo} = props;
   
-  const [show, setShow] = useState(false);
-  const [availableCoachHours, setAvailableCoachHours] = useState({})
+  const [ show, setShow ] = useState(false);
+  const [ availableCoachHours, setAvailableCoachHours ] = useState({})
+
+  useEffect( ()=> {
+    if(Object.keys(availableCoachHours).length !== 0){
+      handleLaunchCalendar()
+    }
+  }, [availableCoachHours])
 
   const handleClose = () => setShow(false)
   const handleOpen = () => setShow(true)
@@ -22,9 +28,7 @@ function ArrangeMeetingBox(props) {
       const coaches = await filterByAvailability(clientInfo.wizard.availability.min, clientInfo.wizard.availability.max);
       console.log('coaches ------>', coaches)
       const availability = await filterByCallAvailability(coaches);
-      setAvailableCoachHours(availability)
-      handleLaunchCalendar();
-
+      setAvailableCoachHours(availability);
     } catch(err){
       console.log(err)
     }

@@ -8,8 +8,11 @@ import 'react-calendar/dist/Calendar.css';
 function ModalCalendar({show, handleClose, availableCoachHours}) {
 
   const [value, onChange] = useState(new Date());
-  const [availability, setAvailability] = useState(availableCoachHours);
-  const [scheduleOptions, setScheduleOptions] = useState({})
+  const [availability, setAvailability] = useState({});
+
+  useEffect(() => {
+    setAvailability(availableCoachHours)
+  }, [availableCoachHours])
 
   useEffect(() => {
     handleSchedule();

@@ -15,10 +15,10 @@ import MeetingAlertBox from '../components/MeetingAlertBox/MeetingAlertBox'
 const DashboardClient = (props) => {
 
   const { setHeaderBackground } = WithAuth();
-  const [userInfo, setUserInfo] = useState({})
-  const [client, setClient] = useState({})
-  const [meeting, setMeeting] = useState({})
-  const [nextTraining, setNextTraining] = useState(false)
+  const [ userInfo, setUserInfo ] = useState({})
+  const [ client, setClient ] = useState({})
+  const [ meeting, setMeeting ] = useState({})
+  const [ nextTraining, setNextTraining ] = useState(false)
 
   let history = useHistory();
 
@@ -38,10 +38,10 @@ const DashboardClient = (props) => {
   }
 
   const handleMessagesProgram = async (userID) => {
-    console.log('clientID -----> ', userID)
+    //console.log('clientID -----> ', userID)
     try{
       const program = await getIDInactiveProgram(userID);
-      console.log('program ---------->', program)
+      //console.log('program ---------->', program)
       if(program){
         checkMeeting(userID, program._id)
       } else {
@@ -55,7 +55,7 @@ const DashboardClient = (props) => {
 
   const checkMeeting = async (userID, programID) => {
     const newMeeting = await nextMeeting(userID, programID)
-    console.log('newMeeting: ----------->', newMeeting)
+    //console.log('newMeeting: ----------->', newMeeting)
     if(newMeeting){
       setMeeting(newMeeting)
     }
