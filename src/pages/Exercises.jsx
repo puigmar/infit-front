@@ -42,13 +42,14 @@ const Exercises = () => {
     }
   }, [coach]);
 
+  console.log('Estos son tus ejercicios', exercises)
 
   return (
     <Fragment>
       <section>
         <h1>Ejercicios disponibles</h1>
         <div className='exercise-list'>
-          {exercises.map((item, index) => 
+          {exercises.map(item => 
             <Exercise
               key={uuidv4()}
               {...item}

@@ -13,6 +13,7 @@ export async function getExercisesByCoach( userID ) {
 
 export async function createExercise( values ) {
   try {
+    console.log('Estos son los valores ejercicio service', values)
     AxiosCredentials.post('/exercise/newExercise', {...values});
   } catch (error) {
     console.log(error)

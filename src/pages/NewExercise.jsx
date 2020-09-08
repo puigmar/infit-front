@@ -26,6 +26,8 @@ function NewExercise() {
       minute: 0,
       second: 0,
     },
+    series: 0,
+    repetition: 0,
   });
 
   const [rest, setRest] = useState({
@@ -60,18 +62,21 @@ function NewExercise() {
     if (name === 'video') {
       if (value === '') {
         setExercise({
-          ...exercise, video: value,
+          ...exercise,
+          video: value,
         });
         setIsVideo(false);
         return;
       }
       setExercise({
-        ...exercise, video: value,
+        ...exercise,
+        video: value,
       });
       setIsVideo(true);
     }
 
     setExercise({ ...exercise, [name]: value });
+    console.log(exercise)
   };
 
   const handleChangeVideoUrl = () => {
@@ -114,7 +119,6 @@ function NewExercise() {
     event.preventDefault();
     createExercise(exercise);
     setExercise({
-      coachID: '',
       title: '',
       image: '',
       video: '',
@@ -123,6 +127,8 @@ function NewExercise() {
         minute: 0,
         second: 0,
       },
+      series: 0,
+      repetition: 0,
     });
   };
 
@@ -177,6 +183,23 @@ function NewExercise() {
           Cargar vídeo
         </button>
 
+        <label htmlFor='input-set'>Series</label>
+        <input
+          type='number'
+          name='series'
+          value={exercise.series}
+          id='input-set'
+          onChange={(e) => handleChangeValues(e)}
+        />
+
+        <label htmlFor='input-repetition'>Repeticiones</label>
+        <input
+          type='number'
+          name='repetition'
+          value={exercise.repetition}
+          id='input-repetition'
+          onChange={(e) => handleChangeValues(e)}
+        />
         <p>Rest</p>
         <label htmlFor='rest-minute'>Minutos</label>
         <input

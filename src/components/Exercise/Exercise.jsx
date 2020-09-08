@@ -19,6 +19,8 @@ function Exercise(props) {
     description,
     image,
     rest,
+    series,
+    repetition,
     getExercises,
     video,
   } = props;
@@ -42,11 +44,11 @@ function Exercise(props) {
       <Card>
         <Card.Img variant='top' src={image} alt={title}/>
         <div className="wrapImage">
-          {video &&    
+          {video &&
             <Player
               playsInline
               src={video}
-            /> 
+            />
           }
         </div>
         <Card.Body>
@@ -72,6 +74,9 @@ function Exercise(props) {
           </Row>
         </Card.Body>
         <ListGroup className='list-group-flush'>
+          
+          <ListGroupItem>Series: {series}</ListGroupItem>
+          <ListGroupItem>Repeticiones: {repetition}</ListGroupItem>
           <ListGroupItem>Descanso por serie</ListGroupItem>
           <ListGroupItem>Minutos: {rest && rest.minute}</ListGroupItem>
           <ListGroupItem>Segundos: {rest && rest.second}</ListGroupItem>
