@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Link } from 'react-router-dom';
 import {filterByAvailability, filterByCallAvailability} from '../../services/user/user.service'
 import { Card, Button } from 'react-bootstrap';
 import ModalCalendar from '../ModalCalendar/ModalCalendar'
@@ -11,7 +10,8 @@ function ArrangeMeetingBox(props) {
   const {clientInfo} = props;
   
   const [ show, setShow ] = useState(false);
-  const [ availableCoachHours, setAvailableCoachHours ] = useState({})
+  const [ availableCoachHours, setAvailableCoachHours ] = useState([])
+  const [ allAvailableCoaches, setAllAvailableCoaches] = useState({})
 
   useEffect( ()=> {
     if(Object.keys(availableCoachHours).length !== 0){
@@ -27,7 +27,9 @@ function ArrangeMeetingBox(props) {
     try{
       const coaches = await filterByAvailability(clientInfo.wizard.availability.min, clientInfo.wizard.availability.max);
       console.log('coaches ------>', coaches)
+      setAllAvailableCoaches(coaches)
       const availability = await filterByCallAvailability(coaches);
+      console.log('filterByCallAvailability ------>', availability)
       setAvailableCoachHours(availability);
     } catch(err){
       console.log(err)
@@ -53,7 +55,7 @@ function ArrangeMeetingBox(props) {
         </Card.Body>
       </Card>
 
-      <ModalCalendar handleOpen={handleOpen} handleClose={handleClose} show={show} availableCoachHours={availableCoachHours} />
+      <ModalCalendar handleMeeting={props.handleMeeting} handleOpen={handleOpen} handleClose={handleClose} show={show} availableCoachHours={availableCoachHours} allAvailableCoaches={allAvailableCoaches} />
   </Fragment>
   )
 }

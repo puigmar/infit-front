@@ -1,0 +1,85 @@
+.meetingCalendar .react-calendar__tile {
+  border: 2px solid #fff;
+  margin: 2px 0;
+}
+
+.meetingCalendar .react-calendar__tile--now,
+.meetingCalendar .react-calendar__tile--active {
+  border-radius: 9px;
+}
+
+.meetingCalendar .react-calendar__tile--now {
+  background: #F7B500;
+}
+
+.meetingCalendar .react-calendar__tile--active:enabled:hover,
+.meetingCalendar .react-calendar__tile--active:enabled:focus,
+.meetingCalendar .react-calendar__tile--active {
+  background: #44D7B6;
+}
+
+.meetingCalendar_availableHours {
+  position: fixed;
+  width: 100%;
+  padding: 30px 30px 50px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  left: 0;
+  bottom: 0;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  bottom: 0;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  border-top: 3px solid #44D7B6;
+  background-color: white;
+  -webkit-box-shadow: -2px -7px 33px -15px rgba(0, 0, 0, 0.5);
+          box-shadow: -2px -7px 33px -15px rgba(0, 0, 0, 0.5);
+}
+
+.meetingCalendar_availableHours.show {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+
+.meetingCalendar_availableHours_intro {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-top: 10px;
+}
+
+.meetingCalendar_availableHours_intro [class*="icon-"] {
+  font-size: 40px;
+  margin-right: 15px;
+  color: #44D7B6;
+}
+
+.meetingCalendar_availableHours_title {
+  font-size: 1.1rem;
+  margin: 0 0 15px;
+  padding-right: 20px;
+  line-height: 1.2;
+}
+
+.meetingCalendar_availableHours_title span {
+  display: inline-block;
+  font-weight: 600;
+}
+
+.meetingCalendar_availableHours .btn-close {
+  width: auto;
+  background-color: transparent;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: black;
+}
+
+.meetingCalendar_availableHours .form-group label {
+  margin-bottom: 10px;
+}
+/*# sourceMappingURL=ModalCalendar.css.map */

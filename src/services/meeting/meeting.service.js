@@ -8,3 +8,12 @@ export async function nextMeeting(userID, programID) {
     console.log(error);
   }
 }
+
+export async function updateMeeting(meeting) {
+  try {
+    const updateMeeting = await AxiosCredentials.put(`/meeting/update`, { meeting }).then(({data}) => data);
+    return updateMeeting;
+  } catch (error) {
+    console.log(error);
+  }
+}

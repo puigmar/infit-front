@@ -10894,8 +10894,8 @@ a:focus {
 
 @font-face {
   font-family: "inFit";
-  src: url("/fonts/inFit.eot?wk1neo");
-  src: url("/fonts/inFit.eot?wk1neo#iefix") format("embedded-opentype"), url("/fonts/inFit.woff2?wk1neo") format("woff2"), url("/fonts/inFit.ttf?wk1neo") format("truetype"), url("/fonts/inFit.woff?wk1neo") format("woff"), url("/fonts/inFit.svg?wk1neo#inFit") format("svg");
+  src: url("/fonts/inFit.eot?6y4l0y");
+  src: url("/fonts/inFit.eot?6y4l0y#iefix") format("embedded-opentype"), url("/fonts/inFit.woff2?6y4l0y") format("woff2"), url("/fonts/inFit.ttf?6y4l0y") format("truetype"), url("/fonts/inFit.woff?6y4l0y") format("woff"), url("/fonts/inFit.svg?6y4l0y#inFit") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -10913,6 +10913,14 @@ a:focus {
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-calendar:before {
+  content: "";
+}
+
+.icon-close:before {
+  content: "";
 }
 
 .icon-user:before {

@@ -3,13 +3,12 @@ import React, { Fragment, useState, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
 import { getTokenUser } from '../helpers/authHelpers.js';
 import { getIdClient } from '../services/user/user.service';
-import { getIDInactiveProgram } from '../services/program/program.service';
-import { nextMeeting } from '../services/meeting/meeting.service';
+import { getProgramByClientID } from '../services/program/program.service';
+import { nextMeeting, updateMeeting } from '../services/meeting/meeting.service';
 import UserIntro from '../components/UserIntro/UserIntro';
 import SubHeader from '../components/SubHeader/SubHeader';
 import ArrangeMeetingBox from '../components/ArrangeMeetingBox/ArrangeMeetingBox'
 import MeetingAlertBox from '../components/MeetingAlertBox/MeetingAlertBox'
-
 
 const DashboardClient = (props) => {
 
@@ -17,13 +16,14 @@ const DashboardClient = (props) => {
   const [ userInfo, setUserInfo ] = useState({})
   const [ client, setClient ] = useState({})
   const [ meeting, setMeeting ] = useState({})
+  const [ showMeeting, setShowMeeting ] = useState(false)
   const [ nextTraining, setNextTraining ] = useState(false)
+  const [ userProgram, setUserProgram ] = useState({})
 
   const getClient = async (id, userInfo) => {
     try{
-      //console.log('id del cliente: ---->', id)
       const clientService = await getIdClient(id)
-      console.log('Client: --->:', clientService)
+      console.log('clientService: --------->', clientService)
       setClient({
         ...clientService,
         isCoach: userInfo.isCoach
@@ -34,15 +34,39 @@ const DashboardClient = (props) => {
     }
   }
 
-  const handleMessagesProgram = async (userID) => {
-    //console.log('clientID -----> ', userID)
+  const getData = async () => {
     try{
-      const program = await getIDInactiveProgram(userID);
-      //console.log('program ---------->', program)
-      if(program){
+      const getToken = await getTokenUser();
+      setUserInfo(getToken);
+      getClient(getToken._id, getToken);
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+    setHeaderBackground(true)
+  }, []);
+
+  const getUserProgram = async (userID) => {
+    try{
+      const program = await getProgramByClientID(userID);
+      setUserProgram(program);
+      return program;
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const handleMessagesProgram = async (userID) => {
+    try{
+      const program = await getUserProgram(userID);
+      console.log('program initial date:', program)
+      if(!program.initialDate){
         checkMeeting(userID, program._id)
       } else {
-
+        
       }
     }
     catch(err){
@@ -51,27 +75,50 @@ const DashboardClient = (props) => {
   }
 
   const checkMeeting = async (userID, programID) => {
+    console.log(userID, programID)
     const newMeeting = await nextMeeting(userID, programID)
-    //console.log('newMeeting: ----------->', newMeeting)
+    console.log(newMeeting)
     if(newMeeting){
+      console.log('meeting ------>', newMeeting)
       setMeeting(newMeeting)
     }
   }
 
-  const getData = async () => {
-    const getToken = await getTokenUser();
-    setUserInfo(getToken);
-    await getClient(getToken._id, getToken);
-  }
-
-  useEffect(() => {
-    getData()
-    setHeaderBackground(true)
-  }, []);
-
   useEffect (() => {
     handleMessagesProgram(client._id);
   }, [client])
+
+
+  const handleMeeting = async (calendarData) => {
+    const {coachID, date} = calendarData;
+    setMeeting({
+      ...meeting,
+      coachID,
+      date,
+      url: `/meeting-room/${client.userID}${coachID}`
+    })
+  }
+
+  const handleMeetingMessages = () => {
+    return !meeting.date
+      ? <ArrangeMeetingBox clientInfo={client} handleMeeting={handleMeeting}/>
+      : <MeetingAlertBox {...meeting} />
+  }
+
+  useEffect(() => {
+    if(meeting.coachID){
+      udpdateDBMeeting();
+    }
+    if(Object.keys(meeting).length !== 0){
+      setShowMeeting(true)
+    }
+  }, [meeting])
+
+  const udpdateDBMeeting = async () => {
+    console.log('meeting: ', meeting);
+    const updateMeetingSession = await updateMeeting(meeting)
+    console.log('updateMeetingSession: ', updateMeetingSession);
+  }
 
   return (
     <Fragment>
@@ -79,10 +126,7 @@ const DashboardClient = (props) => {
         <SubHeader title={'Tu Área Privada'} />
         <div className="home-section box-layout">
           { client && <UserIntro nexTraining={nextTraining} client={client} /> }
-          { Object.keys(meeting).length !== 0 && !nextTraining
-            ? <ArrangeMeetingBox clientInfo={client} />
-            : <MeetingAlertBox />
-          }
+          { showMeeting && handleMeetingMessages() }
         </div>
       </div>
     </Fragment>

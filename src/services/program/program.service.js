@@ -11,9 +11,9 @@ export async function getProgramByUserId(clientID, coachID) {
   }
 }
 
-export async function getIDInactiveProgram(clientID) {
+export async function getProgramByClientID(userID) {
   try{
-    const program = await AxiosCredentials.post(`/program/inactive/${clientID}`);
+    const program = await AxiosCredentials.post(`/program/${userID}`);
     return program.data[0];
   }
   catch(err){

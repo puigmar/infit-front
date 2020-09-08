@@ -44,6 +44,7 @@ export async function filterByAvailability(min, max) {
 export async function filterByCallAvailability(arrayCoaches) {
   try {
     const calendarAvailability = await AxiosCredentials.post('/coaches/byCallAvailability', {availableCoaches: arrayCoaches}).then(({data}) => data);
+    console.log('calendarAvailability: ---->', calendarAvailability)
     return calendarAvailability;
   } catch (error) {
     console.log(error);
