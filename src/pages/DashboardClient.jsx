@@ -19,6 +19,7 @@ const DashboardClient = (props) => {
   const [ showMeeting, setShowMeeting ] = useState(false)
   const [ nextTraining, setNextTraining ] = useState(false)
   const [ userProgram, setUserProgram ] = useState({})
+  const [ sendDBMeeting, setSendDBMeeting] = useState({})
 
   const getClient = async (id, userInfo) => {
     try{
@@ -77,7 +78,7 @@ const DashboardClient = (props) => {
   const checkMeeting = async (userID, programID) => {
     console.log(userID, programID)
     const newMeeting = await nextMeeting(userID, programID)
-    console.log(newMeeting)
+    console.log('new Meeting: ', newMeeting)
     if(newMeeting){
       console.log('meeting ------>', newMeeting)
       setMeeting(newMeeting)
@@ -91,7 +92,7 @@ const DashboardClient = (props) => {
 
   const handleMeeting = async (calendarData) => {
     const {coachID, date} = calendarData;
-    setMeeting({
+    setSendDBMeeting({
       ...meeting,
       coachID,
       date,
@@ -105,20 +106,15 @@ const DashboardClient = (props) => {
       : <MeetingAlertBox {...meeting} />
   }
 
-  useEffect(() => {
-    if(meeting.coachID){
-      udpdateDBMeeting();
-    }
-    if(Object.keys(meeting).length !== 0){
-      setShowMeeting(true)
-    }
-  }, [meeting])
-
   const udpdateDBMeeting = async () => {
-    console.log('meeting: ', meeting);
-    const updateMeetingSession = await updateMeeting(meeting)
-    console.log('updateMeetingSession: ', updateMeetingSession);
+    console.log('meeting: ', sendDBMeeting);
+    const updateMeetingSession = await updateMeeting(sendDBMeeting)
+    checkMeeting(userInfo._id, userProgram._id)
   }
+
+  useEffect(() => {
+    udpdateDBMeeting();
+  }, [sendDBMeeting])
 
   return (
     <Fragment>
@@ -126,7 +122,7 @@ const DashboardClient = (props) => {
         <SubHeader title={'Tu Área Privada'} />
         <div className="home-section box-layout">
           { client && <UserIntro nexTraining={nextTraining} client={client} /> }
-          { showMeeting && handleMeetingMessages() }
+          { Object.keys(meeting).length !== 0 && handleMeetingMessages() }
         </div>
       </div>
     </Fragment>
