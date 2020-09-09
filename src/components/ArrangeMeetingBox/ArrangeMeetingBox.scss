@@ -26,6 +26,29 @@
     font-size: 15px;
     margin-bottom: 30px;
   }
+
+  .card-footer{
+    min-height: 80px;
+  }
+
+  .spinner{
+    width: 100%;
+    display: inline-flex;
+    justify-items: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+
+    img{
+      width: 50px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+  }
 }
 
 .modal-arrangeMeeting{

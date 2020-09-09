@@ -9,6 +9,15 @@ export async function nextMeeting(userID, programID) {
   }
 }
 
+export async function nextCoachMeeting(coachID) {
+  try {
+    const nextMeeting = await AxiosCredentials.post(`/meeting/coach/${coachID}/next`).then(({data}) => data);
+    return nextMeeting;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function updateMeeting(meeting) {
   try {
     const updateMeeting = await AxiosCredentials.put(`/meeting/update`, { meeting }).then(({data}) => data);

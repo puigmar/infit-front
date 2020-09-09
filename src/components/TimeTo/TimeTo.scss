@@ -1,0 +1,78 @@
+.timeToBlock{
+  background: #000 url('/img/bg_countDownMeeting.jpg') no-repeat center;
+  background-size: cover;
+  position: relative;
+  text-align: center;
+  font-size: 1.1rem;
+  border-radius: 0 0 5px 5px;
+  overflow: hidden;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  height: 94px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  a{
+    margin: 0;
+    z-index: 1;
+    border: 0;
+  }
+
+  &:after{
+    position: absolute;
+    content:"";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.3);
+  }
+
+  &.futureMeeting{
+    position: relative;
+
+    span{
+      display: inline-block;
+      position: relative;
+      margin: 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-items: center;
+      text-align: left;
+      line-height: 1.2;
+      color: #fff;
+      font-size: 1.2rem;
+      z-index: 1;
+  
+      &:before{
+        content: "\e909";
+        display: inline-block;
+        font-family: 'inFit';
+        font-size: 2.1em;
+        color: #fff;
+        padding-right: 15px;
+      }
+    }
+  }
+
+  &:not(.futureMeeting){
+    color: #fff;
+
+    div{
+      z-index: 1;
+      position: relative;
+
+      span{
+        padding: 0;
+        letter-spacing: 2px;
+        font-size: 2rem;
+        z-index: 1;
+  
+        &:before{
+          display: none;
+        }
+      }
+    }
+  }
+}

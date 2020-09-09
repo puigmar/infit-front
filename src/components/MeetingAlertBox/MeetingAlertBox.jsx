@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, Button } from 'react-bootstrap';
 import moment from 'moment';
+import { Link } from 'react-router-dom'
 import 'moment/locale/es';
 import './MeetingAlertBox.css'
+import TimeTo from '../TimeTo/TimeTo';
 
 
 
-function MeetingAlertBox({date, coachID}) {  
-  const meetingDate = moment(date).locale('es').format('dddd, D/MM/YYYY');
-  const hour = moment(date).locale('es').format('HH:MM');
+function MeetingAlertBox({meeting, title}) {
+
+  const {date, coachID, url} = meeting;
+
   return (
     <Card className="card-arrangeMeeting">
       <div className="card-arrangeMeeting_info">
@@ -21,10 +24,7 @@ function MeetingAlertBox({date, coachID}) {
           </p>
         </Card.Body>
       </div>
-      <Card.Footer>
-        <span>{meetingDate} <br></br>a las {hour}</span>
-      </Card.Footer>
-      
+      <TimeTo date={date} url={url} title={title}/>
     </Card>
   )
 }

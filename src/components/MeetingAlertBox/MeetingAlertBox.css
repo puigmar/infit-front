@@ -48,35 +48,4 @@
 .card-arrangeMeeting_title span {
   font-weight: 800;
 }
-
-.card-arrangeMeeting .card-footer {
-  position: relative;
-  text-align: center;
-  font-size: 1.1rem;
-  background-color: rgba(68, 215, 182, 0.1);
-}
-
-.card-arrangeMeeting .card-footer span {
-  display: inline-block;
-  position: relative;
-  margin: 0 auto;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  justify-items: center;
-  text-align: left;
-  line-height: 1.2;
-}
-
-.card-arrangeMeeting .card-footer span:before {
-  content: "\e909";
-  display: inline-block;
-  font-family: 'inFit';
-  font-size: 2.1em;
-  color: #44D7B6;
-  padding-right: 15px;
-}
 /*# sourceMappingURL=MeetingAlertBox.css.map */

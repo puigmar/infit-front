@@ -91,10 +91,11 @@ body{
   &:before{
     content: "";
     -webkit-clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
-    clip-path: polygon(0% 5%, 100% 0, 100% 60%, 0% 69%);
+    clip-path: polygon(0% 0%, 100% 0, 100% 60%, 0% 69%);
     height: 350px;
-    top: -39px;
-    background-color: rgba( $secondary-color, 0.1);
+    top: 0;
+    border-radius: 20px 20px 0 0;
+    background-color: lighten($secondary-color, 35%);
     position: absolute;
     left: 0;
     width: 100%;

@@ -36,31 +36,4 @@
       font-weight: 800;
     }
   }
-
-  .card-footer{
-    position: relative;
-    text-align: center;
-    font-size: 1.1rem;
-    background-color: rgba($secondary-color, 0.1);
-
-    span{
-      display: inline-block;
-      position: relative;
-      margin: 0 auto;
-      display: inline-flex;
-      align-items: center;
-      justify-items: center;
-      text-align: left;
-      line-height: 1.2;
-  
-      &:before{
-        content: "\e909";
-        display: inline-block;
-        font-family: 'inFit';
-        font-size: 2.1em;
-        color: $secondary-color;
-        padding-right: 15px;
-      }
-    }
-  }
 }

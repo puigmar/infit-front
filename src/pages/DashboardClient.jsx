@@ -1,14 +1,14 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // import NextTraining from '../components/NextTraining.jsx';
 import WithAuth from '../components/AuthProvider';
 import { getTokenUser } from '../helpers/authHelpers.js';
 import { getIdClient } from '../services/user/user.service';
 import { getProgramByClientID } from '../services/program/program.service';
 import { nextMeeting, updateMeeting } from '../services/meeting/meeting.service';
-import UserIntro from '../components/UserIntro/UserIntro';
 import SubHeader from '../components/SubHeader/SubHeader';
 import ArrangeMeetingBox from '../components/ArrangeMeetingBox/ArrangeMeetingBox'
 import MeetingAlertBox from '../components/MeetingAlertBox/MeetingAlertBox'
+import UserIntro from '../components/UserIntro/UserIntro';
 
 const DashboardClient = (props) => {
 
@@ -96,14 +96,14 @@ const DashboardClient = (props) => {
       ...meeting,
       coachID,
       date,
-      url: `/meeting-room/${client.userID}${coachID}`
+      url: `/meeting-room/${client.userID}:${coachID}`
     })
   }
 
   const handleMeetingMessages = () => {
     return !meeting.date
       ? <ArrangeMeetingBox clientInfo={client} handleMeeting={handleMeeting}/>
-      : <MeetingAlertBox {...meeting} />
+      : <MeetingAlertBox meeting={meeting} title="Próxia cita en" />
   }
 
   const udpdateDBMeeting = async () => {
@@ -117,15 +117,13 @@ const DashboardClient = (props) => {
   }, [sendDBMeeting])
 
   return (
-    <Fragment>
-      <div className="privateArea-page">
-        <SubHeader title={'Tu Área Privada'} />
-        <div className="home-section box-layout">
-          { client && <UserIntro nexTraining={nextTraining} client={client} /> }
-          { Object.keys(meeting).length !== 0 && handleMeetingMessages() }
-        </div>
+    <div className="privateArea-page">
+      <SubHeader title={'Tu Área Privada'} />
+      <div className="home-section box-layout">
+        { client && <UserIntro nexTraining={nextTraining} client={client} message="¡Bienvenido a Infit!" /> }
+        { Object.keys(meeting).length !== 0 && handleMeetingMessages() }
       </div>
-    </Fragment>
+    </div>
   );
 };
 

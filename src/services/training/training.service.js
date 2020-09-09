@@ -18,6 +18,24 @@ export async function getTrainings({userID, isCoach}) {
   }
 }
 
+export async function getCoachNextTraining(coachID) {
+  try {
+    const nextTraining = await AxiosCredentials.post(`/training/next/coach/${coachID}`)
+    return nextTraining.data;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getClientNextTraining(clientID) {
+  try {
+    const nextTraining = await AxiosCredentials.post(`/training/next/client/${clientID}`)
+    return nextTraining.data;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export async function createTraining({myExercises, coachID, provClient}) {
   try {
     console.log('values: myTraining',myExercises )
