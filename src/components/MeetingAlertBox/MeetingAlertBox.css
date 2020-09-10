@@ -46,6 +46,10 @@
 }
 
 .card-arrangeMeeting_title span {
+  display: block;
+}
+
+.card-arrangeMeeting_title strong {
   font-weight: 800;
 }
 /*# sourceMappingURL=MeetingAlertBox.css.map */

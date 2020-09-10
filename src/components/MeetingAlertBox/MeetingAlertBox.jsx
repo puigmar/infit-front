@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Card, Button } from 'react-bootstrap';
+import React from 'react'
+import { Card } from 'react-bootstrap';
 import moment from 'moment';
-import { Link } from 'react-router-dom'
-import 'moment/locale/es';
 import './MeetingAlertBox.css'
 import TimeTo from '../TimeTo/TimeTo';
 
@@ -20,7 +18,8 @@ function MeetingAlertBox({meeting, title}) {
         </div>
         <Card.Body>
           <p className="card-arrangeMeeting_title">
-            Tienes una reunión programada con <span>{coachID.name}</span>
+            <span>Tienes una reunión programada con <strong>{coachID.name}</strong></span>
+            <span>A las {moment(date).format('HH:MM')}</span>
           </p>
         </Card.Body>
       </div>

@@ -11234,6 +11234,7 @@ body {
 .privateArea-page .box-layout {
   margin-top: -40px;
   z-index: 1;
+  padding-bottom: 80px;
 }
 
 .privateArea-page .subHeader {
@@ -11768,6 +11769,75 @@ select.form-control {
   max-width: 80px;
   text-align: center;
   min-height: 36px;
+}
+
+.nextBlock {
+  margin: 20px 0;
+}
+
+.nextBlock h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.nextBlock_content {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 0 0 5px 5px;
+  border-top: 4px solid #44D7B6;
+}
+
+.nextBlock_content_intro {
+  padding-left: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.nextBlock_content_intro p span {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.nextBlock_content_intro p span:first-child, .nextBlock_content_intro p span:last-child {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.nextBlock_content_intro p span:last-child {
+  font-size: 1.1rem;
+  margin-top: 4px;
+}
+
+.nextBlock_content_image span {
+  width: 80px;
+  height: 80px;
+}
+
+.nextBlock_resume dl {
+  font-size: 0.9rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.nextBlock_resume dl dt {
+  padding-right: 10px;
+  width: 84px;
 }
 
 .error {

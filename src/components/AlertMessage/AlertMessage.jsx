@@ -7,7 +7,7 @@ import WithAuth from '../AuthProvider';
 
 const AlertMessage = (props) => {
   const { user } = WithAuth();
-  const { title, image, id, isDelete, show, setShow, getExercises } = props;
+  const { title, id, isDelete, show, setShow, getExercises } = props;
 
   const handleClose = () => {
     setShow(false);

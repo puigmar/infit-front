@@ -10,6 +10,8 @@
   &_content{
     display: inline-flex;
     justify-content: center;
+    border-radius: 0 0 5px 5px;
+    border-top: 4px solid $secondary-color;
 
     &_intro{
       padding-left: 15px;
@@ -24,27 +26,37 @@
           line-height: 1.1;
           font-weight: 800;
 
-          &:first-child{
+          &:first-child,
+          &:last-child{
             font-size: 1.2rem;
             font-weight: 400;
+          }
+
+          &:last-child{
+            font-size: 1.1rem;
+            margin-top: 4px;
           }
         }
       } 
     }
 
     &_image span{
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
     }
   }
 
   &_resume{
-    display: flex;
-    justify-content: space-between;
 
     dl{
-      max-width: 49%;
       font-size: 0.9rem;
+      display: flex;
+      width: 100%;
+
+      dt{
+        padding-right: 10px;
+        width: 84px;
+      }
     }
   }
 }

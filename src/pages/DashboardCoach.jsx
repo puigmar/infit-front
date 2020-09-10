@@ -44,8 +44,10 @@ const DashboardClient = (props) => {
   const getNextMeeting = async (userID) => {
     try {
       const theMeeting = await nextCoachMeeting(userID);
-      console.log('the Meeting ------------>', theMeeting)
-      setNextMeeting([theMeeting])
+      console.log('Hay Meetings?: ', theMeeting)
+      if(theMeeting.meeting.length !== 0){
+        setNextMeeting([theMeeting])
+      }
 
     } catch(err){
       console.log(err)
@@ -69,10 +71,10 @@ const DashboardClient = (props) => {
         <div className="box-layout home-section box-layout dashboard-coach">
           { coach && <UserIntro nextTraining={nextTraining} client={coach} message={'Este es tu próximo entrenamiento'} /> }
           {
-            nextTraining.map(training => <NextTrainingBox training={training} />)
+            Object.keys(nextTraining).length !== 0 && nextTraining.map( (training, index) => <NextTrainingBox key={index} training={training} />)
           }
           {
-            nextMeeting.map(meeting => <NextMeetingBox nextMeeting={nextMeeting[0]} />)
+            nextMeeting.length !== 0 && nextMeeting.map( (meeting, index) => <NextMeetingBox key={index} nextMeeting={nextMeeting[0]} />)
           }
         </div>
       </div>

@@ -3,7 +3,6 @@ import { Card, Button } from 'react-bootstrap';
 import moment from 'moment';
 import { Link } from 'react-router-dom'
 import 'moment/locale/es';
-import './NextMeetingBox.css'
 import TimeTo from '../TimeTo/TimeTo';
 
 
@@ -25,8 +24,9 @@ function NextMeetingBox({nextMeeting}) {
             </div>
             <div className="nextBlock_content_intro">
               <p>
-                <span>Tienes cita a las {hour}</span>
+                <span>Tienes cita</span>
                 <span>con {user.name}</span>
+                <span>A las {hour}</span>
               </p>
             </div>
           </Card.Body>

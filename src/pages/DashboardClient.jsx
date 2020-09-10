@@ -103,7 +103,7 @@ const DashboardClient = (props) => {
   const handleMeetingMessages = () => {
     return !meeting.date
       ? <ArrangeMeetingBox clientInfo={client} handleMeeting={handleMeeting}/>
-      : <MeetingAlertBox meeting={meeting} title="Próxia cita en" />
+      : <MeetingAlertBox meeting={meeting} title="Próxima cita a las" />
   }
 
   const udpdateDBMeeting = async () => {
