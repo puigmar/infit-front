@@ -24,6 +24,7 @@ function MeetingAlertBox({meeting, title}) {
         </Card.Body>
       </div>
       <TimeTo date={date} url={url} title={title}/>
+      <a className="btn btn-primary" href={`${url}`}>Ir a la reunión</a>
     </Card>
   )
 }

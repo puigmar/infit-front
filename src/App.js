@@ -63,7 +63,11 @@ function App() {
             path='/coach/auth/client/programDetail'
             component={ProgramDetail}
           />
-          <PrivateRoute exact path='/client/auth/arrange-meeting' component={ ArrangeMeetingPage } />
+          
+          <PrivateRoute exact path='/coach/auth/my-account/meeting-room/:room' component={ ArrangeMeetingPage } />
+
+          <PrivateRoute exact path='/client/auth/my-account/meeting-room/:room' component={ ArrangeMeetingPage } />
+
         </Switch>
       </div>
     </AuthProvider>

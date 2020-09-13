@@ -31,6 +31,7 @@ function NextMeetingBox({nextMeeting}) {
             </div>
           </Card.Body>
           <TimeTo date={meeting.date} url={meeting.url} title="Próxima cita en"/>
+          <a href={meeting.url} className="btn btn-primary">Ir a la reunión</a>
         </Card>
       </div>
     </section>

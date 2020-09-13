@@ -96,7 +96,7 @@ const DashboardClient = (props) => {
       ...meeting,
       coachID,
       date,
-      url: `/meeting-room/${client.userID}:${coachID}`
+      url: `/meeting-room/${meeting._id}`
     })
   }
 
