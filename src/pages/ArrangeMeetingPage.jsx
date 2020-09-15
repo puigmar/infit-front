@@ -17,8 +17,6 @@ const ArrangeMeetingPage = (props) => {
   let history = useHistory()
   const WEEKDAYS = [1,2,3,4,5,6]
   const ENDPOINT = "http://localhost:4000";
-  const io = require('socket.io-client');
-  const socket = io(ENDPOINT);
 
   const [ userToken, setUserToken ] = useState(getTokenUser())
   const [ userInfo, setUserInfo ] = useState({})
@@ -30,10 +28,19 @@ const ArrangeMeetingPage = (props) => {
   const [ clientInfo, setClientInfo ] = useState([])
   const [ newProgram, setNewProgram ] = useState([])
   const [ room, setRoom] = useState('')
-  const [ isLoadingSchedules, setIsLoadingSchedules] = useState(true)
+  const [ programCompleted, setProgramCompleted ] = useState(false)
+  const [ isWaiting, setIsWaiting ] = useState(true)
+  const [ socketID, setSocketID ] = useState('')
+
+  const io = require('socket.io-client');
+  const socket = io(ENDPOINT);
 
   const handleShow = () => setShow(true)
   const handleClose = () => setShow(false)
+
+  socket.on('startMeeting', data => {
+    console.log('startMeeting data: ', data)
+  })
   
   const handleRecieveProgramData = (socket) => {
     if(!userToken.isCoach){
@@ -51,7 +58,6 @@ const ArrangeMeetingPage = (props) => {
 
   handleRecieveProgramData(socket)
 
-
   useEffect(() => {
     setSelectedDate(true)
     handleinitialDay(value)
@@ -62,6 +68,7 @@ const ArrangeMeetingPage = (props) => {
   useEffect(() => {
     setSelectedDate(false)
     setUserToken(getTokenUser())
+    
     return () => socket.disconnect;
   }, [])
 
@@ -116,6 +123,21 @@ const ArrangeMeetingPage = (props) => {
     }
   }, [program])
 
+  const handleConnect = (socket) => {
+    let roomID = `${meeting.userID}_${meeting.coachID}`
+    socket.emit('connectToRoom', {roomID, userID: userToken._id, isCoach: userToken.isCoach});
+    socket.on('joinedToRoom', () => {
+      console.log(`Se han unido a la room ${roomID}`)
+      setRoom(roomID);
+      socket.emit('checkForOtherUser', {userID: userToken._id});
+    })
+    socket.on('startMeeting', data => {
+      if(data){
+        setIsWaiting(false)
+      }
+    })
+  }
+
   const getClientInfo = async () => {
     const client = await getIdClient(meeting.userID);
     //console.log('CLIENT ------------>', client)
@@ -156,7 +178,6 @@ const ArrangeMeetingPage = (props) => {
     handleRecieveProgramData(socket)
     if(newProgram.length > 0) {   
       handleEmitProgramData(socket)
-      setIsLoadingSchedules(true)
     }
   }, [newProgram])
 
@@ -198,6 +219,7 @@ const ArrangeMeetingPage = (props) => {
         ...newProgram[0],
         initialDate
       }
+      setProgramCompleted(true)
       handleRecieveProgramData(socket)
       setNewProgram([newProgramObj])
     }
@@ -209,22 +231,20 @@ const ArrangeMeetingPage = (props) => {
       socket.emit('sendProgramData', {newProgram})
     }
   }
-
-  const handleConnect = (socket) => {
-    let roomID = `${meeting.userID}_${meeting.coachID}`
-    socket.emit('connectToRoom', {roomID});
-    socket.on('joinedToRoom', () => {
-      console.log(`Te has unido a la room ${roomID}`)
-      setRoom(roomID);
-    })
-  }
     
   return (
-    <div className="meeetingConfirmation-page">
+    <div className={`meeetingConfirmation-page ${isWaiting ? 'isWaiting' : ''}`}>
+      
       <SubHeader title={'Confirmación de servicio'} history={history} />
       <WebCam />
-      
+
+      <div className="loading">
+        <img src="/img/loader.svg" />
+        <p>Esperando a la otra persona</p>
+      </div>
+
       <div className="resume-program box-layout">
+        
         { 
           program.map( (programData, idex) => (
             <section key={idex} className="resume-program_details">
@@ -315,8 +335,8 @@ const ArrangeMeetingPage = (props) => {
         {
           userToken && userToken.isCoach && 
           ( 
-            <div className="meeetingConfirmation-page_SaveBtn">
-              <Button size="lg">Confirmar</Button>
+            <div className={`meeetingConfirmation-page_SaveBtn ${ programCompleted ? 'show' : '' }`}>
+              <Button disablesize="lg">Confirmar</Button>
             </div>
           )
         }
