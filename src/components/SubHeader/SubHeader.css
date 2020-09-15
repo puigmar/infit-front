@@ -17,6 +17,8 @@
   width: 100%;
   text-align: center;
   font-family: 'Lato';
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 .subHeader .backLink {

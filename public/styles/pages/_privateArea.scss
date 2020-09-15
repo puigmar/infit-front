@@ -17,14 +17,15 @@
     padding-bottom: 0px;
     padding-top: 11px;
     box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(#F9CA4B, 1);
+    color: #333;
 
     .backLink {
       top: 18px;
     }
 
     h1{
-      color: #fff;
+      color: #333;
       text-align: left;
       padding: 0 30px;
       position: relative;
@@ -35,7 +36,8 @@
         content: "\e907";
         font-family: 'InFit';
         font-size: 1em;
-        padding-right: 10px
+        padding-right: 10px;
+        color: #333;
       }
     }
   }

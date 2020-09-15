@@ -8,14 +8,13 @@ import TimeTo from '../TimeTo/TimeTo';
 
 function NextMeetingBox({nextMeeting}) {
   console.log('nextMeeting ----------------------> ', nextMeeting)
-  let { meeting, user } = nextMeeting;
-  meeting = meeting[0];
+  let { meeting, user } = nextMeeting[0];
   
   const hour = moment(meeting.date).format('HH:MM');
   console.log('meeting details: --------------->', meeting[0])
   return (
-    <section class="nextBlock nextBlock--meeting">
-      <div class="nextBlock_title">
+    <section className="nextBlock nextBlock--meeting">
+      <div className="nextBlock_title">
         <h3>Próxima cita</h3>
         <Card>
           <Card.Body className="nextBlock_content">

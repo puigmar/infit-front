@@ -9,7 +9,6 @@ function ClientSignupStep6(props) {
 
   const [disabledButton, setDisabledButton] = useState(true)
   const [formCompleted, setFormCompleted] = useState(false)
-  const [paymentIsLoading, setPaymentIsLoading] = useState(false);
 
   // Formik
   const formik = useFormik({

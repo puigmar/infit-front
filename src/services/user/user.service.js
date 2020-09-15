@@ -54,7 +54,6 @@ export async function filterByCallAvailability(arrayCoaches) {
 export async function getUserInfo(userID) {
   try {
     const user = await AxiosCredentials.post('/generic/auth/getUser', {userID}).then(({data}) => data);
-    console.log('userInfo: ---->', user)
     return user;
   } catch (error) {
     console.log(error);

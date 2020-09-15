@@ -1,5 +1,14 @@
 import AxiosCredentials from '../axios/credentials';
 
+export async function getMeeting(meetingID) {
+  try {
+    const theMeeting = await AxiosCredentials.get(`/meeting/${meetingID}`).then(({data}) => data);
+    return theMeeting;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function nextMeeting(userID, programID) {
   try {
     const nextMeeting = await AxiosCredentials.post('/meeting/next', { userID, programID }).then(({data}) => data);

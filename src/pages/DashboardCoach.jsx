@@ -33,8 +33,9 @@ const DashboardClient = (props) => {
     console.log('coach: ', coach)
     try {
       const theTraining = await getCoachNextTraining(coachID);
-      console.log(theTraining)
-      setNextTraining([theTraining])
+      if(theTraining) {
+        setNextTraining([theTraining])
+      }
 
     } catch(err){
       console.log(err)
@@ -44,6 +45,7 @@ const DashboardClient = (props) => {
   const getNextMeeting = async (userID) => {
     try {
       const theMeeting = await nextCoachMeeting(userID);
+      console.log('userID: ', userID)
       console.log('Hay Meetings?: ', theMeeting)
       if(theMeeting.meeting.length !== 0){
         setNextMeeting([theMeeting])
@@ -60,7 +62,7 @@ const DashboardClient = (props) => {
   }, []);
 
   useEffect(() => {
-    getTheNextTraining(coach._id)
+    //getTheNextTraining(coach._id)
     getNextMeeting(coach._id)
   }, [coach])
 
@@ -74,7 +76,7 @@ const DashboardClient = (props) => {
             Object.keys(nextTraining).length !== 0 && nextTraining.map( (training, index) => <NextTrainingBox key={index} training={training} />)
           }
           {
-            nextMeeting.length !== 0 && nextMeeting.map( (meeting, index) => <NextMeetingBox key={index} nextMeeting={nextMeeting[0]} />)
+            nextMeeting.length !== 0 && nextMeeting.map( (meeting, index) => <NextMeetingBox key={index} nextMeeting={nextMeeting} />)
           }
         </div>
       </div>

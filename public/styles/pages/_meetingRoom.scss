@@ -2,12 +2,91 @@
 
   .box-layout{
     z-index: 1;
-    padding-bottom: 80px;
+    padding-bottom: 120px;
   }
 
   .subHeader{
     margin-bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
+    background: rgba(#F9CA4B, 0.7);
+    color: #333;
+
+    .backLink:before{
+      color: #333
+    }
   }
+
+
+  .resume-program_block{
+    margin-bottom: 15px;
+    display: flex;
+
+    .h6{
+      margin-bottom: 4px;
+    }
+
+    > *{
+      width: 50%;
+    }
+
+    dt{
+      font-weight: 600;
+    }
+
+    &.resume-program_block--weekSesion{
+      flex-flow: column;
+    }
+
+    .resume-program_schedules{
+      font-weight: 600;
+
+      &_trainningDays{
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        margin: 0 -10px;
+  
+        > *{
+          width: 50%;
+          padding: 0 10px 15px;
+  
+          select {
+            width: 100%;
+            padding: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .resume-program_initialDay{
+    label{
+      font-weight: 600;
+    }
+
+    input,
+    button{
+      height: 40px;
+    }
+
+    button{
+      font-size: 14px;
+      color: black;
+      border-radius: 0 5px 5px 0;
+      background-color: $secondary-color;
+    }
+  }
+
+  &_SaveBtn{
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 2;
+    box-shadow: 2px -7px 30px -17px rgba(0,0,0,0.75);
+  }
+
 }

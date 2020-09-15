@@ -15,7 +15,8 @@ const SignupCoach = () => {
   let history = useHistory();
 
   const [formCompleted, setFormCompleted] = useState(false)
-  const [title, setTitle] = useState('Registro Entrenador')
+  
+  const title = 'Registro Entrenador';
 
   
 

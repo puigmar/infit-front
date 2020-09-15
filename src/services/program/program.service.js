@@ -20,3 +20,14 @@ export async function getProgramByClientID(userID) {
     console.log(err)
   }
 }
+
+export async function getProgramByID(programID) {
+  console.log('programID --------->', programID)
+  try{
+    const program = await AxiosCredentials.get(`/program/getProgram/${programID}`);
+    return program.data;
+  }
+  catch(err){
+    console.log(err)
+  }
+}

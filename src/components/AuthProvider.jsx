@@ -35,6 +35,7 @@ export function AuthProvider(props) {
     }
   }, []);
 
+
   const signupUser = ({ user, client }) => {
 
     signup(user, client)

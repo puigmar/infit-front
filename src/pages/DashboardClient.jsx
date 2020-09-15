@@ -16,7 +16,6 @@ const DashboardClient = (props) => {
   const [ userInfo, setUserInfo ] = useState({})
   const [ client, setClient ] = useState({})
   const [ meeting, setMeeting ] = useState({})
-  const [ showMeeting, setShowMeeting ] = useState(false)
   const [ nextTraining, setNextTraining ] = useState(false)
   const [ userProgram, setUserProgram ] = useState({})
   const [ sendDBMeeting, setSendDBMeeting] = useState({})
@@ -96,7 +95,7 @@ const DashboardClient = (props) => {
       ...meeting,
       coachID,
       date,
-      url: `/meeting-room/${meeting._id}`
+      url: `meeting-room/${meeting._id}`
     })
   }
 

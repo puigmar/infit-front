@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import WithAuth from './AuthProvider'
 import { getTokenUser} from '../helpers/authHelpers';
@@ -6,18 +6,30 @@ import { getTokenUser} from '../helpers/authHelpers';
 function PrivateRoute({ component: Component, path }) {
   // devuelve un componente <Route /> donde su prop render recibe las props, y si está logueado, devuelve el componente con sus props (history, etc.), en caso contrario, el componente <Redirect /> redirige a /login
   const { isLoading, setIsLoading } = WithAuth();
-  let user = getTokenUser();
+  
+  const [ user, setUser ] = useState({})
+  const [ access, setAcess ] = useState(false)
 
-  if(user){
-    setIsLoading(true)
-  }
+  useEffect(() => {
+    setUser(getTokenUser())
+  }, [])
 
-  console.log('isLoading ----------->', isLoading)
+  useEffect(() => {
+    if(Object.keys(user).length > 0) {
+      console.log('existe usuario')
+      setIsLoading(true)
+    }
+  }, [user])
+
+  useEffect(() => {
+    setAcess(true)
+  }, [isLoading])
 
   return (
+    Object.keys(user).length > 0 &&
     <Route path={path}
       render={(props) =>
-        user ? <Component {...props} /> : <Redirect to={'/'} />
+        access ? <Component {...props} /> : <Redirect to={'/'} />
       }
     />
   );
