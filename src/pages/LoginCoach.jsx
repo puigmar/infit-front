@@ -16,7 +16,6 @@ const LoginCoach = () => {
   let history = useHistory();
 
   const handleFormSubmit = (event) => {
-    const { username, password } = formik.values;
     try {
       event.preventDefault();
       const { username, password } = formik.values;

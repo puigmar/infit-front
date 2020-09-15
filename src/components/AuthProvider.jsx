@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -17,13 +16,14 @@ import {
   getTokenUser,
   deleteTokenUser,
 } from '../helpers/authHelpers';
+import { getExercisesByCoach } from '../services/exercise/exercise.service';
 
 const UserContext = React.createContext();
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [provClient, setProvClient] = useState({})
-  const [headerBackground, setHeaderBackground] = useState(true)
+  const [provClient, setProvClient] = useState({});
+  const [headerBackground, setHeaderBackground] = useState(true);
 
   useEffect(() => {
     if (!getToken()) {
@@ -36,7 +36,6 @@ export function AuthProvider(props) {
   }, []);
 
   const signupUser = ({ user, client }) => {
-
     signup(user, client)
       .then((userSigned) => {
         setToken(uuidv4());
@@ -48,6 +47,7 @@ export function AuthProvider(props) {
         console.log(response);
       });
   };
+
   const loginUser = ({ username, password, isCoach }) => {
     username &&
       login({ username, password, isCoach })
@@ -63,6 +63,16 @@ export function AuthProvider(props) {
           console.log('withAuth.login.err => ', err);
         });
   };
+
+  const getExercises = async (userID) => {
+    try {
+      const exercisesCoach = await getExercisesByCoach(userID);
+      return exercisesCoach;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const logoutUser = () => {
     user &&
       logout(user.isCoach)
@@ -74,6 +84,7 @@ export function AuthProvider(props) {
         })
         .catch((err) => console.log(err));
   };
+
   const value = {
     loginUser,
     logoutUser,
@@ -81,11 +92,13 @@ export function AuthProvider(props) {
     user,
     isLoading,
     setIsLoading,
-    provClient, 
+    provClient,
     setProvClient,
     headerBackground,
-    setHeaderBackground
+    setHeaderBackground,
+    getExercises,
   };
+
   return <UserContext.Provider value={value} {...props} />;
 }
 const WithAuth = () => {

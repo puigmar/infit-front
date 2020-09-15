@@ -5,7 +5,7 @@ import WithAuth from '../AuthProvider';
 
 const AlertMessageEdit = (props) => {
   const { user } = WithAuth();
-  const { title, show, setShow, getExercises, _id} = props;
+  const { title, show, setShow, getMyExercises, _id} = props;
 
   const [exercise, setExercise] = useState({
     coachID: props.coachID,
@@ -32,7 +32,7 @@ const AlertMessageEdit = (props) => {
     console.log('Este es el id del objeto a borrar', _id);
     // editar aqui los ejercicios
     editExerciseByID(_id, exercise)
-    getExercises(user._id);
+    getMyExercises();
     setShow(false);
     console.log('te he renderizado')
   };

@@ -6,46 +6,38 @@ import SubHeader from '../components/SubHeader/SubHeader';
 import { useHistory } from 'react-router-dom';
 import ExerciseSidebar from '../components/ExerciseSideBar/ExerciseSidebar';
 import { v4 as uuidv4 } from 'uuid';
-import Exercise from '../components/Exercise/Exercise';
-import { createTraining } from '../services/training/training.service'
+import ExerciseProgram from '../components/exerciseProgram/ExerciseProgram';
+import { createTraining } from '../services/training/training.service';
 import { Button } from 'react-bootstrap';
 
-function ProgramDetail(props) {
+function ProgramDetail() {
   const { provClient, user } = WithAuth();
 
   const [clientId, setClientId] = useState({});
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(provClient.wizard.objective);
   const [newTraining, setNewTraining] = useState([]); // array para rellenar con myExercises
   const [myExercises, setMyExercises] = useState([]);
+  const [showTraining, setShowTraining] = useState([])
   const [date, setDate] = useState('');
-  // todos los ejercicios del Coach
+  const [training, setTraining] = useState(false)
 
   let history = useHistory();
 
-  // const getCoach = async (user) => {
+  // const handleUser = async (clientArg) => {
   //   try {
-  //     const coachValue = await getUser(user);
-  //     setCoach(coachValue);
-  //   } catch (error) {
-  //     console.log(error);
+  //     const client = await getClientId(clientArg.userID);
+  //     console.log('handleUser', client)
+  //     setClientId(client);
+  //     setTitle(client.wizard.objective);
+  //   } catch (err) {
+  //     console.log(err);
   //   }
   // };
-
-  const handleUSer = async (id) => {
-    try {
-      const client = await getClientId(id);
-      setClientId(client);
-      setTitle(client.wizard.objective);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const getExercises = async (userID) => {
     try {
       const exercisesCoach = await getExercisesByCoach(userID);
       setMyExercises(exercisesCoach);
-      return exercisesCoach;
     } catch (error) {
       console.log(error);
     }
@@ -53,29 +45,42 @@ function ProgramDetail(props) {
 
   useEffect(() => {
     getExercises(user._id);
-    handleUSer(provClient);
+    // handleUser(provClient);
   }, []);
 
-  console.log('Este es el provClient', provClient)
+
+  useEffect(() => {
+    console.log('entrenamiento renderizado', newTraining)
+    setShowTraining(newTraining);
+    console.log('entrenamiento a mostrar', showTraining)
+    console.log('Muestro los datos renderizados program detail')
+  }, [newTraining])
+
 
   const handleOnClickSaveTraining = () => {
-    console.log('myExercises from program detail', myExercises)
-    createTraining({myExercises, coachID: user._id, clientID: provClient._id, date});
-  }
+    createTraining({
+      myExercises,
+      coachID: user._id,
+      clientID: provClient._id,
+      date,
+    });
+  };
+
   return (
     <div>
       {provClient && <SubHeader title={title} history={history} />}
       <section className='exercises-list'>
-        {
-          newTraining.map((item) => (
-            <Exercise
-              key={uuidv4()}
-              {...item}
-              showNumbers={false}
-              showText={true}
-            />
-          ))
-        }
+        {showTraining.map((item) => (
+          <ExerciseProgram
+            key={uuidv4()}
+            {...item}
+            showNumbers={false}
+            showText={true}
+            newTraining={newTraining}
+            setNewTraining={setNewTraining}
+            setTraining={setTraining}
+          />
+        ))}
       </section>
 
       <ExerciseSidebar
@@ -83,7 +88,10 @@ function ProgramDetail(props) {
         newTraining={newTraining}
         setNewTraining={setNewTraining}
       />
-    <Button onClick={() => handleOnClickSaveTraining()}>Guardar Entrenamiento</Button>
+
+      <Button onClick={() => handleOnClickSaveTraining()}>
+        Guardar Entrenamiento
+      </Button>
     </div>
   );
 }

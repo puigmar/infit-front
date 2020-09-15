@@ -19,7 +19,7 @@ function ExerciseSidebar(props) {
       </button>
       <div className='sidbar_exerciseList'>
         {myExercises &&
-          myExercises.map((exercise, index) => (
+          myExercises.map( exercise => (
             <ExerciseSidebarBox
               key={uuidv4()}
               exercise={exercise}

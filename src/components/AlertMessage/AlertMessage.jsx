@@ -7,7 +7,7 @@ import WithAuth from '../AuthProvider';
 
 const AlertMessage = (props) => {
   const { user } = WithAuth();
-  const { title, image, id, isDelete, show, setShow, getExercises } = props;
+  const { title, image, id, isDelete, show, setShow, getMyExercises } = props;
 
   const handleClose = () => {
     setShow(false);
@@ -25,7 +25,7 @@ const AlertMessage = (props) => {
     if (isDelete) {
       console.log('Este es el id del objeto a borrar', id);
       deleteExercises(id);
-      getExercises(user._id);
+      getMyExercises();
       setShow(false);
       console.log('te he renderizado')
     }

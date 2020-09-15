@@ -76,7 +76,7 @@ function NewExercise() {
     }
 
     setExercise({ ...exercise, [name]: value });
-    console.log(exercise)
+    console.log(exercise);
   };
 
   const handleChangeVideoUrl = () => {
@@ -120,6 +120,7 @@ function NewExercise() {
     createExercise(exercise);
     setExercise({
       title: '',
+      coachID: user._id,
       image: '',
       video: '',
       description: '',
