@@ -48,14 +48,23 @@ function ProgramDetail() {
     // handleUser(provClient);
   }, []);
 
+  const handleShowTraining = (value) => {
+    setNewTraining(value);
+    setShowTraining(newTraining);
+    console.log('He pasado por el padre!')
+  }
 
   useEffect(() => {
     console.log('entrenamiento renderizado', newTraining)
-    setShowTraining(newTraining);
     console.log('entrenamiento a mostrar', showTraining)
+    setShowTraining(newTraining);
     console.log('Muestro los datos renderizados program detail')
   }, [newTraining])
-
+  
+  useEffect(() => {
+    console.log('clg de showtrainig', showTraining)
+  }, [showTraining])
+  
 
   const handleOnClickSaveTraining = () => {
     createTraining({
@@ -79,6 +88,7 @@ function ProgramDetail() {
             newTraining={newTraining}
             setNewTraining={setNewTraining}
             setTraining={setTraining}
+            handleShowTraining={handleShowTraining}
           />
         ))}
       </section>

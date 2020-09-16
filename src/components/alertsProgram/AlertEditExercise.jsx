@@ -9,11 +9,13 @@ const AlertEditExercise = (props) => {
     setShow,
     newTraining,
     setNewTraining,
+    handleShowTraining
   } = props;
 
-  const [training, setTraining] = useState([])
+  const [training, setTraining] = useState(newTraining)
 
   const [exercise, setExercise] = useState({
+    _id,
     coachID: props.coachID,
     title: props.title,
     image: props.image,
@@ -23,6 +25,9 @@ const AlertEditExercise = (props) => {
       minute: props.rest.minute,
       second: props.rest.second,
     },
+    
+    series: props.series,
+    repetition: props.repetition,
   });
 
   const [rest, setRest] = useState({
@@ -37,19 +42,22 @@ const AlertEditExercise = (props) => {
   const editNewTraining = () => {
     // para editarlo
     // 1. Encontrar la posición de este entrenamiento
-    let indexEdited = newTraining.findIndex( training => training._id === _id);
-    // 2. susutituirlo por el nuevo editado
-    setTraining(newTraining);
-    setTraining(newTraining, training.splice(indexEdited, 1, exercise));
+    let indexEdited = training.findIndex( training => training._id === _id);
+    console.log('index', indexEdited)
+    console.log('Exercise', exercise)
+
+    console.log('copyTraining NO spliced', training)
+    setTraining(training.splice(indexEdited, 1, exercise))
+    console.log('copyTraining YES spliced', training)
+    setNewTraining([...training])
+    setShow(false);
+    console.log('nuevo entrenamiento editado', newTraining)
+    console.log('te he renderizado');
   }
   
   const handleEdit = () => {
     console.log('Este es el id del objeto a editar', _id);
     editNewTraining()
-    setNewTraining(training);
-    console.log('nuevo entrenamiento editado', newTraining)
-    setShow(false);
-    console.log('te he renderizado');
   };
 
   const handleChangeValues = (event) => {
@@ -103,6 +111,24 @@ const AlertEditExercise = (props) => {
           name='video'
           value={exercise.picture}
           id='input-pictureProgram'
+          onChange={(e) => handleChangeValues(e)}
+        />
+
+        <label htmlFor='input-set'>Series</label>
+        <input
+          type='number'
+          name='series'
+          value={exercise.series}
+          id='input-set'
+          onChange={(e) => handleChangeValues(e)}
+        />
+
+        <label htmlFor='input-repetition'>Repeticiones</label>
+        <input
+          type='number'
+          name='repetition'
+          value={exercise.repetition}
+          id='input-repetition'
           onChange={(e) => handleChangeValues(e)}
         />
 
