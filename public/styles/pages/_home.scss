@@ -1,7 +1,7 @@
 .home-page{
 
   .hero{
-    padding: 30px 40px;
+    padding: 30px 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,13 +27,16 @@
       text-align: center;
       z-index: 2;
       position: relative;
+      font-size: 2rem;
+      text-transform: uppercase;
+      font-weight: 400;
       
       span{
         display: block;
-        font-weight: 400;
+        letter-spacing: 3px;
 
         &:first-child{
-          font-weight: 600;
+          color: #fff
         }
       }
     }

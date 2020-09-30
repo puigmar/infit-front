@@ -2,12 +2,12 @@
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?d0d4cf');
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?d0d4cf#iefix') format('embedded-opentype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff2?d0d4cf') format('woff2'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?d0d4cf') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?d0d4cf') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?d0d4cf##{$icomoon-font-family}') format('svg');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?wk1neo');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?wk1neo#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff2?wk1neo') format('woff2'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?wk1neo') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?wk1neo') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?wk1neo##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -28,6 +28,36 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-user {
+  &:before {
+    content: $icon-user; 
+  }
+}
+.icon-arrangeMeeting {
+  &:before {
+    content: $icon-arrangeMeeting; 
+  }
+}
+.icon-card {
+  &:before {
+    content: $icon-card; 
+  }
+}
+.icon-fuerza {
+  &:before {
+    content: $icon-fuerza; 
+  }
+}
+.icon-mantenerse {
+  &:before {
+    content: $icon-mantenerse; 
+  }
+}
+.icon-perder-peso {
+  &:before {
+    content: $icon-perder-peso; 
+  }
+}
 .icon-addPhoto {
   &:before {
     content: $icon-addPhoto; 

@@ -6,7 +6,6 @@ import FormCompactField from '../FormCompactField/FormCompactField';
 import FormAvatar from '../../components/FormAvatar/FormAvatar';
 
 function ClientSignupStep2(props) {
-  const [disabledButton, setDisabledButton] = useState(true);
   const [avatarIsPending, setAvatarIsPending] = useState(true);
   const [avatarUrl, setAvatarUrl] = useState('');
   const [formCompleted, setFormCompleted] = useState(false);
@@ -25,9 +24,9 @@ function ClientSignupStep2(props) {
     validationSchema: Yup.object().shape({
       nameUser: Yup.string().required('*Debes escribir tu nombre'),
       surname: Yup.string().required('*Debes escribir tus apellidos'),
-      weight: Yup.string().required('*Debes escribir tu peso'),
-      height: Yup.string().required('*Debes escribir tu altura'),
-      age: Yup.string().required('*Debes escribir tu edad'),
+      weight: Yup.number().required('*Debes escribir tu peso'),
+      height: Yup.number().required('*Debes escribir tu altura'),
+      age: Yup.number().required('*Debes escribir tu edad'),
       sex: Yup.string()
         .oneOf(['male', 'female', 'other'])
         .required('Tienes que escoger un sexo'),
@@ -51,33 +50,39 @@ function ClientSignupStep2(props) {
           },
         },
       };
+      props.setClientName(nameUser)
       console.log('stepData: ', stepData);
       props.handleData(stepData);
     },
   });
 
   const handleAvatarFile = (file) => {
-    console.log('file: ', typeof file);
     if (file !== '') {
       setAvatarIsPending(false);
     }
   };
 
   const checkFormEmptyFields = () => {
-    setFormCompleted(true);
-    for (let field in formik.values) {
-      if (formik.values[field] === '') {
-        setFormCompleted(false);
+    setFormCompleted(true)
+    for(let field in formik.values){
+      if(formik.values[field] === '' || Object.keys(formik.errors).length > 0 || avatarIsPending){
+        setFormCompleted(false)
       }
+      limitNumbers('weight', 3)
+      limitNumbers('age', 2)
+      limitNumbers('height', 3)
     }
-    if (avatarIsPending === false && formCompleted === true) {
-      setDisabledButton(false);
+  }
+
+  const limitNumbers = (value, limit) => {
+    if(formik.values[value].toString().length > limit){
+      formik.values[value] = Number(formik.values[value].toString().slice(0, limit))
     }
-  };
+  }
 
   useEffect(() => {
     checkFormEmptyFields();
-  }, [formik.values, avatarIsPending]);
+  }, [formik.values, avatarIsPending, formik.errors]);
 
   const handleFieldClass = (name) => {
     return {
@@ -90,7 +95,7 @@ function ClientSignupStep2(props) {
   return (
     <Fragment>
       <h2>2. DATOS DE TU PERFIL</h2>
-      <Form onSubmit={formik.handleSubmit} onChange={checkFormEmptyFields}>
+      <Form onSubmit={formik.handleSubmit}>
         <FormAvatar
           handleAvatarFile={handleAvatarFile}
           fieldName='avatarUrl'
@@ -100,7 +105,27 @@ function ClientSignupStep2(props) {
         {formik.touched.avatarUrl && formik.errors.avatarUrl && (
           <div className='error-message'>{formik.errors.avatarUrl}</div>
         )}
-
+        
+        <Form.Group controlId='sex' className="mb-4">
+          <Form.Label>Sexo</Form.Label>
+          <Form.Group controlId='sex'>
+            <Form.Control
+              as='select'
+              value='Escoge un sexo'
+              {...formik.getFieldProps('sex')}
+              className="mb-1"
+            >
+              <option value='Escoge un sexo'></option>
+              <option value='male'>Hombre</option>
+              <option value='female'>Mujer</option>
+              <option vale='other'>Other</option>
+            </Form.Control>
+          </Form.Group>
+          {formik.touched.telephone && formik.errors.telephone && (
+            <div className='error-message'>{formik.errors.telephone}</div>
+          )}
+        </Form.Group>
+        
         <Form.Group controlId='nameUser'>
           <FormCompactField>
             <Form.Label>Nombre</Form.Label>
@@ -134,9 +159,7 @@ function ClientSignupStep2(props) {
             <Form.Label>Peso</Form.Label>
             <Form.Control
               {...formik.getFieldProps('weight')}
-              pattern='\d*'
-              maxLength='3'
-              type='text'
+              type='number'
               value={formik.values.weight}
               className={handleFieldClass('weight')}
             />
@@ -150,9 +173,7 @@ function ClientSignupStep2(props) {
           <FormCompactField>
             <Form.Label>Altura</Form.Label>
             <Form.Control
-              type='text'
-              pattern='\d*'
-              maxLength='3'
+              type='number'
               name='height'
               {...formik.getFieldProps('height')}
               value={formik.values.height}
@@ -168,9 +189,7 @@ function ClientSignupStep2(props) {
           <FormCompactField>
             <Form.Label>Edad</Form.Label>
             <Form.Control
-              type='text'
-              pattern='\d*'
-              maxLength='2'
+              type='number'
               name='age'
               {...formik.getFieldProps('age')}
               value={formik.values.age}
@@ -199,26 +218,9 @@ function ClientSignupStep2(props) {
           )}
         </Form.Group>
 
-        <Form.Group controlId='sex'>
-          <Form.Label>Sexo</Form.Label>
-          <Form.Group controlId='sex'>
-            <Form.Control
-              as='select'
-              value='Escoge un sexo'
-              {...formik.getFieldProps('sex')}
-            >
-              <option value='Escoge un sexo'></option>
-              <option value='male'>Hombre</option>
-              <option value='female'>Mujer</option>
-              <option vale='other'>Other</option>
-            </Form.Control>
-          </Form.Group>
-          {formik.touched.telephone && formik.errors.telephone && (
-            <div className='error-message'>{formik.errors.telephone}</div>
-          )}
-        </Form.Group>
+        
         <Button
-          disabled={disabledButton}
+          disabled={!formCompleted}
           type='submit'
           variant='primary'
           size='lg'

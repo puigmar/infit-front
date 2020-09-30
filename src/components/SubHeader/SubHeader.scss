@@ -5,17 +5,23 @@
   align-items: center;
   position: relative;
   margin-bottom: 15px;
+  z-index: 1;
 
   h1{
     font-size: 1.125rem;
     width: 100%;
     text-align: center;
+    font-family: 'Lato';
   }
 
   .backLink{
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 0;
+    left: 20px;
+    
+    &:before{
+      color: #fff;
+    }
   }
 }

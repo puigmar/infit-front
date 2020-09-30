@@ -2,9 +2,12 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { deleteExerciseByID } from '../../services/exercise/exercise.service';
 import { Link } from 'react-router-dom';
+import WithAuth from '../AuthProvider';
+
 
 const AlertMessage = (props) => {
-  const { title, url, id, isDelete, show, setShow, reloadPage } = props;
+  const { user } = WithAuth();
+  const { title, image, id, isDelete, show, setShow, getMyExercises } = props;
 
   const handleClose = () => {
     setShow(false);
@@ -22,9 +25,9 @@ const AlertMessage = (props) => {
     if (isDelete) {
       console.log('Este es el id del objeto a borrar', id);
       deleteExercises(id);
+      getMyExercises();
       setShow(false);
-      reloadPage();
-      return;
+      console.log('te he renderizado')
     }
   };
 
@@ -38,9 +41,6 @@ const AlertMessage = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className='modal-exercise_img'>
-          <img src={url} alt={title} />
-        </div>
         <h3>{title}</h3>
         <p>¿Estás seguro que quieres eliminar este ejercicio?</p>
       </Modal.Body>

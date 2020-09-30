@@ -4,7 +4,8 @@ import { handleAvatarUpload } from '../../services/authenticate/auth-user.servic
 
 const FormAvatar = (props) => {
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [cameraIcon, setCameraIcon] = useState(true);
   const [fieldName, setFieldName] = useState(props.fieldName) 
 
   const [avatarImgRoute, setAvatarImgRoute] = useState('')
@@ -18,8 +19,8 @@ const FormAvatar = (props) => {
     const inputFile = e.currentTarget;
     const uploadData = new FormData();
     uploadData.append(fieldName, inputFile.files[0]);
+    setIsLoading(true)
     const uploadAvatar = await handleAvatarUpload({formData: uploadData});
-    console.log('imagen subida!')
     setIsLoading(false)
     setAvatarImgRoute(uploadAvatar.media_url)
     props.handleAvatarFile(uploadAvatar.media_url)
@@ -31,7 +32,8 @@ const FormAvatar = (props) => {
   }
 
   return (
-    <div className={`form-avatar-upload ${isLoading ? 'isLoading' : ''}`} onClick={(e) => handleFileEvent(e)} style={{backgroundImage:`url("${avatarImgRoute}")`}}>
+    <div className={`form-avatar-upload ${cameraIcon && 'cameraIcon'} ${isLoading && 'isLoading'}`} onClick={(e) => handleFileEvent(e)} style={{backgroundImage:`url("${avatarImgRoute}")`}}>
+        <img src='/img/loader.svg' alt='spinner' />
         <input type="file" name="avatarUrl" onChange={(e) => handleUploadAvatar(e)}/>
     </div>
   )

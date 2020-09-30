@@ -15,7 +15,6 @@ function NewExercise() {
   const { user } = WithAuth();
 
   const [coach, setCoach] = useState(getTokenUser());
-  const [videoUrl, setVideoUrl] = useState('');
   const [isVideo, setIsVideo] = useState(false);
   const [exercise, setExercise] = useState({
     coachID: user._id,
@@ -27,6 +26,8 @@ function NewExercise() {
       minute: 0,
       second: 0,
     },
+    series: 0,
+    repetition: 0,
   });
 
   const [rest, setRest] = useState({
@@ -58,24 +59,32 @@ function NewExercise() {
       setExercise({ ...exercise, rest: { ...rest, [name]: value } });
       return;
     }
+    if (name === 'video') {
+      if (value === '') {
+        setExercise({
+          ...exercise,
+          video: value,
+        });
+        setIsVideo(false);
+        return;
+      }
+      setExercise({
+        ...exercise,
+        video: value,
+      });
+      setIsVideo(true);
+    }
 
     setExercise({ ...exercise, [name]: value });
+    console.log(exercise);
   };
 
   const handleChangeVideoUrl = () => {
-    setExercise({
-      ...exercise,
-      video: videoUrl,
-    });
-    setIsVideo(true);
-  };
-
-  const handleInputVideo = (e) => {
-    if (e.target.value === '') {
+    if (exercise.video === '') {
+      setIsVideo(false);
       return;
     }
-    setVideoUrl(e.target.value);
-    setIsVideo(false);
+    setIsVideo(true);
   };
 
   const handleChangeMedia = async (e) => {
@@ -99,18 +108,19 @@ function NewExercise() {
           video: media.media_url,
         });
         break;
-        default:
-          return;
+      default:
+        return;
     }
 
     console.log('Exercise: ', exercise);
   };
 
-  const createNewExercise = () => {
+  const createNewExercise = (event) => {
+    event.preventDefault();
     createExercise(exercise);
     setExercise({
-      coachID: '',
       title: '',
+      coachID: user._id,
       image: '',
       video: '',
       description: '',
@@ -118,13 +128,15 @@ function NewExercise() {
         minute: 0,
         second: 0,
       },
+      series: 0,
+      repetition: 0,
     });
   };
 
   return (
     <div>
-      <h1>Crea tu nuevo Ejercicio</h1>
-      <form onSubmit={createNewExercise}>
+      <h1>Crea tu nuevo ejercicio</h1>
+      <form onSubmit={(e) => createNewExercise(e)}>
         <label htmlFor='input-title'>Titulo</label>
         <input
           type='text'
@@ -143,7 +155,11 @@ function NewExercise() {
           onChange={(e) => handleChangeValues(e)}
         />
         <div className='wrapImage'>
-          {exercise.image !== '' ? <img src={exercise.image} alt='exercisePicture'/> : ''}
+          {exercise.image !== '' ? (
+            <img src={exercise.image} alt='exercisePicture' />
+          ) : (
+            ''
+          )}
         </div>
         <label htmlFor='input-pictureProgram'>Image</label>
         <input
@@ -154,20 +170,37 @@ function NewExercise() {
           onChange={(e) => handleChangeMedia(e)}
         />
         <div className='wrapImage'>
-          {isVideo && <Player playsInline src={videoUrl} />}
+          {isVideo && <Player playsInline src={exercise.video} />}
         </div>
         <label htmlFor='input-pictureProgramVideo'>Video</label>
         <input
           type='text'
           name='video'
-          value={videoUrl}
+          value={exercise.video}
           id='input-pictureProgramVideo'
-          onChange={(e) => handleInputVideo(e)}
+          onChange={(e) => handleChangeValues(e)}
         />
         <button type='button' onClick={() => handleChangeVideoUrl()}>
           Cargar vídeo
         </button>
 
+        <label htmlFor='input-set'>Series</label>
+        <input
+          type='number'
+          name='series'
+          value={exercise.series}
+          id='input-set'
+          onChange={(e) => handleChangeValues(e)}
+        />
+
+        <label htmlFor='input-repetition'>Repeticiones</label>
+        <input
+          type='number'
+          name='repetition'
+          value={exercise.repetition}
+          id='input-repetition'
+          onChange={(e) => handleChangeValues(e)}
+        />
         <p>Rest</p>
         <label htmlFor='rest-minute'>Minutos</label>
         <input

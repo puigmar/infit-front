@@ -1,0 +1,23 @@
+.sidebar{
+  position: fixed;
+  top: 52px;
+  right: 0;
+  width: 200px;
+  height: calc(100vh - 56px - -3px);
+  z-index: 100;
+  background-color: #EBEBEB;
+  padding: 20px!important;
+  box-sizing: border-box;
+  overflow: scroll;
+  > button{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+    border: none;
+    background-color: #EBEBEB;
+    left: -10px;
+  }
+}

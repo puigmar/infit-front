@@ -10,3 +10,13 @@ export async function getProgramByUserId(clientID, coachID) {
     console.log(error);
   }
 }
+
+export async function getIDInactiveProgram(clientID) {
+  try{
+    const program = await AxiosCredentials.post(`/program/inactive/${clientID}`);
+    return program.data[0];
+  }
+  catch(err){
+    console.log(err)
+  }
+}

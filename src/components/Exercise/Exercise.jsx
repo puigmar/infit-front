@@ -19,7 +19,9 @@ function Exercise(props) {
     description,
     image,
     rest,
-    reloadPage,
+    series,
+    repetition,
+    getMyExercises,
     video,
   } = props;
 
@@ -40,13 +42,13 @@ function Exercise(props) {
   return (
     <>
       <Card>
-        <Card.Img variant='top' src={image} />
+        <Card.Img variant='top' src={image} alt={title}/>
         <div className="wrapImage">
-          {video &&    
+          {video &&
             <Player
               playsInline
               src={video}
-            /> 
+            />
           }
         </div>
         <Card.Body>
@@ -72,6 +74,9 @@ function Exercise(props) {
           </Row>
         </Card.Body>
         <ListGroup className='list-group-flush'>
+          
+          <ListGroupItem>Series: {series}</ListGroupItem>
+          <ListGroupItem>Repeticiones: {repetition}</ListGroupItem>
           <ListGroupItem>Descanso por serie</ListGroupItem>
           <ListGroupItem>Minutos: {rest && rest.minute}</ListGroupItem>
           <ListGroupItem>Segundos: {rest && rest.second}</ListGroupItem>
@@ -86,7 +91,7 @@ function Exercise(props) {
           setShow={setShow}
           isDelete={isDelete}
           title={title}
-          reloadPage={reloadPage}
+          getMyExercises={getMyExercises}
           />
         ) : (
           <AlertMessageEdit
@@ -95,7 +100,7 @@ function Exercise(props) {
           setShow={setShow}
           isDelete={isDelete}
           title={title}
-          reloadPage={reloadPage}
+          getMyExercises={getMyExercises}
           />
         )
       

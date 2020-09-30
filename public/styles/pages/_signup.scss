@@ -1,13 +1,60 @@
 .signup-page{
+  position: relative;
+
   form{
     text-align: center;
 
-    .btn{
-      margin-top: 20px;
+    .form-group{
+      text-align: left;
+
+      select{
+        margin-bottom: 20px;
+      }
     }
   }
 
   .signupBtn{
     text-align: center;
+
+    .btn{
+      background-color: $secondary-color;
+      color: #fff;
+    }
   }
+
+  &_paymentResume{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 19px;
+    margin-bottom: 19px;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 1rem;
+  }
+
+  .accordion {
+
+    margin-top: 10px;
+
+    .card{
+
+      border: 1px solid $secondary-color;
+
+      &-header{
+        padding: 6px;
+        text-align: center;
+        background-color: transparent;
+        color: $secondary-color;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .icon-card{
+          font-size: 1.7em;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+
 }

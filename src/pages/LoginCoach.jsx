@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import WithAuth from '../components/AuthProvider';
-import BoxSkew from '../components/BoxSkew/BoxSkew';
-import SectionBg from '../components/SectionBg/SectionBg';
 import FormCompactField from '../components/FormCompactField/FormCompactField.jsx'
 import { useFormik } from 'formik';
+import { Link, useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import * as Yup from 'yup';
+import SubHeader from '../components/SubHeader/SubHeader';
+
 
 const LoginCoach = () => {
-  const { loginUser } = WithAuth();
+  const { loginUser, setHeaderBackground } = WithAuth();
+  const [title, setTitle] = useState('Login Entrenador')
+  const [formCompleted, setFormCompleted] = useState(false)
+
+  let history = useHistory();
 
   const handleFormSubmit = (event) => {
-    const { username, password } = formik.values;
     try {
       event.preventDefault();
       const { username, password } = formik.values;
@@ -45,10 +49,27 @@ const LoginCoach = () => {
     })
   }
 
+  const checkFormEmptyFields = () => {
+    setFormCompleted(true)
+    for(let field in formik.values){
+      if(formik.values[field] === '' || Object.keys(formik.errors).length > 0){
+        setFormCompleted(false)
+      }
+    }
+  }
+
+  useEffect(() => {
+    setHeaderBackground(false)
+  }, []);
+
+  useEffect(() => {
+    checkFormEmptyFields()
+  }, [formik.values, formik.errors]);
+
   return (
-    <SectionBg bgImage="">
-      <h1>Login</h1>
-      <BoxSkew>
+    <Fragment>
+    <SubHeader title={title} history={history} />
+    <section className="login-page login-page--coach box-layout BgDiagonal">
         <Form onSubmit={handleFormSubmit}>
           <Form.Group controlId="username">
             <FormCompactField>
@@ -76,8 +97,8 @@ const LoginCoach = () => {
           </Form.Group>
           <Button type="submit" variant="primary" size="lg" className="mt-4">Iniciar sesión</Button>
         </Form>
-      </BoxSkew>
-    </SectionBg>
+    </section>
+    </Fragment>
   );
 };
 

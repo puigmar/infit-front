@@ -1,67 +1,39 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { getExercisesByCoach } from '../services/exercise/exercise.service';
-import { getUser } from '../services/user/user.service';
 import Exercise from '../components/Exercise/Exercise';
-import { getTokenUser } from '../helpers/authHelpers';
+import { v4 as uuidv4 } from 'uuid';
+import WithAuth from '../components/AuthProvider';
 
 const Exercises = () => {
-  const [coach, setCoach] = useState(getTokenUser());
-  const [exercises, setExercises] = useState([]);
-
+  const { user, getExercises } = WithAuth();
+  const [myExercises, setMyExercises] = useState([]);
+  const [changeExercises, setChangeExercises] = useState(false);
   //LLAMAR AL COACH & CLIENT
 
-  const getCoach = async (user) => {
+  const getMyExercises = async () => {
     try {
-      const coachValue = await getUser(user);
-      console.log(coachValue);
-      setCoach(coachValue);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getExercises = async (coachID) => {
-    try {
-      const exercisesCoach = await getExercisesByCoach(coachID);
-      console.log('exercises coach getExercises', exercisesCoach)
-      setExercises(exercisesCoach);
+      const exercises = await getExercises(user._id);
+      setMyExercises(exercises);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getCoach(coach);
+    getMyExercises();
   }, []);
 
-  useEffect(() => {
-    getExercises(coach.coachID);
-    return () => {
-      getExercises(coach.coachID);
-    }
-  }, [coach]);
-  
-  const reloadPage = () => {
-    console.log('He hecho el reload')
-    getExercises(coach.coachID);
-  }
 
   return (
     <Fragment>
       <section>
         <h1>Ejercicios disponibles</h1>
         <div className='exercise-list'>
-          {exercises.map((item, index) => (
-            <Exercise
-              key={index}
-              {...item}
-              showNumbers={false}
-              showText={true}
-              reloadPage={reloadPage}
-            />
-          ))}
+          {myExercises &&
+            myExercises.map((item) => (
+              <Exercise key={uuidv4()} {...item} getMyExercises={getMyExercises} />
+            ))}
         </div>
-        <div className='addExercise' ></div>
+        <div className='addExercise'></div>
       </section>
     </Fragment>
   );

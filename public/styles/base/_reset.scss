@@ -76,3 +76,12 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+a:-webkit-any-link:focus {
+  outline-offset: 0;
+}
+
+a:focus{
+  outline: 0;
+  text-decoration: underline;
+}

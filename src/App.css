@@ -10883,10 +10883,19 @@ select {
   }
 }
 
+a:-webkit-any-link:focus {
+  outline-offset: 0;
+}
+
+a:focus {
+  outline: 0;
+  text-decoration: underline;
+}
+
 @font-face {
   font-family: "inFit";
-  src: url("/fonts/inFit.eot?d0d4cf");
-  src: url("/fonts/inFit.eot?d0d4cf#iefix") format("embedded-opentype"), url("/fonts/inFit.woff2?d0d4cf") format("woff2"), url("/fonts/inFit.ttf?d0d4cf") format("truetype"), url("/fonts/inFit.woff?d0d4cf") format("woff"), url("/fonts/inFit.svg?d0d4cf#inFit") format("svg");
+  src: url("/fonts/inFit.eot?wk1neo");
+  src: url("/fonts/inFit.eot?wk1neo#iefix") format("embedded-opentype"), url("/fonts/inFit.woff2?wk1neo") format("woff2"), url("/fonts/inFit.ttf?wk1neo") format("truetype"), url("/fonts/inFit.woff?wk1neo") format("woff"), url("/fonts/inFit.svg?wk1neo#inFit") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -10906,6 +10915,30 @@ select {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-user:before {
+  content: "";
+}
+
+.icon-arrangeMeeting:before {
+  content: "";
+}
+
+.icon-card:before {
+  content: "";
+}
+
+.icon-fuerza:before {
+  content: "";
+}
+
+.icon-mantenerse:before {
+  content: "";
+}
+
+.icon-perder-peso:before {
+  content: "";
+}
+
 .icon-addPhoto:before {
   content: "";
 }
@@ -10916,21 +10949,23 @@ select {
 }
 
 body {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 h1 {
   font-size: 1.8rem;
   font-weight: 600;
+  font-family: 'Alfa Slab One', cursive;
 }
 
 h2 {
   font-size: 1.125rem;
+  font-family: 'Alfa Slab One', cursive;
 }
 
 a {
-  color: #333333;
-  font-weight: 500;
+  color: #44D7B6;
+  font-weight: 300;
 }
 
 @media (max-width: 767px) {
@@ -10974,20 +11009,134 @@ body {
   background-color: transparent;
 }
 
+.box-layout {
+  padding: 30px;
+}
+
+.BgDiagonal,
+.home-section {
+  position: relative;
+}
+
+.BgDiagonal:before, .BgDiagonal:after,
+.home-section:before,
+.home-section:after {
+  content: "";
+  -webkit-clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
+          clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
+  height: 228px;
+  top: -145px;
+  background-color: #F7B500;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.BgDiagonal:after,
+.home-section:after {
+  content: "";
+  background-image: url("/img/bg_hero_home.jpg");
+  background-size: cover;
+  background-repeat: none;
+  opacity: 0.1;
+}
+
+.BgDiagonal.login-page--client:after,
+.home-section.login-page--client:after {
+  background-image: url("/img/bg_client_home.jpg");
+}
+
+.home-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-section:before {
+  content: "";
+  -webkit-clip-path: polygon(0% 0%, 100% 20px, 100% 70%, 0% 59%);
+  clip-path: polygon(0% 5%, 100% 0, 100% 60%, 0% 69%);
+  height: 350px;
+  top: -39px;
+  background-color: rgba(68, 215, 182, 0.1);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.home-section:after {
+  display: none;
+}
+
+.signup-page {
+  position: relative;
+}
+
 .signup-page form {
   text-align: center;
 }
 
-.signup-page form .btn {
-  margin-top: 20px;
+.signup-page form .form-group {
+  text-align: left;
+}
+
+.signup-page form .form-group select {
+  margin-bottom: 20px;
 }
 
 .signup-page .signupBtn {
   text-align: center;
 }
 
+.signup-page .signupBtn .btn {
+  background-color: #44D7B6;
+  color: #fff;
+}
+
+.signup-page_paymentResume {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-bottom: 19px;
+  margin-bottom: 19px;
+  border-bottom: 1px solid #ebebeb;
+  font-size: 1rem;
+}
+
+.signup-page .accordion {
+  margin-top: 10px;
+}
+
+.signup-page .accordion .card {
+  border: 1px solid #44D7B6;
+}
+
+.signup-page .accordion .card-header {
+  padding: 6px;
+  text-align: center;
+  background-color: transparent;
+  color: #44D7B6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.signup-page .accordion .card-header .icon-card {
+  font-size: 1.7em;
+  margin-right: 10px;
+}
+
 .home-page .hero {
-  padding: 30px 40px;
+  padding: 30px 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -11020,15 +11169,18 @@ body {
   text-align: center;
   z-index: 2;
   position: relative;
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 400;
 }
 
 .home-page .hero h1 span {
   display: block;
-  font-weight: 400;
+  letter-spacing: 3px;
 }
 
 .home-page .hero h1 span:first-child {
-  font-weight: 600;
+  color: #fff;
 }
 
 .home-page .fullSection {
@@ -11069,6 +11221,55 @@ body {
   font-weight: 500;
 }
 
+.privateArea-page .box-layout {
+  padding-top: 0;
+}
+
+.privateArea-page .subHeader {
+  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 57%, 0% 80%);
+          clip-path: polygon(0% 0%, 100% 0%, 100% 57%, 0% 80%);
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 80px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  position: relative;
+  margin-bottom: 4px;
+  z-index: 1;
+  padding-bottom: 0px;
+  padding-top: 11px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: #f7b500;
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, #f7b500), color-stop(100%, #e0a307));
+  background: -webkit-gradient(linear, left top, left bottom, from(#f7b500), to(#e0a307));
+  background: linear-gradient(to bottom, #f7b500 0%, #e0a307 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7b500', endColorstr='#e0a307', GradientType=0 );
+}
+
+.privateArea-page .subHeader .backLink {
+  top: 18px;
+}
+
+.privateArea-page .subHeader h1 {
+  color: #fff;
+  text-align: left;
+  padding: 0 30px;
+  position: relative;
+  padding-left: 20px;
+  font-weight: 500;
+}
+
+.privateArea-page .subHeader h1:before {
+  content: "\e907";
+  font-family: 'InFit';
+  font-size: 1em;
+  padding-right: 10px;
+}
+
 .btn {
   background-color: #F7B500;
 }
@@ -11089,7 +11290,6 @@ body {
   font-size: 17px;
   justify-content: center;
   align-items: center;
-  font-size: 17px;
   border-radius: 35px;
   border: 0;
 }
@@ -11141,7 +11341,7 @@ body {
 
 .btn-secondary {
   background-color: #44D7B6;
-  color: #000;
+  color: #fff;
   text-decoration: none;
   font-weight: 400;
 }
@@ -11151,6 +11351,30 @@ body {
   color: #fff;
   text-decoration: none;
   font-weight: 400;
+}
+
+.btn-md {
+  font-size: 14px;
+  padding: 14px;
+  height: 40px;
+}
+
+#root .btn:focus,
+#root .btn-primary:hover {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  background-color: #44D7B6 !important;
+}
+
+#root .btn-primary:not(:disabled):not(.disabled):active, #root .btn-primary:not(:disabled):not(.disabled).active, #root .show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #F7B500 !important;
+  border-color: none;
+}
+
+#root .btn-secondary:disabled {
+  background-color: #44D7B6 !important;
+  opacity: 0.4;
 }
 
 .btn + a {
@@ -11174,13 +11398,15 @@ a {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: grey;
+  background-color: #F7B500;
   margin: 0 8px;
 }
 
 .carousel-item h2 {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 60px;
+  font-weight: 400;
+  letter-spacing: 1px;
 }
 
 .loadingWrapper {
@@ -11237,8 +11463,6 @@ a {
 }
 
 .navbar {
-  /* -webkit-box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18);
-          box-shadow: 3px 6px 20px -5px rgba(0, 0, 0, 0.18); */
   position: relative;
   z-index: 2;
   padding-top: 4px;
@@ -11246,6 +11470,10 @@ a {
 }
 
 .navbar.bg-light {
+  background-color: transparent !important;
+}
+
+.navbar.navbar.bg-light.hasBackground {
   background-color: #F7B500 !important;
 }
 
@@ -11324,37 +11552,183 @@ a {
   }
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  border: 1px solid none;
-  -webkit-text-fill-color: transparent;
-  -webkit-box-shadow: 0 0 0px 1000px none inset;
-  -webkit-transition: background-color 5000s ease-in-out 0s;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-#root input:-internal-autofill-selected {
-  background-color: transparent !important;
-}
-
 .field-compact .form-label {
-  font-size: 0.875;
+  font-size: 1rem;
 }
 
-.field-compact .form-contron:focus {
+.field-compact .form-control {
+  font-size: 1rem;
+}
+
+.field-compact .form-control:focus {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 
+.error-message {
+  font-size: 0.8rem;
+  color: red;
+  padding-top: 5px;
+  text-align: left;
+  font-weight: 300;
+}
+
+.form-label {
+  text-align: left;
+  width: 100%;
+  left: 5px;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+select.form-control {
+  margin-bottom: 5px;
+}
+
 .form-group {
   margin: 0;
+}
+
+.button-check,
+.pack-check {
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+.button-check input,
+.pack-check input {
+  position: absolute;
+  z-index: 0;
+}
+
+.button-check label,
+.pack-check label {
+  width: 100%;
+  border-radius: 24px;
+  height: 48px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid #44D7B6;
+  color: #44D7B6;
+  background-color: white;
+  z-index: 1;
+  position: relative;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.button-check label span,
+.pack-check label span {
+  font-size: 1.4em;
+  margin-right: 10px;
+}
+
+.button-check input:checked + label,
+.pack-check input:checked + label {
+  background-color: #44d7b6;
+  color: white;
+}
+
+.pack-check .form-check-label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 10px 40px;
+  height: auto;
+  border-radius: 30px;
+}
+
+.pack-check .form-check-label > * {
+  width: 50%;
+  text-align: right;
+}
+
+.pack-check .form-check-label_content {
+  text-align: left;
+}
+
+.pack-check .form-check-label_content .pack-check_name {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.pack-check .form-check-label_content .pack-check_duration {
+  font-weight: 300;
+}
+
+.pack-check .form-check-label .pack-check_price,
+.pack-check .form-check-label .pack-check_price span {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.pack-check .form-check-label .pack-check_price span,
+.pack-check .form-check-label .pack-check_price span span {
+  margin: 0;
+}
+
+.availabilityCoach .form-label {
+  margin-bottom: 8px;
+}
+
+.availabilityCoach .form-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.availabilityCoach .form-group .form-label {
+  width: auto;
+  padding: 0 8px;
+  margin: 0;
+}
+
+.availabilityCoach .form-group .form-label:first-of-type {
+  padding-left: 0;
+}
+
+.availabilityCoach .form-group .form-control {
+  width: auto;
+}
+
+.availabilityCoach .form-group .form-control.is-valid {
+  padding-right: 0.75rem;
+  background-image: none;
+}
+
+.dashboard-coach a {
+  margin-top: 20px;
+  width: 100%;
+  display: block;
+  padding: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  border: 1px solid #44D7B6;
+  border-radius: 20px;
 }
 
 .error {

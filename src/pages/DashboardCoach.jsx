@@ -19,16 +19,12 @@ const DashboardClient = (props) => {
     getCoach(coach);
   }, []);
 
-  console.log(coach)
-
   return (
-    <section>
+    <section className="box-layout dashboard-coach">
       <h1>Hola {coach && coach.name}</h1>
       <h2>Este es tu próximo entrenamiento</h2>
       <Link to={'/coach/auth/program'} >Crea un nuevo programa de Programa</Link>
-      <br/>
       <Link to={'/coach/auth/exercises'} >Estos son tus ejercicios</Link>
-      <br/>
       <Link to={'/coach/auth/newExercises'} >Crea ejercicios</Link>
     </section>
   );

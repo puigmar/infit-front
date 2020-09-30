@@ -17,15 +17,8 @@
 
 .field-compact .form-label {
   position: absolute;
-  top: 7px;
-  text-align: left;
-  width: 100%;
+  top: 5px;
   left: 5px;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  padding: 0;
-  margin: 0;
-  pointer-events: none;
 }
 
 .field-compact .form-control {
@@ -36,7 +29,8 @@
   padding: 0 4px;
   text-align: left;
   height: 31px;
-  font-size: 15px;
+  font-weight: 300;
+  font-size: 1.1rem;
 }
 
 .field-compact:focus {
@@ -47,17 +41,13 @@
 }
 
 .field-compact .error-message {
-  font-size: 0.8rem;
-  color: red;
-  padding-top: 5px;
-  text-align: left;
   position: absolute;
   bottom: 17px;
   left: 0;
 }
 
 .field-compact.isFilled .form-label, .field-compact.isFocus .form-label {
-  top: -10px;
+  top: -12px;
   font-size: 0.75rem;
   left: 2px;
 }
